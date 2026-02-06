@@ -6,13 +6,15 @@ const BACKEND_URL = process.env.BACKEND_BASE_URL || 'https://api.fammy.pet';
 
 export async function GET(request: NextRequest) {
   const query = request.nextUrl.searchParams.get('q') || '';
+  const lang = request.nextUrl.searchParams.get('lang') || 'en';
   
   if (query.length < 2) {
     return NextResponse.json({ foods: [] });
   }
 
   try {
-    const response = await fetch(`${BACKEND_URL}/api/v1/foods/search?q=${encodeURIComponent(query)}`);
+    const url = `${BACKEND_URL}/api/v1/foods/search?q=${encodeURIComponent(query)}&lang=${lang}`;
+    const response = await fetch(url);
     const data = await response.json();
     
     if (data.success) {
