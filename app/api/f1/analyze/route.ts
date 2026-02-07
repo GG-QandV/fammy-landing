@@ -135,7 +135,7 @@ export async function POST(request: NextRequest) {
 
         // Call backend diet-analysis
         const token = await generateGuestToken(anonId);
-        const url = `${BACKEND_BASE_URL}/api/v1/functions/diet-analysis`;
+        const url = `${BACKEND_BASE_URL}/api/v1/diet-analysis`;
 
         const response = await fetch(url, {
             method: 'POST',
