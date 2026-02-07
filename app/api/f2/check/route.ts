@@ -8,6 +8,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 const SECRET = new TextEncoder().encode(JWT_SECRET);
 
 interface CheckRequest {
+    lang?: string;
     target: 'dog' | 'cat' | 'human';
     foodId: string;
 }
@@ -19,7 +20,7 @@ interface CheckRequest {
 export async function POST(request: NextRequest) {
     try {
         const body: CheckRequest = await request.json();
-        const { target, foodId } = body;
+        const { target, foodId, lang = 'en' } = body;
 
         if (!target || !foodId) {
             return NextResponse.json(
@@ -97,7 +98,8 @@ export async function POST(request: NextRequest) {
         try {
             backendResult = await checkFood(
                 { target: body.target, foodId: body.foodId },
-                anonId
+                anonId,
+                lang
             );
         } catch (error: any) {
             // Handle backend limits (429 or 403) by showing the landing gate
