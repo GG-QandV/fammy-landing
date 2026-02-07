@@ -2,7 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import F2Form from '../components/F2Form';
+import F1Form from '../components/F1Form';
 import ResultCard from '../components/ResultCard';
+import F1ResultCard from '../components/F1ResultCard';
 import GateModal from '../components/GateModal';
 import { getSupabaseBrowserClient } from '../lib/supabaseClient';
 import CountdownTimer from '../components/CountdownTimer';
@@ -18,8 +20,23 @@ interface CheckResult {
     severity: number;
 }
 
+interface F1Result {
+    recipe_id: string;
+    recipe_name: string;
+    target: string;
+    total_weight_g: number;
+    nutrients: any[];
+    toxicity: {
+        safe: any[];
+        warnings: any[];
+    };
+    overall_safe: boolean;
+    analyzed_at: string;
+}
+
 export default function HomePage() {
     const [result, setResult] = useState<CheckResult | null>(null);
+    const [f1Result, setF1Result] = useState<F1Result | null>(null);
     const [foodName, setFoodName] = useState<string>('');
     const [showGate, setShowGate] = useState(false);
     const [anonId, setAnonId] = useState<string>('');
@@ -27,7 +44,7 @@ export default function HomePage() {
     const [paymentStatus, setPaymentStatus] = useState<'success' | 'cancel' | null>(null);
     const [selectedFeature, setSelectedFeature] = useState<'f1' | 'f2' | null>(null);
 
-    const { t, language } = useLanguage();
+    const { t } = useLanguage();
 
     // Launch date: 45 days from now (March 22, 2026)
     const launchDate = new Date('2026-03-22T12:00:00Z');
@@ -55,7 +72,14 @@ export default function HomePage() {
         }
     }, []);
 
-    const handleSubmit = async (data: { target: string; foodId: string; foodName: string }) => {
+    // Clear results when switching features
+    useEffect(() => {
+        setResult(null);
+        setF1Result(null);
+        setFoodName('');
+    }, [selectedFeature]);
+
+    const handleF2Submit = async (data: { target: string; foodId: string; foodName: string }) => {
         try {
             // Get promo token from localStorage if exists
             const promoToken = typeof window !== 'undefined' ? localStorage.getItem(`promo_token_${anonId}`) : null;
@@ -66,7 +90,7 @@ export default function HomePage() {
                     'Content-Type': 'application/json',
                     ...(promoToken ? { 'x-promo-token': promoToken } : {})
                 },
-                body: JSON.stringify({ target: data.target, foodId: data.foodId, lang: language }),
+                body: JSON.stringify({ target: data.target, foodId: data.foodId }),
             });
 
             if (response.status === 403) {
@@ -87,6 +111,36 @@ export default function HomePage() {
         } catch (error) {
             console.error('Check error:', error);
             alert('Failed to check food safety. Please try again.');
+        }
+    };
+
+    const handleF1Submit = async (data: { target: string; ingredients: { foodId: string; grams: number }[] }) => {
+        try {
+            const response = await fetch('/api/f1/analyze', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ target: data.target, ingredients: data.ingredients }),
+            });
+
+            if (response.status === 403) {
+                const error = await response.json();
+                if (error.code === 'LIMIT_REACHED') {
+                    setShowGate(true);
+                    return;
+                }
+            }
+
+            if (!response.ok) {
+                throw new Error('Failed to analyze recipe');
+            }
+
+            const responseData = await response.json();
+            setF1Result(responseData.data);
+        } catch (error) {
+            console.error('Analysis error:', error);
+            alert('Failed to analyze nutrients. Please try again.');
         }
     };
 
@@ -172,7 +226,7 @@ export default function HomePage() {
 
                                 {/* F2 Form */}
                                 <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 p-8">
-                                    <F2Form onSubmit={handleSubmit} />
+                                    <F2Form onSubmit={handleF2Submit} />
                                 </div>
 
                                 {/* Result Card */}
@@ -182,7 +236,7 @@ export default function HomePage() {
                             </>
                         ) : (
                             <>
-                                {/* Hero section F1 (Placeholder) */}
+                                {/* Hero section F1 */}
                                 <div className="text-center space-y-4">
                                     <h1 className="text-5xl font-bold text-gray-900 dark:text-white uppercase tracking-tight text-primary-600">
                                         {t('nutrient_analysis_title')}
@@ -190,12 +244,17 @@ export default function HomePage() {
                                     <p className="text-xl text-gray-600 dark:text-gray-300">
                                         {t('nutrient_analysis_desc')}
                                     </p>
-                                    <div className="p-12 bg-primary-50 rounded-3xl border-2 border-dashed border-primary-200 text-primary-600 flex flex-col items-center">
-                                        <span className="text-6xl mb-4">🔬</span>
-                                        <p className="font-bold">We are calibrating our nutrition labs...</p>
-                                        <p className="text-sm mt-2 opacity-70 italic">Expected launch: Q2 2026</p>
-                                    </div>
                                 </div>
+
+                                {/* F1 Form */}
+                                <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 p-8">
+                                    <F1Form onSubmit={handleF1Submit} />
+                                </div>
+
+                                {/* F1 Result Card */}
+                                {f1Result && (
+                                    <F1ResultCard result={f1Result} />
+                                )}
                             </>
                         )}
 
