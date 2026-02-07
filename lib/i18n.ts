@@ -37,6 +37,8 @@ export const translations = {
         high: 'High',
         critical: 'Critical',
         deadly: 'Deadly',
+        safe_explanation: 'This food is safe for your pet.',
+        warning_explanation: 'This food may be harmful. Consult a vet.',
     },
     es: {
         feature_select_title: '¿Qué te gustaría verificar hoy?',
@@ -74,6 +76,8 @@ export const translations = {
         high: 'Alto',
         critical: 'Crítico',
         deadly: 'Mortal',
+        safe_explanation: 'Este alimento es seguro para tu mascota.',
+        warning_explanation: 'Este alimento puede ser dañino. Consulta a un veterinario.',
     },
     fr: {
         feature_select_title: 'Que souhaitez-vous vérifier aujourd’hui ?',
@@ -111,6 +115,8 @@ export const translations = {
         high: 'Élevé',
         critical: 'Critique',
         deadly: 'Mortel',
+        safe_explanation: 'Cet aliment est sans danger pour votre animal.',
+        warning_explanation: 'Cet aliment peut être nocif. Consultez un vétérinaire.',
     },
     ua: {
         feature_select_title: 'Що ви хочете перевірити сьогодні?',
@@ -148,5 +154,7 @@ export const translations = {
         high: 'Висока',
         critical: 'Критична',
         deadly: 'Смертельно',
+        safe_explanation: 'Ця їжа безпечна для вашого улюбленця.',
+        warning_explanation: 'Ця їжа може бути шкідливою. Зверніться до ветеринара.',
     }
 };

@@ -118,7 +118,7 @@ export async function POST(request: NextRequest) {
         // Transform backend response to simple format for frontend
         let toxicityLevel: 'safe' | 'caution' | 'moderate' | 'high' | 'critical' | 'deadly' = 'safe';
         let toxicityName = 'Safe';
-        let explanation = 'This food is safe for your pet.';
+        let explanation = 'safe_explanation';
         let severity = 0;
 
         if (backendResult?.results?.warnings && backendResult.results.warnings.length > 0) {
