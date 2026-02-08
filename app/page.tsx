@@ -44,7 +44,7 @@ export default function HomePage() {
     const [paymentStatus, setPaymentStatus] = useState<'success' | 'cancel' | null>(null);
     const [selectedFeature, setSelectedFeature] = useState<'f1' | 'f2' | null>(null);
 
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
 
     // Launch date: 45 days from now (March 22, 2026)
     const launchDate = new Date('2026-03-22T12:00:00Z');
@@ -90,7 +90,7 @@ export default function HomePage() {
                     'Content-Type': 'application/json',
                     ...(promoToken ? { 'x-promo-token': promoToken } : {})
                 },
-                body: JSON.stringify({ target: data.target, foodId: data.foodId }),
+                body: JSON.stringify({ target: data.target, foodId: data.foodId, lang: language }),
             });
 
             if (response.status === 403) {

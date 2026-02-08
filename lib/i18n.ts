@@ -14,8 +14,8 @@ export const translations = {
         food_safety_desc: 'Is it safe for my pet? Check 10,000+ foods instantly.',
         nutrient_analysis_title: 'Nutrient Analysis',
         nutrient_analysis_desc: 'Analyze vitamins, minerals, and caloric density of your recipe.',
-        limit_reached_title: 'Daily Limit Reached',
-        limit_reached_desc: "You've used your free checks. Unlock unlimited checks or join the waitlist to keep going.",
+        limit_reached_title: 'Free Checks Used Up',
+        limit_reached_desc: 'We limit checks in the demo to reduce server load. You can remove limits by supporting the project.',
         unlock_unlimited: 'Unlock Unlimited Access',
         one_time_donation: 'One-time support \$5',
         have_promo: 'Have a promo code?',
@@ -51,6 +51,16 @@ export const translations = {
         add_ingredients_alert: 'Please add at least one ingredient',
         add_ingredient: 'Add ingredient',
         ingredients_list: 'Ingredients',
+        // Ethical Gate Modal
+        waitlist_header: 'Waiting for full version?',
+        waitlist_desc: 'Leave your email — we will write only once when ready. Bonus: 50% discount locked.',
+        founders_header: 'Become a Founder',
+        founders_desc: 'Pay for early access now. This helps us grow the food database, and you get unlimited today.',
+        founders_price: '€25 (instead of €50)',
+        founders_button: 'Support & Remove Limits',
+        thank_you_waitlist: 'Thanks! You are on the list.',
+        thank_you_upsell: 'Do not want to wait? Get access now with Founders Pack.',
+        close: 'Close',
     },
     es: {
         feature_select_title: '¿Qué te gustaría verificar hoy?',
@@ -102,6 +112,16 @@ export const translations = {
         add_ingredients_alert: 'Por favor agrega al menos un ingrediente',
         add_ingredient: 'Agregar ingrediente',
         ingredients_list: 'Ingredientes',
+        // Ethical Gate Modal
+        waitlist_header: '¿Esperando la versión completa?',
+        waitlist_desc: 'Deja tu email — te escribiremos solo una vez cuando esté listo. Bonus: 50% descuento asegurado.',
+        founders_header: 'Conviértete en Fundador',
+        founders_desc: 'Paga el acceso anticipado ahora. Esto nos ayuda a crecer la base de alimentos, y obtienes ilimitado hoy.',
+        founders_price: '€25 (en lugar de €50)',
+        founders_button: 'Apoyar y Quitar Límites',
+        thank_you_waitlist: '¡Gracias! Estás en la lista.',
+        thank_you_upsell: '¿No quieres esperar? Obtén acceso ahora con Founders Pack.',
+        close: 'Cerrar',
     },
     fr: {
         feature_select_title: 'Que souhaitez-vous vérifier aujourd hui ?',
@@ -153,6 +173,16 @@ export const translations = {
         add_ingredients_alert: 'Veuillez ajouter au moins un ingrédient',
         add_ingredient: 'Ajouter un ingrédient',
         ingredients_list: 'Ingrédients',
+        // Ethical Gate Modal
+        waitlist_header: 'En attente de la version complète?',
+        waitlist_desc: 'Laissez votre email — nous écrirons une seule fois quand tout sera prêt. Bonus: 50% de réduction.',
+        founders_header: 'Devenir Fondateur',
+        founders_desc: 'Payez l accès anticipé maintenant. Cela nous aide à développer la base, et vous obtenez illimité aujourd hui.',
+        founders_price: '€25 (au lieu de €50)',
+        founders_button: 'Soutenir et Supprimer les Limites',
+        thank_you_waitlist: 'Merci! Vous êtes sur la liste.',
+        thank_you_upsell: 'Vous ne voulez pas attendre? Obtenez l accès maintenant avec Founders Pack.',
+        close: 'Fermer',
     },
     ua: {
         feature_select_title: 'Що ви хочете перевірити сьогодні?',
@@ -204,6 +234,16 @@ export const translations = {
         add_ingredients_alert: 'Додайте хоча б один інгредієнт',
         add_ingredient: 'Додати інгредієнт',
         ingredients_list: 'Інгредієнти',
+        // Ethical Gate Modal
+        waitlist_header: 'Чекаєте на повну версію?',
+        waitlist_desc: 'Залиште email — ми напишемо лише один раз, коли все буде готово. Бонусом закріпимо знижку 50%.',
+        founders_header: 'Стати Засновником',
+        founders_desc: 'Оплатіть ранній доступ зараз. Це допоможе нам розвивати базу продуктів, а ви отримаєте безліміт вже сьогодні.',
+        founders_price: '€25 (замість €50)',
+        founders_button: 'Підтримати та зняти ліміти',
+        thank_you_waitlist: 'Дякуємо! Ви в списку.',
+        thank_you_upsell: 'Не хочете чекати? Отримайте доступ зараз через Founders Pack.',
+        close: 'Закрити',
     }
 };
 

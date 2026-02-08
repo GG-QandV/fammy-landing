@@ -1,7 +1,7 @@
 'use client';
+import { useLanguage } from '../context/LanguageContext';
 
 import { useState, useEffect, useRef } from 'react';
-import { useLanguage } from '../context/LanguageContext';
 
 interface Food {
     id: string;
@@ -19,8 +19,8 @@ export default function FoodAutocomplete({ onSelect, placeholder = 'Search for a
     const [isLoading, setIsLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(-1);
-    const inputRef = useRef<HTMLInputElement>(null);
     const { language } = useLanguage();
+    const inputRef = useRef<HTMLInputElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     // Debounced search
@@ -34,7 +34,7 @@ export default function FoodAutocomplete({ onSelect, placeholder = 'Search for a
         setIsLoading(true);
         const timer = setTimeout(async () => {
             try {
-                const response = await fetch(`/api/f2/foods?q=${encodeURIComponent(query)}&lang=${language}`);
+                const response = await fetch(`/api/f2/foods?q=${encodeURIComponent(query)}&lang=${language}&lang=${language}`);
                 const data = await response.json();
                 setResults(data.foods || []);
                 setIsOpen(true);

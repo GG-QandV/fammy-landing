@@ -8,9 +8,9 @@ const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 const SECRET = new TextEncoder().encode(JWT_SECRET);
 
 interface CheckRequest {
-    lang?: string;
     target: 'dog' | 'cat' | 'human';
     foodId: string;
+    lang?: string;
 }
 
 /**
@@ -20,7 +20,7 @@ interface CheckRequest {
 export async function POST(request: NextRequest) {
     try {
         const body: CheckRequest = await request.json();
-        const { target, foodId, lang = 'en' } = body;
+        const { target, foodId } = body;
 
         if (!target || !foodId) {
             return NextResponse.json(
@@ -97,9 +97,8 @@ export async function POST(request: NextRequest) {
         let backendResult;
         try {
             backendResult = await checkFood(
-                { target: body.target, foodId: body.foodId },
-                anonId,
-                lang
+                { target: body.target, foodId: body.foodId, lang: body.lang },
+                anonId
             );
         } catch (error: any) {
             // Handle backend limits (429 or 403) by showing the landing gate
@@ -118,7 +117,7 @@ export async function POST(request: NextRequest) {
         // Transform backend response to simple format for frontend
         let toxicityLevel: 'safe' | 'caution' | 'moderate' | 'high' | 'critical' | 'deadly' = 'safe';
         let toxicityName = 'Safe';
-        let explanation = 'safe_explanation';
+        let explanation = 'This food is safe for your pet.';
         let severity = 0;
 
         if (backendResult?.results?.warnings && backendResult.results.warnings.length > 0) {
