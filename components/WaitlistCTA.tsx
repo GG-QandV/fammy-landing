@@ -13,7 +13,7 @@ export default function WaitlistCTA() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!email || !email.includes('@')) {
-            setError('Please enter a valid email');
+            setError(t('waitlist_invalid_email'));
             return;
         }
 
@@ -31,10 +31,10 @@ export default function WaitlistCTA() {
                 setSuccess(true);
                 setEmail('');
             } else {
-                setError('Something went wrong. Please try again.');
+                setError(t('waitlist_error'));
             }
         } catch (err) {
-            setError('Network error. Please try again.');
+            setError(t('waitlist_network_error'));
         } finally {
             setLoading(false);
         }
@@ -48,7 +48,7 @@ export default function WaitlistCTA() {
                         {t('thank_you_waitlist')}
                     </h3>
                     <p className="text-green-600 dark:text-green-300">
-                        Check your inbox for confirmation.
+                        {t('waitlist_confirmation')}
                     </p>
                 </div>
             </div>
@@ -58,10 +58,10 @@ export default function WaitlistCTA() {
     return (
         <div className="max-w-2xl mx-auto text-center py-12">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-                Join Early Access Waitlist
+                {t('waitlist_cta_title')}
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
-                Get 50% off when we launch. No spam, just one email.
+                {t('waitlist_cta_subtitle')}
             </p>
 
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
@@ -81,7 +81,7 @@ export default function WaitlistCTA() {
                     className="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold 
                              rounded-lg transition-colors disabled:opacity-50"
                 >
-                    {loading ? 'Joining...' : 'Join Waitlist'}
+                    {loading ? t('loading') : t('waitlist_cta_button')}
                 </button>
             </form>
 
