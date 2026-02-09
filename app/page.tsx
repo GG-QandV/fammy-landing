@@ -169,10 +169,21 @@ export default function HomePage() {
     return (
         <main className="min-h-screen flex flex-col items-center p-8 bg-gradient-to-b from-gray-50 to-white">
             {!selectedFeature ? (
-                <FeatureSelector
+                <>
+                    
+                    <FeatureSelector
                     onSelect={setSelectedFeature}
                     onPromoClick={() => setShowGate(true)}
                 />
+                    {/* Support Card */}
+                    <section className="py-16 w-full max-w-5xl">
+                        <SupportCard />
+                    </section>
+                    {/* Waitlist CTA */}
+                    <section className="py-20 w-full max-w-2xl">
+                        <WaitlistCTA />
+                    </section>
+                </>
             ) : (
                 <>
                     {/* Header for switching */}
@@ -258,13 +269,6 @@ export default function HomePage() {
                                     <F1ResultCard result={f1Result} />
                                 )}
 
-                                {/* Support Card */}
-                                <section className="py-16">
-                                    <SupportCard />
-                                </section>
-
-                                {(f1Result
-                                )}
                             </>
                         )}
 
@@ -279,13 +283,7 @@ export default function HomePage() {
                     </div>
                 </>
             )}
-                        {/* Waitlist CTA */}
-                        <section className="py-20 bg-purple-50 dark:bg-purple-900/10 -mx-8">
-                            <div className="container mx-auto px-8">
-                                <WaitlistCTA />
-                            </div>
-                        </section>
-
+            {/* Waitlist CTA */}
         </main>
     );
 }

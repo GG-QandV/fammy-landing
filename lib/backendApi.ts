@@ -8,7 +8,7 @@ import { SignJWT } from 'jose';
 const BACKEND_BASE_URL = process.env.BACKEND_BASE_URL || 'http://localhost:3000';
 
 // JWT secret shared with backend for signing guest tokens
-const JWT_SECRET = process.env.JWT_SECRET || '';
+const GUEST_TOKEN = process.env.BACKEND_GUEST_TOKEN || '';
 
 export interface FoodSearchResult {
     id: string;
@@ -26,26 +26,6 @@ export interface F2CheckResult {
     lang?: string;
     toxicityLevel: 'safe' | 'caution' | 'moderate' | 'high' | 'critical' | 'deadly';
     explanation: string;
-}
-
-/**
- * Generate a dynamic guest token for an anonymous user
- */
-async function generateGuestToken(anonId: string): Promise<string> {
-    if (!JWT_SECRET) {
-        console.warn('[backendApi] JWT_SECRET is not set, falling back to empty token');
-        return '';
-    }
-
-    const secret = new TextEncoder().encode(JWT_SECRET);
-    return await new SignJWT({
-        userId: anonId,
-        role: 'guest'
-    })
-        .setProtectedHeader({ alg: 'HS256' })
-        .setIssuedAt()
-        .setExpirationTime('24h') // Token expires in 24 hours
-        .sign(secret);
 }
 
 /**
@@ -91,7 +71,7 @@ export async function checkFood(
     };
 
     // Generate a unique token for this session
-    const token = await generateGuestToken(anonId);
+    const token = GUEST_TOKEN;
 
     console.log('[backendApi] Sending request:', {
         url,
