@@ -11,6 +11,8 @@ import CountdownTimer from '../components/CountdownTimer';
 import { getOrCreateAnonId } from '../lib/anonId';
 import FeatureSelector from '../components/FeatureSelector';
 import LanguageSelector from '../components/LanguageSelector';
+import WaitlistCTA from '../components/WaitlistCTA';
+import SupportCard from '../components/SupportCard';
 import { useLanguage } from '../context/LanguageContext';
 
 interface CheckResult {
@@ -255,6 +257,14 @@ export default function HomePage() {
                                 {f1Result && (
                                     <F1ResultCard result={f1Result} />
                                 )}
+
+                                {/* Support Card */}
+                                <section className="py-16">
+                                    <SupportCard />
+                                </section>
+
+                                {(f1Result
+                                )}
                             </>
                         )}
 
@@ -269,6 +279,13 @@ export default function HomePage() {
                     </div>
                 </>
             )}
+                        {/* Waitlist CTA */}
+                        <section className="py-20 bg-purple-50 dark:bg-purple-900/10 -mx-8">
+                            <div className="container mx-auto px-8">
+                                <WaitlistCTA />
+                            </div>
+                        </section>
+
         </main>
     );
 }
