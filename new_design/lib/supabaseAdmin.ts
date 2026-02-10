@@ -31,3 +31,34 @@ export const supabaseAdmin = new Proxy({} as SupabaseClient<Database>, {
         return (getSupabaseAdmin() as any)[prop];
     }
 });
+
+
+// Public schema client for recipes table
+let _supabasePublic: any = null;
+
+export function getSupabasePublic() {
+    if (_supabasePublic) return _supabasePublic;
+
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+    if (!url || !key) {
+        throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY');
+    }
+
+    _supabasePublic = createClient(url, key, {
+        auth: {
+            autoRefreshToken: false,
+            persistSession: false,
+        },
+        db: {
+            schema: 'public'
+        }
+    });
+
+    return _supabasePublic;
+}
+
+export const supabasePublic = {
+    from: (table: string) => getSupabasePublic().from(table)
+};

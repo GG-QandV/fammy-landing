@@ -113,11 +113,17 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
 
       const data = await res.json()
 
+      console.log("[F1 UI] Response data:", JSON.stringify(data, null, 2))
       if (data.success) {
         setF1Result(data.data)
+      } else if (data.code === "LIMIT_REACHED") {
+        setF1Result({
+          error: t("f1_limit_reached"),
+          isLimit: true,
+        })
       } else {
         setF1Result({
-          error: data.error?.message || t("f1_error_generic"),
+          error: data.message || data.error?.message || t("f1_error_generic"),
         })
       }
     } catch (error) {
@@ -265,13 +271,22 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
 
             {/* F1 Results */}
             {f1Result && (
-              <div className="mt-4 p-6 rounded-xl border-2 bg-emerald-50 border-emerald-200 text-emerald-900 animate-in fade-in slide-in-from-top-2">
-                <h3 className="font-bold text-lg mb-2">Nutrient Analysis Result</h3>
-                {f1Result.nutrients?.map((nutrient: any) => (
-                  <p key={nutrient.code} className="text-sm">
-                    {nutrient.name}: {nutrient.total_amount}{nutrient.unit}
-                  </p>
-                ))}
+              <div className={`mt-4 p-6 rounded-xl border-2 animate-in fade-in slide-in-from-top-2 ${f1Result.error ? (f1Result.isLimit ? "bg-yellow-50 border-yellow-200 text-yellow-900" : "bg-red-50 border-red-200 text-red-900") : "bg-emerald-50 border-emerald-200 text-emerald-900"}`}>
+                {f1Result.error ? (
+                  <>
+                    <h3 className="font-bold text-xl mb-2">{f1Result.isLimit ? t("attention") : t("caution")}</h3>
+                    <p className="text-lg">{f1Result.error}</p>
+                  </>
+                ) : (
+                  <>
+                    <h3 className="font-bold text-xl mb-2">{t("f1_result_title")}</h3>
+                    {f1Result.nutrients?.map((nutrient: any) => (
+                      <p key={nutrient.code} className="text-sm">
+                        {nutrient.name}: {nutrient.totalAmount}{nutrient.unit}
+                      </p>
+                    ))}
+                  </>
+                )}
               </div>
             )}
           </div>
