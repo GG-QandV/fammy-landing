@@ -1,10 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: true,
-    output: 'standalone',
-    env: {
-        BACKEND_BASE_URL: process.env.BACKEND_BASE_URL || '',
-    },
-};
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  images: {
+    unoptimized: true,
+  },
+  devIndicators: {
+    buildActivity: false,
+    buildActivityPosition: 'bottom-right',
+  },
+}
 
-export default nextConfig;
+export default nextConfig

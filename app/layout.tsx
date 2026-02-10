@@ -1,24 +1,49 @@
-import type { Metadata } from 'next';
-import './globals.css';
-import { LanguageProvider } from '../context/LanguageContext';
+import React from "react"
+import type { Metadata, Viewport } from "next"
+import { DM_Sans, Space_Grotesk } from "next/font/google"
+
+import "./globals.css"
+
+const dmSans = DM_Sans({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-dm-sans",
+  weight: ["400", "500", "600", "700"],
+})
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-space-grotesk",
+  weight: ["400", "500", "600", "700"],
+})
 
 export const metadata: Metadata = {
-    title: 'fammy.pet — Free Food Safety Checker for Dogs, Cats & Families',
-    description: 'Check if foods are safe for your pets and family. Instant results for 10,000+ foods. Free tool with unlimited access after donation.',
-};
+  title: "PetCheck -- Safe Food for Pets",
+  description:
+    "Medical-grade food safety checker for your pets. Analyze composition and toxicity instantly.",
+}
+
+export const viewport: Viewport = {
+  themeColor: "#FAFAF8",
+  width: "device-width",
+  initialScale: 1,
+}
+
+import { LanguageProvider } from "../context/LanguageContext"
 
 export default function RootLayout({
-    children,
+  children,
 }: Readonly<{
-    children: React.ReactNode;
+  children: React.ReactNode
 }>) {
-    return (
-        <html lang="en">
-            <body className="antialiased">
-                <LanguageProvider>
-                    {children}
-                </LanguageProvider>
-            </body>
-        </html>
-    );
+  return (
+    <html lang="uk" suppressHydrationWarning>
+      <body
+        className={`${dmSans.variable} ${spaceGrotesk.variable} font-sans antialiased`}
+      >
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
+      </body>
+    </html>
+  )
 }

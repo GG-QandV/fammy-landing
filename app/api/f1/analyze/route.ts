@@ -20,6 +20,7 @@ async function generateGuestToken(anonId: string): Promise<string> {
 
 interface AnalyzeRequest {
     target: string;
+    lang?: string;
     ingredients: { foodId: string; grams: number }[];
 }
 
@@ -30,7 +31,7 @@ interface AnalyzeRequest {
 export async function POST(request: NextRequest) {
     try {
         const body: AnalyzeRequest = await request.json();
-        const { target, ingredients } = body;
+        const { target, ingredients, lang } = body;
 
         if (!target || !ingredients || ingredients.length === 0) {
             return NextResponse.json(
@@ -48,7 +49,7 @@ export async function POST(request: NextRequest) {
 
         const cookieHeader = request.headers.get('cookie');
         const anonId = getAnonIdFromCookieHeader(cookieHeader);
-        const ip = request.ip || request.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
+        const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || request.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
 
         if (!anonId) {
             return NextResponse.json(
@@ -76,6 +77,7 @@ export async function POST(request: NextRequest) {
                 .or(`anon_id.eq.${anonId},ip_address.eq.${ip}`)
                 .gte('created_at', twentyFourHoursAgo.toISOString()) as any);
 
+            console.log('[F1] Usage check:', { anonId, ip, count, DAILY_LIMIT });
             if (count !== null && count >= DAILY_LIMIT) {
                 return NextResponse.json(
                     {
@@ -142,6 +144,7 @@ export async function POST(request: NextRequest) {
             headers: {
                 'Content-Type': 'application/json',
                 'x-session-id': anonId,
+                'Accept-Language': lang || 'en',
                 ...(token ? { 'Authorization': `Bearer ${token}` } : {})
             },
             body: JSON.stringify({ recipe_id: recipe.id }),

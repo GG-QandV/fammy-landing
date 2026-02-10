@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
         const anonId = getAnonIdFromCookieHeader(cookieHeader);
 
         // Get client IP address
-        const ip = request.ip || request.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
+        const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || request.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
 
         if (!anonId) {
             return NextResponse.json(
@@ -134,7 +134,7 @@ export async function POST(request: NextRequest) {
                 toxicityLevel = 'high';
             }
 
-            toxicityName = warning.toxicity_name || 'Warning';
+            toxicityName = warning.toxicityName || 'Warning';
             severity = warning.severity || 0;
 
             // Check for explicit "deadly" or "fatal" in name to upgrade display
