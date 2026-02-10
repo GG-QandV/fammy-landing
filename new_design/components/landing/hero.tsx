@@ -280,7 +280,7 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
                 ) : (
                   <>
                     <h3 className="font-bold text-xl mb-2">{t("f1_result_title")}</h3>
-                    {f1Result.nutrients?.map((nutrient: any) => (
+                    {f1Result.nutrients?.filter((nutrient: any) => nutrient.totalAmount > 0).map((nutrient: any) => (
                       <p key={nutrient.code} className="text-sm">
                         {nutrient.name}: {nutrient.totalAmount}{nutrient.unit}
                       </p>
