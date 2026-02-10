@@ -12,7 +12,8 @@ import { Loader2, Search, XCircle, ShieldCheck, Plus } from "lucide-react"
 interface FoodResult {
   toxicityLevel: string
   toxicityName: string
-  explanation: string
+  explanation?: string
+  notes?: string
   severity: number
   foodName?: string
 }
@@ -63,13 +64,21 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
 
       const data = await res.json()
 
-      if (data.success) {
-        setResult(data.data.results.safe.length > 0 ? data.data.results.safe[0] : data.data.results.warnings[0])
+      console.log("[F2 UI] Response data:", JSON.stringify(data, null, 2))
+      if (data.result) {
+        setResult(data.result)
+      } else if (data.code === "LIMIT_REACHED") {
+        setResult({
+          toxicityLevel: "caution",
+          toxicityName: t("attention"),
+          explanation: t("f2_limit_reached"),
+          severity: 2,
+        })
       } else {
         setResult({
           toxicityLevel: "caution",
           toxicityName: t("caution"),
-          explanation: data.error?.message || t("f2_error_generic"),
+          explanation: data.message || t("f2_error_generic"),
           severity: 3,
         })
       }
@@ -140,14 +149,14 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
             onClick={() => onFeatureChange("f2")}
             size="xl" className={` ${activeFeature === "f2" ? "bg-teal hover:bg-teal/90" : ""}`}
           >
-            🚫 {t("f2_title")}
+            👍👎 {t("f2_title")}
           </Button>
           <Button
             variant={activeFeature === "f1" ? "default" : "outline"}
             onClick={() => onFeatureChange("f1")}
             size="xl" className={` ${activeFeature === "f1" ? "bg-purple-600 hover:bg-purple-700" : ""}`}
           >
-            🧪 {t("f1_title")}
+            <span className="text-3xl">🔬</span><span className="text-xl">🧪</span> {t("f1_title")}
           </Button>
         </div>
 
@@ -164,16 +173,16 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
           <Button
             variant={species === "dog" ? "default" : "outline"}
             onClick={() => setSpecies("dog")}
-            className={`flex-1 h-12 rounded-xl ${species === "dog" ? "bg-teal hover:bg-teal/90" : ""}`}
+            className={`flex-1 h-16 rounded-xl text-2xl ${species === "dog" ? "bg-teal hover:bg-teal/90" : ""}`}
           >
-            🐶 {t("species_dog")}
+            🐶 <span className="text-2xl">{t("species_dog")}</span>
           </Button>
           <Button
             variant={species === "cat" ? "default" : "outline"}
             onClick={() => setSpecies("cat")}
-            className={`flex-1 h-12 rounded-xl ${species === "cat" ? "bg-teal hover:bg-teal/90" : ""}`}
+            className={`flex-1 h-16 rounded-xl text-2xl ${species === "cat" ? "bg-teal hover:bg-teal/90" : ""}`}
           >
-            🐱 {t("species_cat")}
+            🐱 <span className="text-2xl">{t("species_cat")}</span>
           </Button>
         </div>
         )}
@@ -197,19 +206,19 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
 
             {/* F2 Results */}
             {result && (
-              <div className={`mt-4 p-4 rounded-xl border-2 animate-in fade-in slide-in-from-top-2 ${result.severity >= 3 ? "bg-red-50 border-red-200 text-red-900" : "bg-emerald-50 border-emerald-200 text-emerald-900"
+              <div className={`mt-4 p-6 rounded-xl border-2 animate-in fade-in slide-in-from-top-2 ${result.severity >= 3 ? "bg-red-50 border-red-200 text-red-900" : result.severity === 2 ? "bg-yellow-50 border-yellow-200 text-yellow-900" : "bg-emerald-50 border-emerald-200 text-emerald-900"
                 }`}>
-                <div className="flex items-center gap-2 font-bold uppercase text-sm mb-1">
-                  {result.severity >= 3 ? <XCircle className="h-4 w-4" /> : <ShieldCheck className="h-4 w-4" />}
+                <div className="flex items-center gap-2 font-bold uppercase text-xl mb-2">
+                  {result.severity >= 3 ? <XCircle className="h-6 w-6" /> : <ShieldCheck className="h-6 w-6" />}
                   {result.toxicityName}
                 </div>
-                <p className="text-sm opacity-90">{result.explanation}</p>
+                <p className="text-lg opacity-90">{result.notes || result.explanation}</p>
               </div>
             )}
           </div>
         ) : (
           <div className="space-y-4">
-            <div className="flex flex-col gap-4 rounded-xl border border-border bg-background p-4 overflow-visible">
+            <div className="flex flex-col gap-6 rounded-xl border border-border bg-background p-4 overflow-visible">
             <p className="text-sm text-muted-foreground mb-2">{t("f1_hint")}</p>
               {ingredients.map((ingredient, index) => (
                 <div key={index} className="flex items-center gap-2">
@@ -256,7 +265,7 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
 
             {/* F1 Results */}
             {f1Result && (
-              <div className="mt-4 p-4 rounded-xl border-2 bg-emerald-50 border-emerald-200 text-emerald-900 animate-in fade-in slide-in-from-top-2">
+              <div className="mt-4 p-6 rounded-xl border-2 bg-emerald-50 border-emerald-200 text-emerald-900 animate-in fade-in slide-in-from-top-2">
                 <h3 className="font-bold text-lg mb-2">Nutrient Analysis Result</h3>
                 {f1Result.nutrients?.map((nutrient: any) => (
                   <p key={nutrient.code} className="text-sm">
