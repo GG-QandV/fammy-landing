@@ -131,7 +131,7 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
   }
 
   return (
-    <section id="hero" className="relative w-full overflow-hidden py-16 text-center lg:py-24">
+    <section id="hero" className="relative w-full overflow-visible py-16 text-center lg:py-24">
       <div className="relative z-10 mx-auto max-w-2xl px-4">
         {/* Feature Tabs */}
         <div className="mb-8 inline-flex space-x-2 rounded-full bg-card p-1 shadow-sm">
@@ -209,7 +209,7 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
           </div>
         ) : (
           <div className="space-y-4">
-            <div className="flex flex-col gap-4 rounded-xl border border-border bg-background p-4">
+            <div className="flex flex-col gap-4 rounded-xl border border-border bg-background p-4 overflow-visible">
             <p className="text-sm text-muted-foreground mb-2">{t("f1_hint")}</p>
               {ingredients.map((ingredient, index) => (
                 <div key={index} className="flex items-center gap-2">
@@ -237,22 +237,12 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
                 </div>
               ))}
               <div className="flex gap-2">
-                <div className="relative flex-1">
-                  <Input
-                    placeholder={t("recipe_search_placeholder")}
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && addIngredient()}
-                    className="h-10 pl-3 rounded-lg border-border bg-secondary"
-                  />
-                </div>
-                <Button
-                  onClick={addIngredient}
-                  disabled={!query.trim()}
-                  className="h-10 shrink-0 rounded-lg bg-teal text-white hover:bg-teal/90"
-                >
-                  <Plus className="h-4 w-4" />
-                </Button>
+                <FoodAutocomplete
+                  onSelect={(food) => {
+                    setIngredients(prev => [...prev, { foodId: food.id, foodName: food.name, grams: 100 }]);
+                  }}
+                  placeholder={t("recipe_search_placeholder")}
+                />
               </div>
             </div>
 

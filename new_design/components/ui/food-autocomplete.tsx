@@ -113,7 +113,7 @@ export default function FoodAutocomplete({ onSelect, placeholder = 'Search for a
             {isOpen && results.length > 0 && (
                 <div
                     ref={dropdownRef}
-                    className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto"
+                    className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-80 overflow-y-auto"
                 >
                     {results.map((food, index) => (
                         <button
