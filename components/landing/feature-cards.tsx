@@ -40,7 +40,7 @@ function FeatureCard({ title, description, feature, icon, accent, onActivate }: 
       </p>
       <div className="mt-8">
         <span className={`inline-flex items-center gap-2 rounded-lg ${btnBg} px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-transform group-hover:translate-x-1`}>
-          {t("open_tool")}
+          {t(feature === "f1" ? "open_f1_tool" : "open_f2_tool")}
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
