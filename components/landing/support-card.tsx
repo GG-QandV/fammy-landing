@@ -9,12 +9,14 @@ interface EmailModalProps {
     isOpen: boolean;
     onClose: () => void;
     onSkip: () => void;
-    onSubmit: (email: string) => void;
+    onSubmit: (email: string, giftEmail?: string) => void;
     t: (key: string) => string;
 }
 
 function EmailModal({ isOpen, onClose, onSkip, onSubmit, t }: EmailModalProps) {
     const [email, setEmail] = useState('');
+    const [isGift, setIsGift] = useState(false);
+    const [giftEmail, setGiftEmail] = useState('');
     const [error, setError] = useState('');
 
     if (!isOpen) return null;
@@ -24,7 +26,11 @@ function EmailModal({ isOpen, onClose, onSkip, onSubmit, t }: EmailModalProps) {
             setError(t('invalid_email'));
             return;
         }
-        onSubmit(email);
+        if (isGift && (!giftEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(giftEmail))) {
+            setError(t('invalid_email'));
+            return;
+        }
+        onSubmit(email, isGift ? giftEmail : undefined);
     };
 
     return (
@@ -45,6 +51,31 @@ function EmailModal({ isOpen, onClose, onSkip, onSubmit, t }: EmailModalProps) {
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg mb-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 />
                 {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+
+                <label className="flex items-center gap-2 mt-4 cursor-pointer">
+                    <input
+                        type="checkbox"
+                        checked={isGift}
+                        onChange={(e) => setIsGift(e.target.checked)}
+                        className="w-4 h-4 rounded border-gray-300"
+                    />
+                    <span className="text-gray-700 dark:text-gray-300">{t('gift_checkbox')}</span>
+                </label>
+
+                {isGift && (
+                    <div className="mt-3">
+                        <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
+                            {t('gift_email_label')}
+                        </label>
+                        <input
+                            type="email"
+                            value={giftEmail}
+                            onChange={(e) => { setGiftEmail(e.target.value); setError(''); }}
+                            placeholder={t('gift_email_placeholder')}
+                            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                        />
+                    </div>
+                )}
 
                 <div className="flex gap-3 mt-4">
                     <button
@@ -80,7 +111,7 @@ export default function SupportCard() {
 
     const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://api.fammy.pet';
 
-    const createCheckout = async (tier: TierId, email?: string) => {
+    const createCheckout = async (tier: TierId, email?: string, giftEmail?: string) => {
         setLoading(tier);
         try {
             const res = await fetch(`${BACKEND_URL}/api/v1/billing/founders-checkout`, {
@@ -89,6 +120,7 @@ export default function SupportCard() {
                 body: JSON.stringify({
                     productCode: tier,
                     email: email || undefined,
+                    giftEmail: giftEmail || undefined,
                     successUrl: `${window.location.origin}/support/success`,
                     cancelUrl: `${window.location.origin}/support/cancel`,
                 }),
@@ -118,10 +150,10 @@ export default function SupportCard() {
         }
     };
 
-    const handleSubmitEmail = (email: string) => {
+    const handleSubmitEmail = (email: string, giftEmail?: string) => {
         setShowEmailModal(false);
         if (pendingTier) {
-            createCheckout(pendingTier, email);
+            createCheckout(pendingTier, email, giftEmail);
         }
     };
 
