@@ -115,9 +115,16 @@ export async function POST(request: NextRequest) {
         console.log('[LANDING] Backend result:', JSON.stringify(backendResult, null, 2));
 
         // Transform backend response to simple format for frontend
+        const safeLabels: Record<string, { name: string; explanation: string }> = {
+            en: { name: 'Safe', explanation: 'This food is safe for your pet.' },
+            ua: { name: 'Безпечно', explanation: 'Ця їжа безпечна для вашого улюбленця.' },
+            es: { name: 'Seguro', explanation: 'Este alimento es seguro para tu mascota.' },
+            fr: { name: 'Sûr', explanation: 'Cet aliment est sûr pour votre animal.' },
+        };
+        const safeLang = body.lang && ['en', 'ua', 'es', 'fr'].includes(body.lang) ? body.lang : 'en';
         let toxicityLevel: 'safe' | 'caution' | 'moderate' | 'high' | 'critical' | 'deadly' = 'safe';
-        let toxicityName = 'Safe';
-        let explanation = 'This food is safe for your pet.';
+        let toxicityName = safeLabels[safeLang].name;
+        let explanation = safeLabels[safeLang].explanation;
         let severity = 0;
 
         if (backendResult?.results?.warnings && backendResult.results.warnings.length > 0) {
