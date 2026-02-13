@@ -39,6 +39,8 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<FoodResult | null>(null)
   const [f1Result, setF1Result] = useState<any | null>(null)
+  const [promoCode, setPromoCode] = useState("")
+  const [promoStatus, setPromoStatus] = useState<"idle" | "loading" | "success" | "expired" | "invalid">("idle")
 
   useEffect(() => {
     getOrCreateAnonId()
@@ -138,6 +140,31 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
     if (!query.trim()) return
     setIngredients(prev => [...prev, { foodId: query, foodName: query, grams: 100 }])
     setQuery("")
+  }
+
+  const handlePromoSubmit = async () => {
+    if (!promoCode.trim()) return
+    setPromoStatus("loading")
+    try {
+      const res = await fetch("/api/promo/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: promoCode.trim() }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setPromoStatus("success")
+        if (data.token) {
+          document.cookie = `promo_token=${data.token}; path=/; max-age=86400`
+        }
+      } else if (data.error === "expired") {
+        setPromoStatus("expired")
+      } else {
+        setPromoStatus("invalid")
+      }
+    } catch {
+      setPromoStatus("invalid")
+    }
   }
 
   const removeIngredient = (index: number) => {
@@ -289,6 +316,35 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
             )}
           </div>
         )}
+        {/* Promo Code */}
+        <div className="mt-8 rounded-xl bg-cream/30 border border-cream p-4">
+          <p className="text-base font-medium text-navy mb-2">{t("have_promo")}</p>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={promoCode}
+              onChange={(e) => { setPromoCode(e.target.value); setPromoStatus("idle"); }}
+              placeholder={t("promo_placeholder")}
+              className="flex-1 h-12 px-4 rounded-lg border border-light-grey bg-white text-navy text-base focus:border-navy/40 focus:outline-none"
+            />
+            <button
+              onClick={handlePromoSubmit}
+              disabled={promoStatus === "loading" || !promoCode.trim()}
+              className="h-12 px-5 rounded-lg bg-navy text-white text-base font-semibold hover:opacity-90 disabled:opacity-50 transition-opacity"
+            >
+              {promoStatus === "loading" ? "..." : t("apply_promo")}
+            </button>
+          </div>
+          {promoStatus === "success" && (
+            <p className="mt-2 text-sm text-emerald-600 font-medium">{t("promo_success")}</p>
+          )}
+          {promoStatus === "expired" && (
+            <p className="mt-2 text-sm text-red-600 font-medium">{t("promo_expired")}</p>
+          )}
+          {promoStatus === "invalid" && (
+            <p className="mt-2 text-sm text-red-600 font-medium">{t("promo_invalid")}</p>
+          )}
+        </div>
       </div>
     </section>
   )
