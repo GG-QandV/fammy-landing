@@ -54,11 +54,13 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
 
     try {
       const anonId = await getOrCreateAnonId()
+      const promoToken = document.cookie.match(/promo_token=([^;]+)/)?.[1] || ""
       const res = await fetch("/api/f2/check", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Cookie: `anon_id=${anonId}`,
+          ...(promoToken ? { "x-promo-token": promoToken } : {}),
         },
         body: JSON.stringify({ target: species, foodId: selectedFood?.id || "", lang: language }),
       })
