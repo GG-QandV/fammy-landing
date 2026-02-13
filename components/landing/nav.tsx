@@ -12,14 +12,14 @@ export function Nav() {
         href="/"
         className="pointer-events-auto flex items-center gap-2 font-semibold text-foreground"
       >
-        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
+        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-cream text-xs text-navy">
           ●
         </span>
         fammy.pet
       </Link>
 
       {/* Language switcher */}
-      <div className="pointer-events-auto flex gap-1 rounded-full border border-border bg-card/80 p-1 backdrop-blur-sm">
+      <div className="pointer-events-auto flex gap-1 rounded-full border border-light-grey bg-white-card/80 p-1 backdrop-blur-sm">
         {(["en", "es", "fr", "ua"] as const).map((lang) => (
           <button
             key={lang}
@@ -27,8 +27,8 @@ export function Nav() {
             onClick={() => setLanguage(lang)}
             className={`px-2 py-1 text-xs font-medium rounded-full transition-colors ${
               language === lang
-                ? "bg-primary text-primary-foreground"
-                : "text-muted-foreground hover:text-foreground"
+                ? "bg-navy text-white"
+                : "text-grey hover:text-navy"
             }`}
           >
             {lang.toUpperCase()}

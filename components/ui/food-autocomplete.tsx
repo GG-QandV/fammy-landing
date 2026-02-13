@@ -100,26 +100,26 @@ export default function FoodAutocomplete({ onSelect, placeholder = 'Search for a
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder={placeholder}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="h-14 w-full px-4 py-3 border border-light-grey rounded-lg bg-white focus:border-navy/40 focus:outline-none"
                 data-testid="food-autocomplete-input"
             />
 
             {isLoading && (
                 <div className="absolute right-3 top-3">
-                    <div className="animate-spin h-5 w-5 border-2 border-primary-500 border-t-transparent rounded-full" />
+                    <div className="animate-spin h-5 w-5 border-2 border-navy border-t-transparent rounded-full" />
                 </div>
             )}
 
             {isOpen && results.length > 0 && (
                 <div
                     ref={dropdownRef}
-                    className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-80 overflow-y-auto"
+                    className="absolute z-10 w-full mt-1 bg-white border border-light-grey rounded-lg shadow-soft max-h-80 overflow-y-auto"
                 >
                     {results.map((food, index) => (
                         <button
                             key={food.id}
                             onClick={() => handleSelect(food)}
-                            className={`w-full px-4 py-2 text-left hover:bg-gray-100 ${index === selectedIndex ? 'bg-gray-100' : ''
+                            className={`w-full px-4 py-2 text-left hover:bg-sky ${index === selectedIndex ? 'bg-sky' : ''
                                 }`}
                             data-testid={`food-option-${index}`}
                         >
@@ -130,7 +130,7 @@ export default function FoodAutocomplete({ onSelect, placeholder = 'Search for a
             )}
 
             {isOpen && results.length === 0 && !isLoading && query.length >= 2 && (
-                <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg p-4 text-gray-500 text-center">
+                <div className="absolute z-10 w-full mt-1 bg-white border border-light-grey rounded-lg shadow-soft p-4 text-grey text-center">
                     No foods found
                 </div>
             )}

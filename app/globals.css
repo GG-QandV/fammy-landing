@@ -10,55 +10,55 @@
 
 @layer base {
   :root {
-    /* 60% — Alabaster / Light Sage (air, backgrounds) */
-    --background: 50 25% 97%;
-    --foreground: 210 18% 15%;
+    /* Sky — page background (60%) */
+    --background: 207 33% 91%;
+    --foreground: 220 22% 30%;
 
-    /* Cards — pure white */
-    --card: 0 0% 100%;
-    --card-foreground: 210 18% 15%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 210 18% 15%;
+    /* White Card — cards, inputs */
+    --card: 210 20% 98%;
+    --card-foreground: 220 22% 30%;
+    --popover: 210 20% 98%;
+    --popover-foreground: 220 22% 30%;
 
-    /* 30% — Deep Teal (structure, headings, borders) */
-    --primary: 192 72% 21%;
-    --primary-foreground: 50 25% 97%;
+    /* Navy — primary buttons, headings (15%) */
+    --primary: 221 22% 38%;
+    --primary-foreground: 210 20% 98%;
 
-    /* Light Sage for secondary surfaces */
-    --secondary: 108 18% 90%;
-    --secondary-foreground: 192 50% 18%;
+    /* Cream — secondary surfaces, icon bg (2%) */
+    --secondary: 42 60% 83%;
+    --secondary-foreground: 221 22% 38%;
 
-    /* Muted - very light sage */
-    --muted: 108 12% 94%;
-    --muted-foreground: 210 8% 46%;
+    /* Muted */
+    --muted: 210 15% 93%;
+    --muted-foreground: 218 15% 53%;
 
-    /* 10% — Living Coral (CTA, badges, timer) */
-    --accent: 22 85% 49%;
+    /* Coral — micro accents only (<1%) */
+    --accent: 10 60% 69%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Borders from Deep Teal at low opacity */
-    --border: 192 20% 88%;
-    --input: 192 14% 91%;
-    --ring: 192 72% 21%;
+    /* Borders */
+    --border: 210 15% 89%;
+    --input: 210 15% 89%;
+    --ring: 221 22% 38%;
 
-    --chart-1: 192 72% 21%;
-    --chart-2: 108 18% 70%;
-    --chart-3: 22 85% 49%;
-    --chart-4: 210 18% 60%;
-    --chart-5: 192 40% 40%;
+    --chart-1: 221 22% 38%;
+    --chart-2: 42 60% 83%;
+    --chart-3: 10 60% 69%;
+    --chart-4: 218 12% 60%;
+    --chart-5: 220 25% 25%;
 
     --radius: 0.75rem;
 
-    /* Custom tokens for the design */
-    --sage: 108 18% 90%;
-    --sage-deep: 108 26% 34%;
-    --teal: 192 72% 21%;
-    --coral: 22 85% 49%;
-    --alabaster: 50 25% 97%;
-    --charcoal: 210 18% 15%;
+    /* Custom design tokens */
+    --navy: 221 22% 38%;
+    --dark-navy: 220 25% 25%;
+    --cream: 42 60% 83%;
+    --coral: 10 60% 69%;
+    --grey: 218 12% 60%;
+    --light-grey: 210 15% 89%;
   }
 }
 
@@ -68,51 +68,5 @@
   }
   body {
     @apply bg-background text-foreground;
-  }
-}
-
-/* Custom utility classes for the 60/30/10 palette */
-@layer utilities {
-  .bg-sage {
-    background-color: hsl(108 18% 90%);
-  }
-  .bg-sage-deep {
-    background-color: hsl(108 26% 34%);
-  }
-  .bg-teal {
-    background-color: hsl(192 72% 21%);
-  }
-  .bg-coral {
-    background-color: hsl(22 85% 49%);
-  }
-  .bg-alabaster {
-    background-color: hsl(50 25% 97%);
-  }
-  .text-teal {
-    color: hsl(192 72% 21%);
-  }
-  .text-coral {
-    color: hsl(22 85% 49%);
-  }
-  .text-charcoal {
-    color: hsl(210 18% 15%);
-  }
-  .text-sage-deep {
-    color: hsl(108 26% 34%);
-  }
-  .border-teal {
-    border-color: hsl(192 72% 21%);
-  }
-  .border-coral {
-    border-color: hsl(22 85% 49%);
-  }
-  .border-sage {
-    border-color: hsl(108 18% 90%);
-  }
-  .ring-coral {
-    --tw-ring-color: hsl(22 85% 49%);
-  }
-  .shadow-deep {
-    box-shadow: 0 20px 60px rgba(15, 76, 92, 0.08);
   }
 }

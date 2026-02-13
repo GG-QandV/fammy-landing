@@ -6,7 +6,6 @@ import { getOrCreateAnonId } from "../../lib/anonId"
 import { useRouter } from "next/navigation"
 import { Input } from "../ui/input"
 import FoodAutocomplete from "../ui/food-autocomplete"
-import { Button } from "../ui/button"
 import { Loader2, Search, XCircle, ShieldCheck, Plus } from "lucide-react"
 
 interface FoodResult {
@@ -146,24 +145,25 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
   }
 
   return (
-    <section id="hero" className="relative w-full overflow-visible py-16 text-center lg:py-24">
+    <section id="hero" className="relative w-full overflow-visible pt-20 py-16 text-center lg:py-24">
       <div className="relative z-10 mx-auto max-w-2xl px-4">
         {/* Feature Tabs */}
-        <div className="mb-8 inline-flex space-x-2 rounded-full bg-card p-1 shadow-sm">
-          <Button
-            variant={activeFeature === "f2" ? "default" : "outline"}
+        <div className="mb-8 inline-flex space-x-2 rounded-full bg-white-card p-1 shadow-soft">
+          <button
             onClick={() => onFeatureChange("f2")}
-            size="xl" className={` ${activeFeature === "f2" ? "bg-teal hover:bg-teal/90" : ""}`}
+            className={`h-9 sm:h-10 px-4 sm:px-6 rounded-full text-sm sm:text-base font-medium transition-colors ${activeFeature === "f2" ? "bg-navy text-white" : "bg-slate-100 text-grey hover:bg-slate-200"}`}
           >
-            👍👎 {t("f2_title")}
-          </Button>
-          <Button
-            variant={activeFeature === "f1" ? "default" : "outline"}
+            <svg className="inline-block w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 256 256"><path d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"></path></svg>
+            <svg className="inline-block w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 256 256"><path d="M239.82,157l-12-96A24,24,0,0,0,204,40H32A16,16,0,0,0,16,56v88a16,16,0,0,0,16,16H75.06l37.78,75.58A8,8,0,0,0,120,240a40,40,0,0,0,40-40V184h56a24,24,0,0,0,23.82-27ZM72,144H32V56H72Zm150,21.29a7.88,7.88,0,0,1-6,2.71H152a8,8,0,0,0-8,8v24a24,24,0,0,1-19.29,23.54L88,150.11V56H204a8,8,0,0,1,7.94,7l12,96A7.87,7.87,0,0,1,222,165.29Z"></path></svg>
+            {t("f2_title")}
+          </button>
+          <button
             onClick={() => onFeatureChange("f1")}
-            size="xl" className={` ${activeFeature === "f1" ? "bg-purple-600 hover:bg-purple-700" : ""}`}
+            className={`h-9 sm:h-10 px-4 sm:px-6 rounded-full text-sm sm:text-base font-medium transition-colors ${activeFeature === "f1" ? "bg-navy text-white" : "bg-slate-100 text-grey hover:bg-slate-200"}`}
           >
-            <span className="text-3xl">🔬</span><span className="text-xl">🧪</span> {t("f1_title")}
-          </Button>
+            <svg className="inline-block w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 256 256"><path d="M237.66,86.34l-60-60a8,8,0,0,0-11.32,0L37.11,155.57a44.77,44.77,0,0,0,63.32,63.32L212.32,107l22.21-7.4a8,8,0,0,0,3.13-13.25ZM89.11,207.57a28.77,28.77,0,0,1-40.68-40.68l28.8-28.8c8.47-2.9,21.75-4,39.07,5,10.6,5.54,20.18,8,28.56,8.73ZM205.47,92.41a8,8,0,0,0-3.13,1.93l-39.57,39.57c-8.47,2.9-21.75,4-39.07-5-10.6-5.54-20.18-8-28.56-8.73L172,43.31,217.19,88.5Z"></path></svg>
+            {t("f1_title")}
+          </button>
         </div>
 
         {/* Hero Content */}
@@ -176,20 +176,20 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
 
         {activeFeature === "f2" && (
         <div className="mt-8 flex justify-center gap-3">
-          <Button
-            variant={species === "dog" ? "default" : "outline"}
+          <button
             onClick={() => setSpecies("dog")}
-            className={`flex-1 h-16 rounded-xl text-2xl ${species === "dog" ? "bg-teal hover:bg-teal/90" : ""}`}
+            className={`flex-1 h-10 rounded-xl text-base font-medium transition-colors ${species === "dog" ? "bg-navy text-white" : "bg-white text-grey border border-light-grey hover:bg-slate-50"}`}
           >
-            🐶 <span className="text-2xl">{t("species_dog")}</span>
-          </Button>
-          <Button
-            variant={species === "cat" ? "default" : "outline"}
+            <svg className="inline-block w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 256 256"><path d="M239.71,125l-16.42-88a16,16,0,0,0-19.61-12.58l-.31.09L150.85,40h-45.7L52.63,24.56l-.31-.09A16,16,0,0,0,32.71,37.05L16.29,125a15.77,15.77,0,0,0,9.12,17.52A16.26,16.26,0,0,0,32.12,144,15.48,15.48,0,0,0,40,141.84V184a40,40,0,0,0,40,40h96a40,40,0,0,0,40-40V141.85a15.5,15.5,0,0,0,7.87,2.16,16.31,16.31,0,0,0,6.72-1.47A15.77,15.77,0,0,0,239.71,125ZM32,128h0L48.43,40,90.5,52.37Zm144,80H136V195.31l13.66-13.65a8,8,0,0,0-11.32-11.32L128,180.69l-10.34-10.35a8,8,0,0,0-11.32,11.32L120,195.31V208H80a24,24,0,0,1-24-24V123.11L107.92,56h40.15L200,123.11V184A24,24,0,0,1,176,208Zm48-80L165.5,52.37,207.57,40,224,128ZM104,140a12,12,0,1,1-12-12A12,12,0,0,1,104,140Zm72,0a12,12,0,1,1-12-12A12,12,0,0,1,176,140Z"></path></svg>
+            {t("species_dog")}
+          </button>
+          <button
             onClick={() => setSpecies("cat")}
-            className={`flex-1 h-16 rounded-xl text-2xl ${species === "cat" ? "bg-teal hover:bg-teal/90" : ""}`}
+            className={`flex-1 h-10 rounded-xl text-base font-medium transition-colors ${species === "cat" ? "bg-navy text-white" : "bg-white text-grey border border-light-grey hover:bg-slate-50"}`}
           >
-            🐱 <span className="text-2xl">{t("species_cat")}</span>
-          </Button>
+            <svg className="inline-block w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 256 256"><path d="M96,140a12,12,0,1,1-12-12A12,12,0,0,1,96,140Zm76-12a12,12,0,1,0,12,12A12,12,0,0,0,172,128Zm60-80v88c0,52.93-46.65,96-104,96S24,188.93,24,136V48A16,16,0,0,1,51.31,36.69c.14.14.26.27.38.41L69,57a111.22,111.22,0,0,1,118.1,0L204.31,37.1c.12-.14.24-.27.38-.41A16,16,0,0,1,232,48Zm-16,0-21.56,24.8A8,8,0,0,1,183.63,74,88.86,88.86,0,0,0,168,64.75V88a8,8,0,1,1-16,0V59.05a97.43,97.43,0,0,0-16-2.72V88a8,8,0,1,1-16,0V56.33a97.43,97.43,0,0,0-16,2.72V88a8,8,0,1,1-16,0V64.75A88.86,88.86,0,0,0,72.37,74a8,8,0,0,1-10.81-1.17L40,48v88c0,41.66,35.21,76,80,79.67V195.31l-13.66-13.66a8,8,0,0,1,11.32-11.31L128,180.68l10.34-10.34a8,8,0,0,1,11.32,11.31L136,195.31v20.36c44.79-3.69,80-38,80-79.67Z"></path></svg>
+            {t("species_cat")}
+          </button>
         </div>
         )}
 
@@ -201,13 +201,13 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
                 placeholder={t("search_placeholder")}
                 
               />
-              <Button
+              <button
                 onClick={handleF2Check}
                 disabled={loading || !query}
-                className="h-14 px-8 rounded-xl bg-coral hover:bg-coral/90 text-white"
+                className="h-14 px-8 rounded-xl bg-navy text-white hover:opacity-90 disabled:opacity-50 transition-opacity font-medium"
               >
                 {loading ? <Loader2 className="animate-spin" /> : t("check_button").split(" ")[0]}
-              </Button>
+              </button>
             </div>
 
             {/* F2 Results */}
@@ -224,7 +224,7 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
           </div>
         ) : (
           <div className="space-y-4">
-            <div className="flex flex-col gap-6 rounded-xl border border-border bg-background p-4 overflow-visible">
+            <div className="flex flex-col gap-6 rounded-xl border border-light-grey bg-white p-4 overflow-visible">
             <p className="text-sm text-muted-foreground mb-2">{t("f1_hint")}</p>
               {ingredients.map((ingredient, index) => (
                 <div key={index} className="flex items-center gap-2">
@@ -241,14 +241,12 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
                   <p className="flex-1 text-sm text-foreground">
                     {ingredient.foodName}
                   </p>
-                  <Button
-                    variant="ghost"
-                    size="icon"
+                  <button
                     onClick={() => removeIngredient(index)}
-                    className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                    className="h-8 w-8 flex items-center justify-center text-grey hover:text-navy transition-colors"
                   >
                     <XCircle className="h-4 w-4" />
-                  </Button>
+                  </button>
                 </div>
               ))}
               <div className="flex gap-2">
@@ -261,13 +259,13 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
               </div>
             </div>
 
-            <Button
+            <button
               onClick={handleF1Submit}
               disabled={loading || ingredients.length === 0}
-              className="h-14 w-full rounded-xl bg-purple-600 hover:bg-purple-700 text-white"
+              className="h-14 w-full rounded-xl bg-navy text-white hover:opacity-90 disabled:opacity-50 transition-opacity font-medium"
             >
               {loading ? <Loader2 className="animate-spin" /> : t("analyze_button")}
-            </Button>
+            </button>
 
             {/* F1 Results */}
             {f1Result && (

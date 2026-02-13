@@ -7,17 +7,17 @@ interface FeatureCardProps {
   description: string
   feature: "f1" | "f2"
   icon: React.ReactNode
-  accent: "teal" | "coral"
+  accent: "navy"
   onActivate: (feature: "f1" | "f2") => void
 }
 
 function FeatureCard({ title, description, feature, icon, accent, onActivate }: FeatureCardProps) {
   const { t } = useLanguage()
-  const borderColor = accent === "teal" ? "border-teal/20" : "border-coral/20"
-  const hoverBorder = accent === "teal" ? "hover:border-teal/40" : "hover:border-coral/40"
-  const iconBg = accent === "teal" ? "bg-teal/8" : "bg-coral/8"
-  const iconColor = accent === "teal" ? "text-teal" : "text-coral"
-  const btnBg = accent === "teal" ? "bg-teal" : "bg-coral"
+  const borderColor = "border-light-grey"
+  const hoverBorder = "hover:border-navy/30"
+  const iconBg = "bg-cream"
+  const iconColor = "text-navy"
+  const btnBg = "bg-navy"
 
   const handleClick = () => {
     onActivate(feature)
@@ -27,7 +27,7 @@ function FeatureCard({ title, description, feature, icon, accent, onActivate }: 
   return (
     <button
       onClick={handleClick}
-      className={`group flex w-full flex-col rounded-2xl border-2 ${borderColor} ${hoverBorder} bg-card p-8 shadow-deep transition-all duration-300 hover:scale-[1.02] lg:w-[45%] lg:p-10 text-left`}
+      className={`group flex w-full flex-col rounded-2xl border-2 ${borderColor} ${hoverBorder} bg-white p-6 shadow-soft transition-all duration-300 hover:scale-[1.02] lg:w-[45%] lg:p-10 text-left`}
     >
       <div className={`mb-6 flex h-14 w-14 items-center justify-center rounded-xl ${iconBg} ${iconColor}`}>
         {icon}
@@ -62,12 +62,12 @@ export function FeatureCards({ onFeatureSelect }: FeatureCardsProps) {
   }
 
   return (
-    <section className="bg-alabaster px-6 py-20 lg:px-12 lg:py-32">
+    <section className="bg-sky px-6 py-12 lg:px-12 lg:py-20">
       <div className="mx-auto max-w-6xl">
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
           {t("feature_mission")}
         </p>
-        <h2 className="font-display text-3xl font-semibold text-teal lg:text-5xl">
+        <h2 className="font-display text-3xl font-semibold text-navy lg:text-5xl">
           {t("feature_what_we_check")}
         </h2>
 
@@ -76,7 +76,7 @@ export function FeatureCards({ onFeatureSelect }: FeatureCardsProps) {
             title={t("f1_title")}
             description={t("f1_desc")}
             feature="f1"
-            accent="teal"
+            accent="navy"
             onActivate={handleActivate}
             icon={
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -91,7 +91,7 @@ export function FeatureCards({ onFeatureSelect }: FeatureCardsProps) {
             title={t("f2_title")}
             description={t("f2_desc")}
             feature="f2"
-            accent="coral"
+            accent="navy"
             onActivate={handleActivate}
             icon={
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">

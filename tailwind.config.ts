@@ -65,11 +65,24 @@ const config: Config = {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))',
         },
+        // v2 palette
+        sky: '#D6E6F0',
+        cream: '#F5E6B8',
+        coral: '#E8887A',
+        navy: '#4A5A7A',
+        'dark-navy': '#2C3650',
+        grey: '#8A95A8',
+        'light-grey': '#E8ECF0',
+        'white-card': '#FAFBFC',
       },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+      },
+      boxShadow: {
+        'soft': '0 2px 12px rgba(44, 54, 80, 0.06)',
+        'deep': '0 8px 30px rgba(44, 54, 80, 0.08)',
       },
       keyframes: {
         'accordion-down': {

@@ -57,10 +57,10 @@ export default function WaitlistCTA() {
 
     return (
         <div className="max-w-2xl mx-auto text-center py-12">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+            <h2 className="text-3xl font-bold text-navy mb-4">
                 {t('waitlist_cta_title')}
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+            <p className="text-lg text-grey mb-8">
                 {t('waitlist_cta_subtitle')}
             </p>
 
@@ -70,23 +70,20 @@ export default function WaitlistCTA() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="your@email.com"
-                    className="flex-1 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 
-                             bg-white dark:bg-gray-800 text-gray-900 dark:text-white
-                             focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="flex-1 px-6 py-3 rounded-lg border border-light-grey bg-white text-navy focus:border-navy/40 focus:outline-none"
                     disabled={loading}
                 />
                 <button
                     type="submit"
                     disabled={loading}
-                    className="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold 
-                             rounded-lg transition-colors disabled:opacity-50"
+                    className="px-8 py-3 bg-navy hover:opacity-90 text-white font-semibold rounded-lg transition-opacity disabled:opacity-50"
                 >
                     {loading ? t('loading') : t('waitlist_cta_button')}
                 </button>
             </form>
 
             {error && (
-                <p className="mt-3 text-sm text-red-600 dark:text-red-400">{error}</p>
+                <p className="mt-3 text-sm text-red-600">{error}</p>
             )}
         </div>
     );
