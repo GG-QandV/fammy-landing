@@ -1,0 +1,26 @@
+| Що змінилося | Було                    | Стало                            |
+| ------------ | ----------------------- | -------------------------------- |
+| F1 назва UA  | Аналіз раціону          | Аналіз нутрієнтів                |
+| F1 назва EN  | Diet analysis           | Nutrient analysis                |
+| F1 назва ES  | Análisis de dieta       | Análisis de nutrientes           |
+| F1 назва FR  | Analyse du régime       | Analyse nutritionnelle           |
+| F2 назва UA  | Перевірка їжі           | Перевірка безпеки їжі            |
+| F2 назва EN  | Food check              | Food safety check                |
+| F2 назва ES  | Chequeo de comida       | Control de seguridad alimentaria |
+| F2 назва FR  | Vérification nourriture | Contrôle de sécurité alimentaire |
+| F3 назва UA  | —                       | Калькулятор порцій               |
+| F3 назва EN  | —                       | Portion calculator               |
+| F3 назва ES  | —                       | Calculadora de porciones         |
+| F3 назва FR  | —                       | Calculateur de portions          |
+| F4 назва UA  | —                       | Генератор рецептів               |
+| F4 назва EN  | —                       | Recipe generator                 |
+| F4 назва ES  | —                       | Generador de recetas             |
+| F4 назва FR  | —                       | Générateur de recettes           |
+| F5 назва UA  | —                       | Трекер кондиції                  |
+| F5 назва EN  | —                       | Body condition tracker           |
+| F5 назва ES  | —                       | Seguimiento de condición         |
+| F5 назва FR  | —                       | Suivi de condition               |
+| F6 назва UA  | —                       | Поради з нутрієнтів              |
+| F6 назва EN  | —                       | Nutrient advice                  |
+| F6 назва ES  | —                       | Consejos nutricionales           |
+| F6 назва FR  | —                       | Conseils nutritionnels           |

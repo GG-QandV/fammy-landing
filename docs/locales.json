@@ -1,0 +1,63 @@
+{
+  "features": {
+    "nutrientAnalysis": {
+      "title": "Аналіз Нутрієнтів",
+      "description": "Детальний аналіз вітамінів, мінералів та калорій на основі офіційної бази даних USDA Foundation Foods. 3 800+ продуктів, 187 000+ зв'язків нутрієнт-продукт.",
+      "button": "Аналіз нутрієнтів"
+    },
+    "foodSafety": {
+      "title": "Безпека Їжі",
+      "description": "Миттєво перевірте, чи їжа токсична для собак або котів. База з 454 токсинів на основі досліджень AAFCO, FEDIAF та ветеринарної токсикології.",
+      "button": "Перевірити токсини"
+    }
+  }
+}
+
+
+{
+  "features": {
+    "nutrientAnalysis": {
+      "title": "Nutrient Analysis",
+      "description": "Detailed analysis of vitamins, minerals, and calories based on official USDA Foundation Foods database. 3,800+ products, 187,000+ nutrient-food relationships.",
+      "button": "Nutrient analysis"
+    },
+    "foodSafety": {
+      "title": "Food Safety",
+      "description": "Instantly check if food is toxic for dogs or cats. Database of 454 toxins based on AAFCO, FEDIAF and veterinary toxicology research.",
+      "button": "Check toxins"
+    }
+  }
+}
+
+
+{
+  "features": {
+    "nutrientAnalysis": {
+      "title": "Análisis de Nutrientes",
+      "description": "Análisis detallado de vitaminas, minerales y calorías basado en la base oficial USDA Foundation Foods. 3 800+ productos, 187 000+ relaciones nutriente-alimento.",
+      "button": "Análisis de nutrientes"
+    },
+    "foodSafety": {
+      "title": "Seguridad Alimentaria",
+      "description": "Comprueba al instante si un alimento es tóxico para perros o gatos. Base de 454 toxinas según AAFCO, FEDIAF y toxicología veterinaria.",
+      "button": "Verificar toxinas"
+    }
+  }
+}
+
+
+{
+  "features": {
+    "nutrientAnalysis": {
+      "title": "Analyse Nutritionnelle",
+      "description": "Analyse détaillée des vitamines, minéraux et calories basée sur la base officielle USDA Foundation Foods. 3 800+ produits, 187 000+ relations nutriment-aliment.",
+      "button": "Analyse nutritionnelle"
+    },
+    "foodSafety": {
+      "title": "Sécurité Alimentaire",
+      "description": "Vérifiez instantanément si un aliment est toxique pour les chiens ou chats. Base de 454 toxines selon AAFCO, FEDIAF et toxicologie vétérinaire.",
+      "button": "Vérifier les toxines"
+    }
+  }
+}
+
