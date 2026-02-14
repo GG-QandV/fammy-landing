@@ -19,7 +19,7 @@ const SECRET = new TextEncoder().encode(JWT_SECRET);
  */
 export async function POST(request: NextRequest) {
     try {
-        const { code } = await request.json();
+        const { code, email } = await request.json();
 
         if (!code || typeof code !== 'string' || code.trim().length < 3) {
             return NextResponse.json({ success: false, error: 'invalid' }, { status: 400 });
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
         // 1. Look up promo code
         const { data: promo, error: promoError } = await (supabaseAdmin
             .from('promo_codes' as any)
-            .select('id, code, tier, duration_months, expires_at, max_uses, used_count, is_active')
+            .select('id, code, tier, promo_type, daily_limit, bound_email, duration_months, expires_at, max_uses, used_count, is_active')
             .eq('code', code.toUpperCase().trim())
             .single() as any);
 
@@ -63,6 +63,13 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ success: false, error: 'expired' });
         }
 
+        // 4b. Check personal promo requires matching email
+        if (promo.promo_type === 'personal') {
+            if (!email || email.toLowerCase().trim() !== (promo.bound_email || '').toLowerCase().trim()) {
+                return NextResponse.json({ success: false, error: 'invalid' });
+            }
+        }
+
         // 5. Check if already redeemed by this anon_id
         const { data: existing } = await (supabaseAdmin
             .from('landing_promo_redemptions' as any)
@@ -76,7 +83,7 @@ export async function POST(request: NextRequest) {
             if (new Date(existing.expires_at) > new Date()) {
                 console.log('[PROMO] Already active for anon:', anonId);
                 // Return token again (re-issue)
-                const limit = tierToLimit(promo.tier);
+                const limit = promo.daily_limit || tierToLimit(promo.tier);
                 const token = await generatePromoToken(anonId, promo.id, promo.tier, limit, existing.expires_at);
                 return NextResponse.json({ success: true, token, tier: promo.tier, limit });
             }
@@ -95,7 +102,7 @@ export async function POST(request: NextRequest) {
             expiresAt.setHours(expiresAt.getHours() + 24); // default 24h
         }
 
-        const limit = tierToLimit(promo.tier);
+        const limit = promo.daily_limit || tierToLimit(promo.tier);
 
         // 7. Create redemption record
         const { error: insertError } = await (supabaseAdmin
