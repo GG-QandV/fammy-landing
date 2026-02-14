@@ -67,7 +67,6 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
 
       const data = await res.json()
 
-      console.log("[F2 UI] Response data:", JSON.stringify(data, null, 2))
       if (data.result) {
         setResult(data.result)
       } else if (data.code === "LIMIT_REACHED") {
@@ -116,7 +115,6 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
 
       const data = await res.json()
 
-      console.log("[F1 UI] Response data:", JSON.stringify(data, null, 2))
       if (data.success) {
         setF1Result(data.data)
       } else if (data.code === "LIMIT_REACHED") {

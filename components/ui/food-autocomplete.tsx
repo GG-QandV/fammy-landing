@@ -34,7 +34,7 @@ export default function FoodAutocomplete({ onSelect, placeholder = 'Search for a
         setIsLoading(true);
         const timer = setTimeout(async () => {
             try {
-                const response = await fetch(`/api/f2/foods?q=${encodeURIComponent(query)}&lang=${language}&lang=${language}`);
+                const response = await fetch(`/api/f2/foods?q=${encodeURIComponent(query)}&lang=${language}`);
                 const data = await response.json();
                 setResults(data.foods || []);
                 setIsOpen(true);
