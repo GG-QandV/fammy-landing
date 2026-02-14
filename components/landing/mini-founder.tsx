@@ -4,6 +4,98 @@ import React from "react"
 import { useState, useEffect } from "react"
 import { useLanguage } from "../../context/LanguageContext"
 
+interface EmailModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSkip: () => void;
+  onSubmit: (email: string, giftEmail?: string) => void;
+  t: (key: string) => string;
+}
+
+function EmailModal({ isOpen, onClose, onSkip, onSubmit, t }: EmailModalProps) {
+  const [email, setEmail] = useState('');
+  const [isGift, setIsGift] = useState(false);
+  const [giftEmail, setGiftEmail] = useState('');
+  const [error, setError] = useState('');
+
+  if (!isOpen) return null;
+
+  const handleSubmit = () => {
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError(t('invalid_email'));
+      return;
+    }
+    if (isGift && (!giftEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(giftEmail))) {
+      setError(t('invalid_email'));
+      return;
+    }
+    onSubmit(email, isGift ? giftEmail : undefined);
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl p-6 max-w-md w-full relative">
+        <h3 className="text-xl font-bold text-navy mb-4">
+          {t('lifetime_modal_title')}
+        </h3>
+        <p className="text-grey mb-6">
+          {t('lifetime_modal_desc')}
+        </p>
+
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => { setEmail(e.target.value); setError(''); }}
+          placeholder={t('email_placeholder')}
+          className="w-full px-4 py-3 border border-light-grey rounded-lg mb-2 bg-white text-navy"
+        />
+        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+
+        <label className="flex items-center gap-2 mt-4 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={isGift}
+            onChange={(e) => setIsGift(e.target.checked)}
+            className="w-4 h-4 rounded border-light-grey"
+          />
+          <span className="text-navy">{t('lifetime_gift_checkbox')}</span>
+        </label>
+
+        {isGift && (
+          <div className="mt-3">
+            <label className="block text-sm text-grey mb-1">
+              {t('lifetime_gift_label')}
+            </label>
+            <input
+              type="email"
+              value={giftEmail}
+              onChange={(e) => { setGiftEmail(e.target.value); setError(''); }}
+              placeholder={t('lifetime_gift_placeholder')}
+              className="w-full px-4 py-3 border border-light-grey rounded-lg bg-white text-navy"
+            />
+          </div>
+        )}
+
+        <div className="mt-6">
+          <button
+            onClick={handleSubmit}
+            className="w-full px-4 py-4 bg-navy hover:opacity-90 text-white rounded-lg font-semibold text-lg"
+          >
+            {t('lifetime_button_get')}
+          </button>
+        </div>
+
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-grey hover:text-navy"
+        >
+          ✕
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function useCountdown(targetDate: Date) {
   const [mounted, setMounted] = useState(false)
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
@@ -48,6 +140,50 @@ export function MiniFounder() {
   const features = t('lifetime_features').split('|')
   const remaining = 87 // TODO: from DB
 
+  const [showEmailModal, setShowEmailModal] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  const handleSupport = () => {
+    setShowEmailModal(true);
+  };
+
+  const createCheckout = async (email?: string, giftEmail?: string) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/payments/founders-checkout`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          productCode: 'founder',
+          email: email || undefined,
+          giftEmail: giftEmail || undefined,
+          successUrl: `${window.location.origin}/support/success`,
+          cancelUrl: `${window.location.origin}/support/cancel`,
+        }),
+      });
+      const data = await res.json();
+      if (data.success && data.data?.url) {
+        window.location.href = data.data.url;
+      } else {
+        console.error('Checkout error:', data);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(null as any);
+    }
+  };
+
+  const handleSkipEmail = () => {
+    setShowEmailModal(false);
+    createCheckout();
+  };
+
+  const handleSubmitEmail = (email: string, giftEmail?: string) => {
+    setShowEmailModal(false);
+    createCheckout(email, giftEmail);
+  };
+
   return (
     <section className="bg-dark-navy px-6 py-16 lg:px-12 lg:py-20">
       <div className="mx-auto max-w-6xl">
@@ -60,7 +196,7 @@ export function MiniFounder() {
               {t("founders_program")}
             </p>
             <h2 className="font-display text-2xl font-bold text-white lg:text-3xl mb-1">
-              {t("founders_lifetime")} — {t("lifetime_price")}
+              {t("lifetime_modal_title")} — {t("lifetime_price")}
             </h2>
             <p className="max-w-lg text-sm leading-relaxed text-white/70">
               {t("founders_desc")}
@@ -102,9 +238,11 @@ export function MiniFounder() {
         {/* CTA */}
         <div className="flex flex-col items-center gap-3">
           <button
-            className="h-14 rounded-xl bg-cream px-10 text-base font-semibold text-dark-navy transition-all hover:scale-[1.02] active:scale-[0.98]"
+            onClick={handleSupport}
+            disabled={loading}
+            className="h-14 rounded-xl bg-cream px-10 text-base font-semibold text-dark-navy transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
           >
-            {t('lifetime_button')}
+            {loading ? t('loading') : t('lifetime_button')}
           </button>
           <p className="text-xs text-white/50">
             {t('lifetime_button_sub')}
@@ -113,6 +251,14 @@ export function MiniFounder() {
             {t('lifetime_guarantee')}
           </p>
         </div>
+
+        <EmailModal
+          isOpen={showEmailModal}
+          onClose={() => setShowEmailModal(false)}
+          onSkip={handleSkipEmail}
+          onSubmit={handleSubmitEmail}
+          t={t as any}
+        />
 
       </div>
     </section>
