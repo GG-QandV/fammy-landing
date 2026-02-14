@@ -41,20 +41,21 @@ export async function POST(request: NextRequest) {
         // Upsert waitlist lead
         const { error } = await supabaseAdmin
             .from('landing_waitlist_leads' as any)
-            .upsert({
+            .insert({
                 email: email.toLowerCase(),
                 provider,
                 auth_user_id: authUserId,
                 utm_source,
                 utm_campaign,
                 ref_code,
-                status: 'pending',
-            }, {
-                onConflict: 'email',
             });
 
         if (error) {
-            console.error('Waitlist upsert error:', error);
+            // Duplicate email — treat as success
+            if (error.code === '23505') {
+                return NextResponse.json({ success: true, duplicate: true });
+            }
+            console.error('Waitlist insert error:', error);
             return NextResponse.json(
                 { error: 'Failed to add to waitlist' },
                 { status: 500 }
