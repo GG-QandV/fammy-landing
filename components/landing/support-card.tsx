@@ -160,7 +160,7 @@ export default function SupportCard() {
     const tiers = [
         { id: 'basic_support' as TierId, name: t('support_coffee'), desc: t('support_coffee_desc'), price: 5, emoji: 'coffee' },
         { id: 'pro_support' as TierId, name: t('support_mini'), desc: t('support_mini_desc'), price: 25, emoji: 'rocket' },
-        { id: 'founder' as TierId, name: t('support_core'), desc: t('support_core_desc'), price: 100, emoji: 'trophy' },
+        { id: 'founder' as TierId, name: t('support_core'), desc: t('support_core_desc'), price: 99, emoji: 'trophy' },
     ];
 
     return (
@@ -195,15 +195,19 @@ export default function SupportCard() {
                         <p className="text-grey text-sm mb-4">
                             {tier.desc}
                         </p>
-                        <div className="text-3xl font-bold text-dark-navy mb-4">
+                        <div className="text-3xl font-bold text-dark-navy mb-1">
                             €{tier.price}
                         </div>
+                        {tier.id === 'founder' && (
+                            <p className="text-sm text-coral line-through mb-3">{t('support_core_compare')}</p>
+                        )}
+                        {tier.id !== 'founder' && <div className="mb-4" />}
                         <button
                             onClick={() => handleSupport(tier.id)}
                             disabled={loading === tier.id}
                             className="w-full px-6 py-3 bg-navy hover:opacity-90 text-white font-semibold rounded-lg transition-opacity disabled:opacity-50"
                         >
-                            {loading === tier.id ? t('loading') : t('support_button')}
+                            {loading === tier.id ? t('loading') : tier.id === 'founder' ? t('support_button_join') : t('support_button')}
                         </button>
                     </div>
                 ))}

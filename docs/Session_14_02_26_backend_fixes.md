@@ -1,5 +1,3 @@
-
-
 # Сесія 14.02.26 — Виправлення зв'язків бекенд↔лендінг, waitlist, promo
 
 ## Зроблено
@@ -99,8 +97,6 @@ text
 app.recipe_ingredients.food_id → reference.foods(id)
 Cross-schema FK працює в PostgreSQL
 Supabase JS insert через schema 'app' — працює, FK валідація на рівні БД
-
-
 
 ---
 

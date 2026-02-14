@@ -40,15 +40,20 @@ export default function WaitlistCTA() {
         }
     };
 
+    const benefits = t('waitlist_benefits').split('|');
+
     if (success) {
         return (
             <div className="max-w-2xl mx-auto text-center py-12">
-                <div className="bg-green-50 dark:bg-green-900/20 rounded-xl p-8">
-                    <h3 className="text-2xl font-bold text-green-800 dark:text-green-200 mb-2">
-                        {t('thank_you_waitlist')}
+                <div className="bg-green-50 rounded-xl p-8">
+                    <h3 className="text-2xl font-bold text-green-800 mb-2">
+                        {'\u2713 '}{t('thank_you_waitlist')}
                     </h3>
-                    <p className="text-green-600 dark:text-green-300">
+                    <p className="text-green-600 mb-4">
                         {t('waitlist_confirmation')}
+                    </p>
+                    <p className="text-sm text-green-500">
+                        {t('waitlist_success_share')}
                     </p>
                 </div>
             </div>
@@ -60,9 +65,17 @@ export default function WaitlistCTA() {
             <h2 className="text-3xl font-bold text-navy mb-4">
                 {t('waitlist_cta_title')}
             </h2>
-            <p className="text-lg text-grey mb-8">
+            <p className="text-lg text-grey mb-6">
                 {t('waitlist_cta_subtitle')}
             </p>
+
+            <div className="flex flex-col items-center gap-2 mb-8">
+                {benefits.map((b, i) => (
+                    <span key={i} className="text-sm text-navy/80">
+                        {'\u2713 '}{b}
+                    </span>
+                ))}
+            </div>
 
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
                 <input
@@ -85,6 +98,10 @@ export default function WaitlistCTA() {
             {error && (
                 <p className="mt-3 text-sm text-red-600">{error}</p>
             )}
+
+            <p className="mt-4 text-xs text-grey/60">
+                {t('waitlist_privacy')}
+            </p>
         </div>
     );
 }

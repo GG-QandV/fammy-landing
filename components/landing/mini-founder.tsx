@@ -1,7 +1,6 @@
 "use client"
 
 import React from "react"
-
 import { useState, useEffect } from "react"
 import { useLanguage } from "../../context/LanguageContext"
 
@@ -45,71 +44,76 @@ export function MiniFounder() {
   const { t } = useLanguage()
   const [targetDate] = useState(() => new Date("2026-03-22T00:00:00"))
   const { days, hours, minutes, seconds, mounted } = useCountdown(targetDate)
-  const [email, setEmail] = useState("")
-  const [submitted, setSubmitted] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (email.trim()) {
-      setSubmitted(true)
-    }
-  }
+  const features = t('lifetime_features').split('|')
+  const remaining = 87 // TODO: from DB
 
   return (
     <section className="bg-dark-navy px-6 py-16 lg:px-12 lg:py-20">
       <div className="mx-auto max-w-6xl">
-        {/* Desktop: single row  |  Mobile: stacked */}
-        <div className="flex flex-col items-center gap-10 lg:flex-row lg:items-center lg:gap-0">
-          {/* Text — 40% */}
-          <div className="flex-shrink-0 lg:w-[40%]">
+
+        {/* Top row: text + timer */}
+        <div className="flex flex-col items-start gap-10 lg:flex-row lg:items-center lg:gap-16 mb-12">
+          {/* Text */}
+          <div className="flex-1">
             <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-cream">
               {t("founders_program")}
             </p>
-            <h2 className="font-display text-2xl font-bold text-white lg:text-3xl">
-              {t("founders_lifetime")}
+            <h2 className="font-display text-2xl font-bold text-white lg:text-3xl mb-1">
+              {t("founders_lifetime")} — {t("lifetime_price")}
             </h2>
-            <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/70">
+            <p className="max-w-lg text-sm leading-relaxed text-white/70">
               {t("founders_desc")}
             </p>
           </div>
 
-          {/* Timer — 30% */}
-          <div className="flex items-center justify-center gap-4 lg:w-[30%]">
-            <TimerBlock value={days} label="days" />
-            <span className="text-2xl font-light text-white/30">:</span>
-            <TimerBlock value={hours} label="hrs" />
-            <span className="text-2xl font-light text-white/30">:</span>
-            <TimerBlock value={minutes} label="min" />
-            <span className="text-2xl font-light text-white/30">:</span>
-            <TimerBlock value={seconds} label="sec" />
-          </div>
-
-          {/* Email — 30% */}
-          <div className="w-full lg:w-[30%]">
-            {submitted ? (
-              <div className="flex h-14 items-center justify-center rounded-xl bg-cream/20 text-sm font-medium text-cream">
-                {t("thank_you_waitlist")}
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-2 sm:flex-row">
-                <input
-                  type="email"
-                  placeholder="your@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="h-14 flex-1 rounded-xl border border-white/20 bg-white/10 px-4 text-base text-white outline-none transition-colors placeholder:text-white/40 focus:border-cream/40"
-                />
-                <button
-                  type="submit"
-                  className="h-14 shrink-0 rounded-xl bg-cream px-6 text-sm font-semibold text-dark-navy transition-all hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  {t("waitlist_cta_button")}
-                </button>
-              </form>
-            )}
+          {/* Timer + slots */}
+          <div className="flex flex-col items-center gap-4">
+            <div className="flex items-center gap-4">
+              <TimerBlock value={days} label="days" />
+              <span className="text-2xl font-light text-white/30">:</span>
+              <TimerBlock value={hours} label="hrs" />
+              <span className="text-2xl font-light text-white/30">:</span>
+              <TimerBlock value={minutes} label="min" />
+              <span className="text-2xl font-light text-white/30">:</span>
+              <TimerBlock value={seconds} label="sec" />
+            </div>
+            <div className="flex gap-6 text-xs text-white/50">
+              <span>{t('lifetime_slots_label')} <strong className="text-cream">{remaining}/100</strong></span>
+            </div>
           </div>
         </div>
+
+        {/* Features */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 max-w-2xl">
+          {features.map((f, i) => (
+            <div key={i} className="flex items-start gap-2 text-sm text-white/80">
+              <span className="text-cream mt-0.5">{'\u2713'}</span>
+              <span>{f}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Comparison */}
+        <p className="text-xs text-white/40 mb-10 max-w-xl">
+          {t('lifetime_comparison')}
+        </p>
+
+        {/* CTA */}
+        <div className="flex flex-col items-center gap-3">
+          <button
+            className="h-14 rounded-xl bg-cream px-10 text-base font-semibold text-dark-navy transition-all hover:scale-[1.02] active:scale-[0.98]"
+          >
+            {t('lifetime_button')}
+          </button>
+          <p className="text-xs text-white/50">
+            {t('lifetime_button_sub')}
+          </p>
+          <p className="text-xs text-cream/60">
+            {t('lifetime_guarantee')}
+          </p>
+        </div>
+
       </div>
     </section>
   )
