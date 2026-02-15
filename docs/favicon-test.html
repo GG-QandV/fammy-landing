@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favicon Test - f.p</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap" rel="stylesheet">
+    <style>
+        .logo-font {
+            font-family: 'Inter', sans-serif;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+        }
+
+        .logo-proportions {
+            display: inline-block;
+            transform: scale(0.85, 0.935);
+            transform-origin: center;
+        }
+
+        .navy {
+            color: #2C3650;
+        }
+
+        .coral {
+            color: #E8887A;
+        }
+
+        .seawave {
+            color: hsl(187, 100%, 35%);
+        }
+
+        .bg-canvas {
+            background-color: #FAFAF8;
+        }
+    </style>
+</head>
+
+<body class="bg-canvas min-h-screen flex flex-col items-center justify-center p-20 space-y-20">
+
+    <div class="text-center space-y-4">
+        <h1 class="text-gray-400 uppercase tracking-widest text-sm font-bold">1. Large Preview (Reference)</h1>
+        <div class="logo-font text-[120px] leading-none select-none">
+            <span class="logo-proportions">
+                <span class="navy">f</span><span class="coral">.</span><span class="seawave">p</span>
+            </span>
+        </div>
+    </div>
+
+    <div class="text-center space-y-4">
+        <h1 class="text-gray-400 uppercase tracking-widest text-sm font-bold">2. Favicon Sizes</h1>
+        <div class="flex items-center space-x-12">
+            <div class="flex flex-col items-center">
+                <div
+                    class="logo-font text-[48px] leading-none bg-white p-2 rounded shadow-sm border border-gray-100 flex items-center justify-center w-24 h-24">
+                    <span class="logo-proportions">
+                        <span class="navy">f</span><span class="coral">.</span><span class="seawave">p</span>
+                    </span>
+                </div>
+                <span class="text-[10px] mt-2 font-bold text-gray-500">48x48 Base</span>
+            </div>
+
+            <div class="flex flex-col items-center">
+                <div
+                    class="logo-font text-[32px] leading-none bg-white p-1 rounded shadow-sm border border-gray-100 flex items-center justify-center w-16 h-16">
+                    <span class="logo-proportions">
+                        <span class="navy">f</span><span class="coral">.</span><span class="seawave">p</span>
+                    </span>
+                </div>
+                <span class="text-[10px] mt-2 font-bold text-gray-500">32x32 View</span>
+            </div>
+
+            <div class="flex flex-col items-center">
+                <div
+                    class="logo-font text-[16px] leading-none bg-white p-0.5 rounded shadow-sm border border-gray-100 flex items-center justify-center w-8 h-8">
+                    <span class="logo-proportions">
+                        <span class="navy">f</span><span class="coral">.</span><span class="seawave">p</span>
+                    </span>
+                </div>
+                <span class="text-[10px] mt-2 font-bold text-gray-500">Tab Icon View</span>
+            </div>
+        </div>
+        <div class="text-center space-y-4">
+            <h1 class="text-gray-400 uppercase tracking-widest text-sm font-bold">3. Vector Curves (Hand-Coded SVGs)
+            </h1>
+            <div class="flex items-center space-x-12">
+                <div class="flex flex-col items-center">
+                    <div
+                        class="bg-white p-4 rounded shadow-sm border border-gray-100 flex items-center justify-center w-32 h-32">
+                        <img src="../public/favicon-f-p-100.svg" alt="f.p 100x100 Vector" class="w-full h-full">
+                    </div>
+                    <span class="text-[10px] mt-2 font-bold text-gray-500">100x100 Vector</span>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <div
+                        class="bg-white p-2 rounded shadow-sm border border-gray-100 flex items-center justify-center w-24 h-24">
+                        <img src="../public/favicon-f-p-50.svg" alt="f.p 50x50 Vector" class="w-full h-full">
+                    </div>
+                    <span class="text-[10px] mt-2 font-bold text-gray-500">50x50 Vector</span>
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>
