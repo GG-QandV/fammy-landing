@@ -26,6 +26,9 @@ export const metadata: Metadata = {
   title: "PetCheck -- Safe Food for Pets",
   description:
     "Medical-grade food safety checker for your pets. Analyze composition and toxicity instantly.",
+  icons: {
+    icon: "/favicon-f-p.svg",
+  },
 }
 
 export const viewport: Viewport = {
