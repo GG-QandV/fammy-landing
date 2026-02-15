@@ -59,13 +59,19 @@
             color: #0284c7;
         }
 
-        /* Sizing: Original was text-2xl (24px). +30% is ~31.2px (approx 32px / 2rem) */
+        /* Sizing: Original was text-2xl (24px).
+           To increase ONLY height by 30%, we use scaleY(1.3) on an inline-block element.
+        */
         .logo-text-30-plus {
-            font-size: 2rem;
+            font-size: 1.5rem;
+            /* ~24px base */
             line-height: 1;
+            display: inline-block;
+            transform: scaleY(1.3);
+            transform-origin: center;
         }
 
-        /* Shadow Specs: 
+        /* Shadow Specs:
            Offset: 25% of height (~32px * 0.25 = 8px)
            Blur: 30% of height (~32px * 0.3 = 9.6px)
            Opacity: 50%
