@@ -65,14 +65,14 @@
         }
 
         /* Sizing: Original was text-2xl (24px).
-           To increase ONLY height by 15%, we use scaleY(1.15) on an inline-block element.
+           To increase ONLY height by 10%, we use scaleY(1.1) on an inline-block element.
         */
         .logo-text-30-plus {
             font-size: 1.5rem;
             /* ~24px base */
             line-height: 1;
             display: inline-block;
-            transform: scaleY(1.15);
+            transform: scaleY(1.1);
             transform-origin: center;
         }
 
@@ -125,7 +125,7 @@
                         <span class="logo-text-30-plus font-black text-dark-navy tracking-tight">
                             fammy<span class="text-coral-darker">.</span><span class="text-original-blue">pet</span>
                         </span>
-                        <p class="text-[10px] text-gray-400 uppercase tracking-widest">+15% H / Dark Navy / Saturated
+                        <p class="text-[10px] text-gray-400 uppercase tracking-widest">+10% H / Dark Navy / Saturated
                             Dot</p>
                     </div>
 
@@ -145,8 +145,8 @@
                         <span class="logo-text-30-plus font-black text-dark-navy tracking-tight logo-shadow">
                             fammy<span class="text-coral-darker">.</span><span class="text-original-blue">pet</span>
                         </span>
-                        <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Shadow: Navy (65% /
-                            Blur 50%)</p>
+                        <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Shadow: Navy (50% /
+                            Blur 30%)</p>
                     </div>
 
                     <div class="text-center space-y-2">
@@ -210,6 +210,39 @@
                     <div class="text-[11px] leading-tight text-gray-500">
                         <p class="font-bold text-gray-900">#4A5A7A</p>
                         <p>Shadow base, active states</p>
+                    </div>
+                </div>
+
+                <!-- Swatch: Sky -->
+                <div class="flex flex-col space-y-2">
+                    <div class="w-full h-24 rounded-2xl bg-sky shadow-soft flex items-end p-3 border border-gray-100">
+                        <span class="text-navy font-bold text-xs">Sky</span>
+                    </div>
+                    <div class="text-[11px] leading-tight text-gray-500">
+                        <p class="font-bold text-gray-900">#D6E6F0</p>
+                        <p>Pastel backgrounds, accents</p>
+                    </div>
+                </div>
+
+                <!-- Swatch: Cream -->
+                <div class="flex flex-col space-y-2">
+                    <div class="w-full h-24 rounded-2xl bg-cream shadow-soft flex items-end p-3">
+                        <span class="text-navy font-bold text-xs">Cream</span>
+                    </div>
+                    <div class="text-[11px] leading-tight text-gray-500">
+                        <p class="font-bold text-gray-900">#F5E6B8</p>
+                        <p>Highlight boxes, pills</p>
+                    </div>
+                </div>
+
+                <!-- Swatch: Grey -->
+                <div class="flex flex-col space-y-2">
+                    <div class="w-full h-24 rounded-2xl bg-grey shadow-soft flex items-end p-3">
+                        <span class="text-white font-bold text-xs">Grey</span>
+                    </div>
+                    <div class="text-[11px] leading-tight text-gray-500">
+                        <p class="font-bold text-gray-900">#8A95A8</p>
+                        <p>Subtext, icons</p>
                     </div>
                 </div>
             </div>
