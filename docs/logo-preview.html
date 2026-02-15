@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fammy.pet - Legacy Logo Variants</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        .font-inter { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 p-10 font-inter">
+    <div class="max-w-4xl mx-auto space-y-12">
+        <header class="border-b pb-6">
+            <h1 class="text-3xl font-bold text-gray-900">Fammy.pet Legacy Logo Preview</h1>
+            <p class="mt-2 text-gray-600">Found in early Git commits (e.g., commit 45c0aef). Features two-toned styling: "fammy" in gray-900 and ".pet" in primary-600.</p>
+        </header>
+
+        <!-- Variant 1: Original from 45c0aef -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold text-gray-700">1. Original Version (Commit 45c0aef)</h2>
+            <div class="p-8 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center">
+                <span class="text-2xl font-black text-[#111827]">fammy<span class="text-[#0284c7]">.pet</span></span>
+            </div>
+            <div class="bg-gray-100 p-4 rounded-lg">
+                <code class="text-sm">&lt;span class="text-2xl font-black text-[#111827]"&gt;fammy&lt;span class="text-[#0284c7]"&gt;.pet&lt;/span&gt;&lt;/span&gt;</code>
+                <p class="mt-2 text-xs text-gray-500">Classes: text-2xl font-black. Colors: Black (#111827) and Sky Blue (#0284c7).</p>
+            </div>
+        </section>
+
+        <!-- Variant 2: Larger Display -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold text-gray-700">2. Larger Version (For Hero)</h2>
+            <div class="p-8 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center">
+                <span class="text-4xl font-black text-[#111827] tracking-tight">fammy<span class="text-[#0284c7]">.pet</span></span>
+            </div>
+            <div class="bg-gray-100 p-4 rounded-lg">
+                <code class="text-sm">&lt;span class="text-4xl font-black text-[#111827] tracking-tight"&gt;fammy&lt;span class="text-[#0284c7]"&gt;.pet&lt;/span&gt;&lt;/span&gt;</code>
+            </div>
+        </section>
+
+        <!-- Variant 3: Alternative Blue (Deep Blue) -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold text-gray-700">3. Deeper Blue Variant</h2>
+            <div class="p-8 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center">
+                <span class="text-2xl font-black text-[#111827]">fammy<span class="text-[#0369a1]">.pet</span></span>
+            </div>
+            <div class="bg-gray-100 p-4 rounded-lg">
+                <p class="text-xs text-gray-500 text-center">Using color #0369a1 (primary-700 in old config)</p>
+            </div>
+        </section>
+
+        <footer class="pt-8 text-sm text-gray-400">
+            Note: All variants use font-weight: 900 (black) as found in the original source code.
+        </footer>
+    </div>
+</body>
+</html>
