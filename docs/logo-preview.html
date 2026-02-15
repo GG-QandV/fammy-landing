@@ -12,6 +12,7 @@
             font-family: 'Inter', sans-serif;
         }
 
+        /* Palette Colors */
         .text-coral {
             color: #E8887A;
         }
@@ -36,19 +37,40 @@
             background-color: #2C3650;
         }
 
-        .bg-grey {
-            background-color: #8A95A8;
-        }
-
-        .bg-light-grey {
-            background-color: #E8ECF0;
+        .text-dark-navy {
+            color: #2C3650;
         }
 
         .bg-white-card {
-            background-color: #FAFBFC;
+            background-color: #FAFAF8;
         }
 
-        /* Sea Wave Variants */
+        /* Specialized Colors */
+        .text-coral-darker {
+            color: hsl(7, 88%, 55%);
+        }
+
+        /* Darker + Saturated (+15%/-15%) */
+        .text-seawave-custom {
+            color: hsl(187, 100%, 35%);
+        }
+
+        .text-original-blue {
+            color: #0284c7;
+        }
+
+        /* Sizing: Original was text-2xl (24px). +30% is ~31.2px (approx 32px / 2rem) */
+        .logo-text-30-plus {
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        /* Shadow Specs: Size 1/3 of text (~10px), opacity 65%, blur 50% (~15px) */
+        .logo-shadow {
+            filter: drop-shadow(0 10.5px 15px rgba(74, 90, 122, 0.65));
+        }
+
+        /* Generic Sea Wave Helpers */
         .text-seawave-standard {
             color: hsl(187, 100%, 27%);
         }
@@ -68,43 +90,79 @@
 </head>
 
 <body class="bg-gray-50 p-10 font-inter">
-    <div class="max-w-4xl mx-auto space-y-16">
+    <div class="max-w-6xl mx-auto space-y-16">
         <header class="border-b pb-6">
             <h1 class="text-3xl font-bold text-gray-900">Fammy.pet Design System Preview</h1>
-            <p class="mt-2 text-gray-600">Legacy logo restoration and current production color palette.</p>
+            <p class="mt-2 text-gray-600">Legacy logo restoration, current production color palette, and high-fidelity
+                shadow variants.</p>
         </header>
 
-        <!-- 1. Logo Variants Section -->
+        <!-- 0. High-Fidelity Shadow Variants -->
         <section class="space-y-8">
-            <h2 class="text-2xl font-bold text-gray-800">1. Legacy Logo Recap</h2>
+            <h2 class="text-2xl font-bold text-gray-800">0. High-Fidelity & Shadow Variants (Large Scale)</h2>
+            <div
+                class="w-full h-96 bg-white-card rounded-[40px] shadow-deep border border-gray-100 flex flex-col justify-around p-12">
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Original Pattern -->
-                <div class="space-y-3">
-                    <p class="text-sm font-medium text-gray-500">Original Logic (Black + Blue + Coral Dot)</p>
-                    <div
-                        class="p-8 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center">
-                        <span class="text-3xl font-black text-[#111827]">fammy<span class="text-coral">.</span><span
-                                class="text-[#0284c7]">pet</span></span>
+                <!-- Group A: Flat Logos -->
+                <div class="flex items-center justify-around w-full">
+                    <div class="text-center space-y-2">
+                        <span class="logo-text-30-plus font-black text-dark-navy tracking-tight">
+                            fammy<span class="text-coral-darker">.</span><span class="text-original-blue">pet</span>
+                        </span>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-widest">+30% H / Dark Navy / Saturated
+                            Dot</p>
+                    </div>
+
+                    <div class="text-center space-y-2">
+                        <span class="logo-text-30-plus font-black text-dark-navy tracking-tight">
+                            fammy<span class="text-coral-darker">.</span><span class="text-seawave-custom">pet</span>
+                        </span>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-widest">HSL(187, 100%, 35%) Wave</p>
                     </div>
                 </div>
 
-                <!-- Sea Wave Standard -->
-                <div class="space-y-3">
-                    <p class="text-sm font-medium text-gray-500 text-seawave-standard font-bold">Sea Wave Standard
-                        (Black + Wave + Coral Dot)</p>
-                    <div
-                        class="p-8 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center">
-                        <span class="text-3xl font-black text-[#111827]">fammy<span class="text-coral">.</span><span
-                                class="text-seawave-standard">pet</span></span>
+                <div class="border-t border-gray-100 w-full"></div>
+
+                <!-- Group B: Shadowed Logos -->
+                <div class="flex items-center justify-around w-full">
+                    <div class="text-center space-y-2">
+                        <span class="logo-text-30-plus font-black text-dark-navy tracking-tight logo-shadow">
+                            fammy<span class="text-coral-darker">.</span><span class="text-original-blue">pet</span>
+                        </span>
+                        <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Shadow: Navy (65% /
+                            Blur 50%)</p>
                     </div>
+
+                    <div class="text-center space-y-2">
+                        <span class="logo-text-30-plus font-black text-dark-navy tracking-tight logo-shadow">
+                            fammy<span class="text-coral-darker">.</span><span class="text-seawave-custom">pet</span>
+                        </span>
+                        <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Wave Shadow Variant</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1. Logo Variants Section (Previous) -->
+        <section class="space-y-8">
+            <h2 class="text-2xl font-bold text-gray-800 border-l-4 border-coral pl-4">1. Early History Recap</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="p-8 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center">
+                    <span class="text-2xl font-black text-[#111827]">fammy<span class="text-coral">.</span><span
+                            class="text-[#0284c7]">pet</span></span>
+                </div>
+                <div class="p-8 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center">
+                    <span class="text-2xl font-black text-[#111827]">fammy<span class="text-coral">.</span><span
+                            class="text-seawave-standard">pet</span></span>
                 </div>
             </div>
         </section>
 
         <!-- 2. Color Palette Section -->
         <section class="space-y-8">
-            <h2 class="text-2xl font-bold text-gray-800">2. Production Color Palette</h2>
+            <h2 class="text-2xl font-bold text-gray-800 bg-gray-100 p-2 rounded">2. Current Production Color Palette
+            </h2>
             <div class="grid grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Swatch: Coral -->
                 <div class="flex flex-col space-y-2">
@@ -114,17 +172,6 @@
                     <div class="text-[11px] leading-tight text-gray-500">
                         <p class="font-bold text-gray-900">#E8887A</p>
                         <p>Action color, dot, borders</p>
-                    </div>
-                </div>
-
-                <!-- Swatch: Navy -->
-                <div class="flex flex-col space-y-2">
-                    <div class="w-full h-24 rounded-2xl bg-navy shadow-soft flex items-end p-3">
-                        <span class="text-white font-bold text-xs">Navy</span>
-                    </div>
-                    <div class="text-[11px] leading-tight text-gray-500">
-                        <p class="font-bold text-gray-900">#4A5A7A</p>
-                        <p>Primary UI, active buttons</p>
                     </div>
                 </div>
 
@@ -139,85 +186,21 @@
                     </div>
                 </div>
 
-                <!-- Swatch: Sky -->
+                <!-- Swatch: Navy -->
                 <div class="flex flex-col space-y-2">
-                    <div class="w-full h-24 rounded-2xl bg-sky shadow-soft flex items-end p-3 border border-gray-100">
-                        <span class="text-navy font-bold text-xs">Sky</span>
+                    <div class="w-full h-24 rounded-2xl bg-navy shadow-soft flex items-end p-3">
+                        <span class="text-white font-bold text-xs">Navy</span>
                     </div>
                     <div class="text-[11px] leading-tight text-gray-500">
-                        <p class="font-bold text-gray-900">#D6E6F0</p>
-                        <p>Pastel backgrounds, accents</p>
-                    </div>
-                </div>
-
-                <!-- Swatch: Cream -->
-                <div class="flex flex-col space-y-2">
-                    <div class="w-full h-24 rounded-2xl bg-cream shadow-soft flex items-end p-3">
-                        <span class="text-navy font-bold text-xs">Cream</span>
-                    </div>
-                    <div class="text-[11px] leading-tight text-gray-500">
-                        <p class="font-bold text-gray-900">#F5E6B8</p>
-                        <p>Highlight boxes, pills</p>
-                    </div>
-                </div>
-
-                <!-- Swatch: Grey -->
-                <div class="flex flex-col space-y-2">
-                    <div class="w-full h-24 rounded-2xl bg-grey shadow-soft flex items-end p-3">
-                        <span class="text-white font-bold text-xs">Grey</span>
-                    </div>
-                    <div class="text-[11px] leading-tight text-gray-500">
-                        <p class="font-bold text-gray-900">#8A95A8</p>
-                        <p>Subtext, icons</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3. Dynamic Sea Wave Calibration -->
-        <section class="space-y-8">
-            <h2 class="text-2xl font-bold text-gray-800">3. Sea Wave Calibration (+/- 10%)</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Light -->
-                <div class="flex flex-col space-y-2">
-                    <div
-                        class="w-full h-32 rounded-3xl bg-seawave-light shadow-deep flex flex-col justify-center items-center text-white text-center p-4">
-                        <span class="text-xs opacity-80 mb-1">Lighter</span>
-                        <span class="font-bold text-lg">(-10%)</span>
-                    </div>
-                    <div class="text-[11px] text-gray-500 text-center">
-                        <p class="font-bold">HSL(187, 100%, 37%)</p>
-                    </div>
-                </div>
-
-                <!-- Standard -->
-                <div class="flex flex-col space-y-2">
-                    <div
-                        class="w-full h-32 rounded-3xl bg-seawave-standard shadow-deep flex flex-col justify-center items-center text-white text-center p-4">
-                        <span class="text-xs opacity-100 font-black mb-1">Standard</span>
-                        <span class="font-bold text-lg">BASE</span>
-                    </div>
-                    <div class="text-[11px] text-gray-900 text-center font-bold">
-                        <p>HSL(187, 100%, 27%)</p>
-                    </div>
-                </div>
-
-                <!-- Deep -->
-                <div class="flex flex-col space-y-2">
-                    <div
-                        class="w-full h-32 rounded-3xl bg-seawave-deep shadow-deep flex flex-col justify-center items-center text-white text-center p-4">
-                        <span class="text-xs opacity-80 mb-1">Deeper</span>
-                        <span class="font-bold text-lg">(+10%)</span>
-                    </div>
-                    <div class="text-[11px] text-gray-500 text-center">
-                        <p class="font-bold">HSL(187, 100%, 17%)</p>
+                        <p class="font-bold text-gray-900">#4A5A7A</p>
+                        <p>Shadow base, active states</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <footer class="pt-10 text-sm text-gray-400 border-t">
-            Design assets for <strong>fammy.pet</strong> restoration. Font: Inter (Black 900).
+            Design assets for <strong>fammy.pet</strong>. All variants use font-weight: 900.
         </footer>
     </div>
 </body>
