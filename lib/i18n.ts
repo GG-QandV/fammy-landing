@@ -423,7 +423,7 @@ export const translations = {
         select_f1: 'Обрати F1',
         select_f2: 'Обрати F2',
         switch_function: 'Змінити функцію',
-        food_safety_title: 'Перевірка Безпеки',
+        food_safety_title: 'Безпечна їжа',
         food_safety_desc: 'Чи це безпечно для мого улюбленця? Перевірте понад 3800 продуктів на наявність 454 токсинів',
         nutrient_analysis_title: 'Аналіз Нутрієнтів',
         nutrient_analysis_desc: 'Аналізуйте вітаміни, мінерали та калорійність вашого рецепту.',
