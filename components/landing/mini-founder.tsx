@@ -247,9 +247,9 @@ export function MiniFounder() {
           <p className="text-xs text-white/50">
             {t('lifetime_button_sub')}
           </p>
-          <p className="text-xs text-cream/60">
+          {/* <p className="text-xs text-cream/60">
             {t('lifetime_guarantee')}
-          </p>
+          </p> */}
         </div>
 
         <EmailModal
