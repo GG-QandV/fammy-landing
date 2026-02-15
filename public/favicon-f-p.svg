@@ -1,0 +1,20 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&amp;display=swap');
+      .logo-text {
+        font-family: 'Inter', sans-serif;
+        font-weight: 900;
+        font-size: 20px;
+        letter-spacing: -0.05em;
+      }
+    </style>
+  </defs>
+  <g transform="translate(16, 20)">
+    <g transform="scale(0.85, 0.935)">
+      <text class="logo-text" text-anchor="middle">
+        <tspan fill="#2C3650">f</tspan><tspan fill="hsl(7, 88%, 55%)">.</tspan><tspan fill="hsl(187, 100%, 35%)">p</tspan>
+      </text>
+    </g>
+  </g>
+</svg>
