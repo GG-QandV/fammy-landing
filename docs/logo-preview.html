@@ -1,59 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fammy.pet - Legacy Logo Variants</title>
+    <title>Fammy.pet - Refined Legacy Logo Variants</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-inter {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .text-coral {
+            color: #E8887A;
+        }
+
+        /* Sea Wave Variants (HSL based for 10% precision) */
+        .text-seawave-standard {
+            color: hsl(187, 100%, 27%);
+        }
+
+        /* Base Sea Wave */
+        .text-seawave-light {
+            color: hsl(187, 100%, 37%);
+        }
+
+        /* +10% lightness */
+        .text-seawave-deep {
+            color: hsl(187, 100%, 17%);
+        }
+
+        /* -10% lightness, naturally deeper */
     </style>
 </head>
+
 <body class="bg-gray-50 p-10 font-inter">
     <div class="max-w-4xl mx-auto space-y-12">
         <header class="border-b pb-6">
-            <h1 class="text-3xl font-bold text-gray-900">Fammy.pet Legacy Logo Preview</h1>
-            <p class="mt-2 text-gray-600">Found in early Git commits (e.g., commit 45c0aef). Features two-toned styling: "fammy" in gray-900 and ".pet" in primary-600.</p>
+            <h1 class="text-3xl font-bold text-gray-900">Fammy.pet Legacy Logo: Refined Versions</h1>
+            <p class="mt-2 text-gray-600">Updated per request: All dots are now <span class="text-coral font-bold">Coral
+                    (#E8887A)</span>. Added "Sea Wave" variations with 10% steps.</p>
         </header>
 
-        <!-- Variant 1: Original from 45c0aef -->
+        <!-- Variant 1: Original Pattern with Coral Dot -->
         <section class="space-y-4">
-            <h2 class="text-xl font-semibold text-gray-700">1. Original Version (Commit 45c0aef)</h2>
+            <h2 class="text-xl font-semibold text-gray-700">1. Original Font + Coral Dot</h2>
             <div class="p-8 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center">
-                <span class="text-2xl font-black text-[#111827]">fammy<span class="text-[#0284c7]">.pet</span></span>
+                <span class="text-3xl font-black text-[#111827]">fammy<span class="text-coral">.</span><span
+                        class="text-[#0284c7]">pet</span></span>
             </div>
             <div class="bg-gray-100 p-4 rounded-lg">
-                <code class="text-sm">&lt;span class="text-2xl font-black text-[#111827]"&gt;fammy&lt;span class="text-[#0284c7]"&gt;.pet&lt;/span&gt;&lt;/span&gt;</code>
-                <p class="mt-2 text-xs text-gray-500">Classes: text-2xl font-black. Colors: Black (#111827) and Sky Blue (#0284c7).</p>
+                <code
+                    class="text-sm">&lt;span class="font-black"&gt;fammy&lt;span class="text-[#E8887A]"&gt;.&lt;/span&gt;&lt;span class="text-[#0284c7]"&gt;pet&lt;/span&gt;&lt;/span&gt;</code>
             </div>
         </section>
 
-        <!-- Variant 2: Larger Display -->
-        <section class="space-y-4">
-            <h2 class="text-xl font-semibold text-gray-700">2. Larger Version (For Hero)</h2>
-            <div class="p-8 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center">
-                <span class="text-4xl font-black text-[#111827] tracking-tight">fammy<span class="text-[#0284c7]">.pet</span></span>
+        <!-- Variant 2: Sea Wave Series (Marine Blue/Green) -->
+        <section class="space-y-8">
+            <h2 class="text-2xl font-bold text-gray-800 border-l-4 border-seawave-standard pl-4">2. Sea Wave Variations
+                ("Морська хвиля")</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Lighter -->
+                <div class="space-y-3">
+                    <p class="text-sm font-medium text-gray-500">A. Lighter (-10%)</p>
+                    <div
+                        class="p-6 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center">
+                        <span class="text-2xl font-black text-[#111827]">fammy<span class="text-coral">.</span><span
+                                class="text-seawave-light">pet</span></span>
+                    </div>
+                </div>
+
+                <!-- Standard -->
+                <div class="space-y-3">
+                    <p class="text-sm font-medium text-gray-900 font-bold">B. Standard (Base)</p>
+                    <div
+                        class="p-6 bg-white rounded-xl shadow-md border-2 border-seawave-standard flex items-center justify-center">
+                        <span class="text-2xl font-black text-[#111827]">fammy<span class="text-coral">.</span><span
+                                class="text-seawave-standard">pet</span></span>
+                    </div>
+                </div>
+
+                <!-- Deeper -->
+                <div class="space-y-3">
+                    <p class="text-sm font-medium text-gray-500">C. Deeper (+10%)</p>
+                    <div
+                        class="p-6 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center">
+                        <span class="text-2xl font-black text-[#111827]">fammy<span class="text-coral">.</span><span
+                                class="text-seawave-deep">pet</span></span>
+                    </div>
+                </div>
             </div>
-            <div class="bg-gray-100 p-4 rounded-lg">
-                <code class="text-sm">&lt;span class="text-4xl font-black text-[#111827] tracking-tight"&gt;fammy&lt;span class="text-[#0284c7]"&gt;.pet&lt;/span&gt;&lt;/span&gt;</code>
+
+            <div class="bg-blue-50 p-4 rounded-lg text-sm text-blue-800">
+                <p><strong>Colors Used:</strong></p>
+                <ul class="list-disc ml-5 mt-2">
+                    <li>Coral Dot: <code class="bg-white px-1">#E8887A</code></li>
+                    <li>Sea Wave Base: <code class="bg-white px-1">hsl(187, 100%, 27%)</code></li>
+                    <li>Lighter: <code class="bg-white px-1">hsl(187, 100%, 37%)</code></li>
+                    <li>Deeper: <code class="bg-white px-1">hsl(187, 100%, 17%)</code></li>
+                </ul>
             </div>
         </section>
 
-        <!-- Variant 3: Alternative Blue (Deep Blue) -->
-        <section class="space-y-4">
-            <h2 class="text-xl font-semibold text-gray-700">3. Deeper Blue Variant</h2>
-            <div class="p-8 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center">
-                <span class="text-2xl font-black text-[#111827]">fammy<span class="text-[#0369a1]">.pet</span></span>
-            </div>
-            <div class="bg-gray-100 p-4 rounded-lg">
-                <p class="text-xs text-gray-500 text-center">Using color #0369a1 (primary-700 in old config)</p>
-            </div>
-        </section>
-
-        <footer class="pt-8 text-sm text-gray-400">
-            Note: All variants use font-weight: 900 (black) as found in the original source code.
+        <footer class="pt-8 text-sm text-gray-400 border-t">
+            All variants maintain the original <strong>font-weight: 900</strong> (font-black) and
+            <strong>text-2xl/3xl/4xl</strong> sizing.
         </footer>
     </div>
 </body>
+
 </html>
