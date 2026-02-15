@@ -13,6 +13,7 @@ const config: Config = {
       fontFamily: {
         sans: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
         display: ['var(--font-space-grotesk)', 'system-ui', 'sans-serif'],
+        inter: ['var(--font-inter)', 'system-ui', 'sans-serif'],
       },
       colors: {
         background: 'hsl(var(--background))',
@@ -74,6 +75,7 @@ const config: Config = {
         grey: '#8A95A8',
         'light-grey': '#E8ECF0',
         'white-card': '#FAFBFC',
+        seawave: 'hsl(var(--seawave))',
       },
       borderRadius: {
         lg: 'var(--radius)',

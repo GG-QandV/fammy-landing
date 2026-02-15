@@ -1,6 +1,6 @@
 import React from "react"
 import type { Metadata, Viewport } from "next"
-import { DM_Sans, Space_Grotesk } from "next/font/google"
+import { DM_Sans, Space_Grotesk, Inter } from "next/font/google"
 
 import "./globals.css"
 
@@ -8,6 +8,12 @@ const dmSans = DM_Sans({
   subsets: ["latin", "latin-ext"],
   variable: "--font-dm-sans",
   weight: ["400", "500", "600", "700"],
+})
+
+const inter = Inter({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-inter",
+  weight: ["900"],
 })
 
 const spaceGrotesk = Space_Grotesk({
@@ -38,7 +44,7 @@ export default function RootLayout({
   return (
     <html lang="uk" suppressHydrationWarning>
       <body
-        className={`${dmSans.variable} ${spaceGrotesk.variable} font-sans antialiased`}
+        className={`${dmSans.variable} ${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}
       >
         <LanguageProvider>
           {children}

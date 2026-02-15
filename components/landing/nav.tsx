@@ -10,12 +10,11 @@ export function Nav() {
     <nav className="pointer-events-none fixed inset-x-0 top-0 z-50 flex items-center justify-between p-4 md:p-6">
       <Link
         href="/"
-        className="pointer-events-auto flex items-center gap-2 font-semibold text-foreground"
+        className="pointer-events-auto flex items-center gap-1 font-inter font-black text-dark-navy logo-stretch logo-shadow"
       >
-        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-cream text-xs text-navy">
-          ●
-        </span>
-        fammy.pet
+        <span className="text-2xl">fammy</span>
+        <span className="text-2xl text-coral">.</span>
+        <span className="text-2xl text-seawave">pet</span>
       </Link>
 
       {/* Language switcher */}
@@ -25,11 +24,10 @@ export function Nav() {
             key={lang}
             type="button"
             onClick={() => setLanguage(lang)}
-            className={`px-2 py-1 text-xs font-medium rounded-full transition-colors ${
-              language === lang
-                ? "bg-navy text-white"
-                : "text-grey hover:text-navy"
-            }`}
+            className={`px-2 py-1 text-xs font-medium rounded-full transition-colors ${language === lang
+              ? "bg-navy text-white"
+              : "text-grey hover:text-navy"
+              }`}
           >
             {lang.toUpperCase()}
           </button>
