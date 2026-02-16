@@ -76,13 +76,15 @@ export default function PortionCalculator() {
                     onClick={() => setSpecies("dog")}
                     className={`flex-1 h-10 rounded-xl text-base font-medium transition-all ${species === "dog" ? "bg-navy text-white shadow-md scale-105" : "bg-white text-grey border border-light-grey hover:bg-slate-50"}`}
                 >
-                    🐶 {language === 'ua' ? 'Собака' : 'Dog'}
+                    <svg className="inline-block w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 256 256"><path d="M239.71,125l-16.42-88a16,16,0,0,0-19.61-12.58l-.31.09L150.85,40h-45.7L52.63,24.56l-.31-.09A16,16,0,0,0,32.71,37.05L16.29,125a15.77,15.77,0,0,0,9.12,17.52A16.26,16.26,0,0,0,32.12,144,15.48,15.48,0,0,0,40,141.84V184a40,40,0,0,0,40,40h96a40,40,0,0,0,40-40V141.85a15.5,15.5,0,0,0,7.87,2.16,16.31,16.31,0,0,0,6.72-1.47A15.77,15.77,0,0,0,239.71,125ZM32,128h0L48.43,40,90.5,52.37Zm144,80H136V195.31l13.66-13.65a8,8,0,0,0-11.32-11.32L128,180.69l-10.34-10.35a8,8,0,0,0-11.32,11.32L120,195.31V208H80a24,24,0,0,1-24-24V123.11L107.92,56h40.15L200,123.11V184A24,24,0,0,1,176,208Zm48-80L165.5,52.37,207.57,40,224,128ZM104,140a12,12,0,1,1-12-12A12,12,0,0,1,104,140Zm72,0a12,12,0,1,1-12-12A12,12,0,0,1,176,140Z"></path></svg>
+                    {t("species_dog")}
                 </button>
                 <button
                     onClick={() => setSpecies("cat")}
                     className={`flex-1 h-10 rounded-xl text-base font-medium transition-all ${species === "cat" ? "bg-navy text-white shadow-md scale-105" : "bg-white text-grey border border-light-grey hover:bg-slate-50"}`}
                 >
-                    🐱 {language === 'ua' ? 'Кіт' : 'Cat'}
+                    <svg className="inline-block w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 256 256"><path d="M96,140a12,12,0,1,1-12-12A12,12,0,0,1,96,140Zm76-12a12,12,0,1,0,12,12A12,12,0,0,0,172,128Zm60-80v88c0,52.93-46.65,96-104,96S24,188.93,24,136V48A16,16,0,0,1,51.31,36.69c.14.14.26.27.38.41L69,57a111.22,111.22,0,0,1,118.1,0L204.31,37.1c.12-.14.24-.27.38-.41A16,16,0,0,1,232,48Zm-16,0-21.56,24.8A8,8,0,0,1,183.63,74,88.86,88.86,0,0,0,168,64.75V88a8,8,0,1,1-16,0V59.05a97.43,97.43,0,0,0-16-2.72V88a8,8,0,1,1-16,0V56.33a97.43,97.43,0,0,0-16,2.72V88a8,8,0,1,1-16,0V64.75A88.86,88.86,0,0,0,72.37,74a8,8,0,0,1-10.81-1.17L40,48v88c0,41.66,35.21,76,80,79.67V195.31l-13.66-13.66a8,8,0,0,1,11.32-11.31L128,180.68l10.34-10.34a8,8,0,0,1,11.32,11.31L136,195.31v20.36c44.79-3.69,80-38,80-79.67Z"></path></svg>
+                    {t("species_cat")}
                 </button>
             </div>
 
@@ -127,6 +129,8 @@ export default function PortionCalculator() {
                     </select>
                 </div>
 
+                {/* Meals per day temporarily hidden until full logic is implemented */}
+                {/* 
                 <div className="space-y-2 text-left">
                     <label className="text-sm font-semibold text-grey/70 ml-1">{t("meals_per_day_label")}</label>
                     <Input
@@ -138,6 +142,7 @@ export default function PortionCalculator() {
                         disabled={period === 'meal'}
                     />
                 </div>
+                */}
             </div>
 
             <Button

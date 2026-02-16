@@ -23,9 +23,33 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: "PetCheck -- Safe Food for Pets",
+  title: "Fammy.pet - Pet Nutrition Validator",
   description:
-    "Medical-grade food safety checker for your pets. Analyze composition and toxicity instantly.",
+    "Validate homemade pet recipes instantly. Check ingredients for toxicity, balance nutrients, and keep your dog or cat healthy.",
+  openGraph: {
+    title: "Fammy.pet - Pet Nutrition Validator",
+    description:
+      "Validate homemade pet recipes instantly. Check ingredients for toxicity, balance nutrients, and keep your dog or cat healthy.",
+    url: "https://fammy.pet",
+    siteName: "Fammy.pet",
+    images: [
+      {
+        url: "https://fammy.pet/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Fammy.pet - Pet Nutrition Validator",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Fammy.pet - Pet Nutrition Validator",
+    description:
+      "Validate homemade pet recipes instantly. Check ingredients for toxicity, balance nutrients, and keep your dog or cat healthy.",
+    images: ["https://fammy.pet/og-image.jpg"],
+  },
   icons: {
     icon: "/favicon-f-p.png",
   },

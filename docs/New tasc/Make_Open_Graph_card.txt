@@ -1,0 +1,140 @@
+Задача
+Добавить Open Graph meta-теги в лендинг проекта fammy.pet (Next.js, branch design-v2-wip).
+​
+
+Файл
+text
+~/app/layout.tsx
+Код
+Вставить в <head> секцию layout.tsx (вариант 1):
+
+tsx
+export const metadata = {
+  title: 'Fammy.pet - Pet Nutrition Validator',
+  description: 'Validate homemade pet recipes instantly. Check ingredients for toxicity, balance nutrients, and keep your dog or cat healthy.',
+  openGraph: {
+    title: 'Fammy.pet - Pet Nutrition Validator',
+    description: 'Validate homemade pet recipes instantly. Check ingredients for toxicity, balance nutrients, and keep your dog or cat healthy.',
+    url: 'https://fammy.pet',
+    siteName: 'Fammy.pet',
+    images: [
+      {
+        url: 'https://fammy.pet/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Fammy.pet - Pet Nutrition Validator',
+      }
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Fammy.pet - Pet Nutrition Validator',
+    description: 'Validate homemade pet recipes instantly. Check ingredients for toxicity, balance nutrients, and keep your dog or cat healthy.',
+    images: ['https://fammy.pet/og-image.jpg'],
+  },
+};
+
+Код (вставить в export metadata)
+Найти в файле существующий export const metadata = {...} или создать, если его нет (вариант 2):
+
+tsx
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Fammy.pet - Pet Nutrition Validator',
+  description: 'Validate homemade pet recipes instantly. Check ingredients for toxicity, balance nutrients, and keep your dog or cat healthy.',
+  openGraph: {
+    title: 'Fammy.pet - Pet Nutrition Validator',
+    description: 'Validate homemade pet recipes instantly. Check ingredients for toxicity, balance nutrients, and keep your dog or cat healthy.',
+    url: 'https://fammy.pet',
+    siteName: 'Fammy.pet',
+    images: [
+      {
+        url: 'https://fammy.pet/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Fammy.pet - Pet Nutrition Validator',
+      }
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Fammy.pet - Pet Nutrition Validator',
+    description: 'Validate homemade pet recipes instantly. Check ingredients for toxicity, balance nutrients, and keep your dog or cat healthy.',
+    images: ['https://fammy.pet/og-image.jpg'],
+  },
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+
+Расположение в файле
+text
+1. Импорты (import)
+2. export const metadata = {...}  ← ВСТАВИТЬ ЗДЕСЬ
+3. export default function RootLayout(...)
+
+Если metadata уже существует
+Заменить существующий блок metadata полностью или добавить только секцию openGraph внутрь существующего объекта.
+
+
+Изображение
+Создать(загрузить и переименовать уже созданное*) public/og-image.jpg размером 1200×630px
+
+*изображение в папке /docs/New tasc/Open_Graph/Screen_Open_Graph.jpeg
+
+Использовать navy #4A5A7A, cream #F5E6B8, coral #E8887A из палитры проекта
+​
+
+Включить: логотип, иконку собаки/кота, текст "Pet Nutrition Validator"
+
+Проверка
+bash
+cd /home/gg/projects/nutritiondata/fammy-landing/new_design
+npm run build
+npm run dev -- -p 3003
+Тест превью:
+
+Telegram: вставить http://192.168.1.176:3003
+
+Facebook Debugger: https://developers.facebook.com/tools/debug/
+
+LinkedIn Inspector: https://www.linkedin.com/post-inspector/
+
+Деплой
+После проверки
+
+Text for Open Graph:
+
+Title: Fammy.pet - Pet Nutrition Validator
+
+Description: Validate homemade pet recipes instantly. Check ingredients for toxicity, balance nutrients, and keep your dog or cat healthy.
+
+URL: https://fammy.pet
+Image: https://fammy.pet/og-image.jpg (1200×630px)
+Type: website
+
+
+FINAL OPEN GRAPH TEXT (English)
+text
+Title: Fammy.pet - Pet Nutrition Validator
+
+Description: Validate homemade pet recipes instantly. Check ingredients for toxicity, balance nutrients, and keep your dog or cat healthy.
+
+URL: https://fammy.pet
+Image: https://fammy.pet/og-image.jpg (1200×630px)
+Type: website
+

@@ -1,0 +1,124 @@
+Новая архитектура для fammy.pet
+Уровень 1: Hero — Intent-Based Entry
+
+┌────────────────────────────────────┐
+│  Що ви хочете дізнатися?           │
+│  ┌──────────────────────────────┐  │
+│  │ 🔍 Пошук: "чи можна шоколад" │  │ ← Universal search
+│  └──────────────────────────────┘  │
+│                                    │
+│  Популярні запити:                 │
+│  [Перевірити продукт] (F2)         │
+│  [Розрахувати порції] (F3)         │
+│  [Аналіз раціону] (F1)             │
+└────────────────────────────────────┘
+
+Логіка:
+
+Search → intelligent routing (NLP визначає F2/F1/F3)
+
+Quick actions → 3-4 топ функції (metrics-driven)
+
+Решта функцій в категоріях нижче
+
+Уровень 2: Function Categories (замість FeatureCards рулона)
+
+┌─────────────────────────────────────┐
+│ БЕЗПЕКА ХАРЧУВАННЯ                  │
+│ ├─ Перевірка продуктів (F2)         │ ← Expandable cards
+│ ├─ Токсичні речовини                │
+│ └─ Алергени та непереносимість      │
+├─────────────────────────────────────┤
+│ ХАРЧУВАННЯ ТА ДІЄТА                 │
+│ ├─ Калькулятор порцій (F3)          │
+│ ├─ Аналіз раціону (F1)              │
+│ ├─ Генератор рецептів (F4)          │
+│ └─ Поживні речовини (F6)            │
+├─────────────────────────────────────┤
+│ МОНІТОРИНГ ЗДОРОВ'Я                 │
+│ ├─ BCS трекер (F5)                  │
+│ ├─ Вага та ріст                     │
+│ └─ Медична історія                  │
+└─────────────────────────────────────┘
+
+Scaling:
+
+3-5 категорій (фіксовано)
+
+Функції додаються всередину категорій
+
+Expandable accordion — показується тільки активна
+
+Уровень 3: Pet Context — динамічний селектор
+Де з'являється pet selector:
+
+User clicks "Перевірити продукт" (F2)
+    ↓
+Modal/Sheet opens:
+┌──────────────────────────────────┐
+│ Для кого перевіряємо?            │
+│ ┌────┐ ┌────┐ ┌────┐ ┌────┐      │
+│ │ 🐕 │ │ 🐈 │ │ 🐦 │ │ 🐹 │      │
+│ │Dog │ │Cat │ │Bird│ │Ham.│      │
+│ └────┘ └────┘ └────┘ └────┘      │
+│                                  │
+│ [+ 22 більше видів]              │ ← Expandable
+└──────────────────────────────────┘
+    ↓
+Opens F2 tool with dog context
+
+26 видів організація:
+
+Топ-4 (90% трафіку): Dog, Cat, Bird, Hamster — великі кнопки
+"Інші види" dropdown:
+  Гризуни (4): Rabbit, Guinea Pig, Chinchilla, Rat
+  Рептилії (6): Turtle, Lizard, Snake, etc
+  Екзотика (12): Ferret, Hedgehog, Parrot, etc
+
+Desktop vs Mobile layout
+Desktop (≥1024px)
+
+┌─────────────────────────────────────────────┐
+│ Nav                                         │
+├──────────────┬──────────────────────────────┤
+│ Sidebar      │ Main Content                 │
+│ Categories   │ ┌─────────────────────────┐  │
+│ [Безпека]    │ │ Active Function (F2)    │  │
+│ [Харчування] │ │                         │  │
+│ [Здоров'я]   │ │ Pet context: 🐕 [Change]│  │
+│              │ │                         │  │
+│              │ └─────────────────────────┘  │
+└──────────────┴──────────────────────────────┘
+
+Mobile (<768px)
+
+Hero: Search + 3 quick actions
+  ↓ scroll
+Category accordion (collapsed)
+  ↓ tap function
+Bottom sheet modal → pet selector → tool
+
+Добавить:
+✅ Universal search input (Algolia/Fuse.js)
+
+✅ Category accordion component
+
+✅ Pet selector modal (26 species)
+
+✅ Function router (search → F1-F6)
+
+Hero новый состав:
+
+<Hero>
+  <UniversalSearch onSelect={(intent) => routeToFunction(intent)} />
+  <QuickActions functions={['F2', 'F3', 'F1']} />
+</Hero>
+<CategorySection>
+  <Accordion categories={FUNCTION_CATEGORIES} />
+</CategorySection>
+
+
+
+
+
+
