@@ -1,8 +1,8 @@
 # Landing V3 — Контекст разработки
 
-## Текущая фаза: Phase 5 (DraftPage assembly)
-## Что сделано: Phase 0 (ветка, CONTEXT.md), Phase 1 (species-config, functions-config, i18n), Phase 2 (draft route, страницы инструментов, SEO metadata), Phase 3 (PetSelector, ComingSoon), Phase 4 (ToolSheet, F2 Wizard)
-## Следующий шаг: Собрать DraftPage — Accordion с категориями, каждый инструмент открывает ToolSheet/ComingSoon
+## Текущая фаза: Phase 6 (HeroV3 + DesktopLayout + Сборка)
+## Что сделано: Phase 0-5 ✅ (ветка, configs, i18n, routes, SEO, PetSelector, ComingSoon, ToolSheet, F2 Wizard, F1 Wizard, CategoryAccordion, DraftPage assembly)
+## Следующий шаг: HeroV3 (заголовок + промокод), DesktopLayout (два стовпці ≥1024px), полноценные F1/F2 страницы
 
 ## Принятые решения
 - Без Universal Search (не нужен на этом этапе)
@@ -19,4 +19,4 @@
 - F3-F6 не реализованы → заглушки ComingSoon
 - i18n: species_dog/cat/human уже существовали — в v3 блоке не дублировать
 
-## Последний MCP checkpoint: 2026-02-16 Phase 4 complete
+## Последний MCP checkpoint: 2026-02-16 Phase 5 complete

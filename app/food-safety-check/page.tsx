@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+import FoodSafetyCheckPage from "./f2-client"
 
 export const metadata: Metadata = {
     title: "Food Safety Check — Fammy.pet",
@@ -15,20 +16,6 @@ export const metadata: Metadata = {
     },
 }
 
-/**
- * F2: Food Safety Check — standalone SEO page.
- * Phase 4 will add the full F2 wizard here.
- */
-export default function FoodSafetyCheckPage() {
-    return (
-        <main className="mx-auto max-w-3xl px-4 py-16">
-            <h1 className="text-3xl font-bold text-navy">
-                🔍 Food Safety Check
-            </h1>
-            <p className="mt-4 text-muted-foreground">
-                Check if a product is safe for your pet.
-            </p>
-            {/* Phase 4: F2Tool component will be mounted here */}
-        </main>
-    )
+export default function Page() {
+    return <FoodSafetyCheckPage />
 }
