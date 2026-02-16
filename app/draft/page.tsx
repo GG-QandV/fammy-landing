@@ -131,7 +131,7 @@ export default function DraftPage() {
 
     const mainContent = (
         <>
-            <HeroV3 />
+            <HeroV3 onChooseTool={() => handleToolSelect('f2')} />
 
             {/* ToolSheet modals */}
             {activeFunc && activeFunc.available && activeTool === 'f2' && (

@@ -7,10 +7,11 @@ import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 
 interface HeroV3Props {
+    onChooseTool?: () => void;
     className?: string;
 }
 
-export function HeroV3({ className }: HeroV3Props) {
+export function HeroV3({ onChooseTool, className }: HeroV3Props) {
     const { t } = useLanguage();
     const [promoCode, setPromoCode] = useState('');
     const [promoStatus, setPromoStatus] = useState<'idle' | 'loading' | 'success' | 'expired' | 'invalid'>('idle');
@@ -40,10 +41,14 @@ export function HeroV3({ className }: HeroV3Props) {
         }
     };
 
-    const scrollToTools = () => {
-        const el = document.getElementById('category-accordion');
-        if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
+    const handleChooseTool = () => {
+        if (onChooseTool) {
+            onChooseTool();
+        } else {
+            const el = document.getElementById('category-accordion');
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
         }
     };
 
@@ -60,7 +65,7 @@ export function HeroV3({ className }: HeroV3Props) {
                 <Button
                     size="lg"
                     className="mt-8 h-14 px-8 text-base"
-                    onClick={scrollToTools}
+                    onClick={handleChooseTool}
                 >
                     {t('choose_tool')}
                 </Button>
