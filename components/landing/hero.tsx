@@ -6,7 +6,9 @@ import { getOrCreateAnonId } from "../../lib/anonId"
 import { useRouter } from "next/navigation"
 import { Input } from "../ui/input"
 import FoodAutocomplete from "../ui/food-autocomplete"
-import { Loader2, Search, XCircle, ShieldCheck, Plus } from "lucide-react"
+import { Loader2, Search, XCircle, ShieldCheck, Plus, Scale, Copy, Check } from "lucide-react"
+import { toGrams, fromGrams, WeightUnit, formatWeight } from "../../lib/converters/weight-converter"
+import { copyToClipboard } from "../../lib/utils/clipboard"
 
 interface FoodResult {
   toxicityLevel: string
@@ -41,6 +43,8 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
   const [f1Result, setF1Result] = useState<any | null>(null)
   const [promoCode, setPromoCode] = useState("")
   const [promoStatus, setPromoStatus] = useState<"idle" | "loading" | "success" | "expired" | "invalid">("idle")
+  const [weightUnit, setWeightUnit] = useState<WeightUnit>("g")
+  const [copied, setCopied] = useState(false)
 
   useEffect(() => {
     getOrCreateAnonId()
@@ -171,6 +175,41 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
     setIngredients(prev => prev.filter((_, i) => i !== index))
   }
 
+  const toggleWeightUnit = () => {
+    setWeightUnit(prev => prev === "g" ? "oz" : "g")
+  }
+
+  const handleCopyF1 = async () => {
+    if (!f1Result || !f1Result.nutrients) return;
+
+    const isMacro = (n: any) =>
+      n.category === 'macronutrient' ||
+      /^(protein|fat|carbs|fiber|energy|calories|203|204|205|208|291)/i.test(String(n.code)) ||
+      /^(білок|вуглеводи|жири|клітковина|енергія|белки|углеводы|жиры|клетчатка|энергия)/i.test(n.name);
+
+    const nutrients = [...f1Result.nutrients].filter((n: any) => n.totalAmount > 0);
+
+    const major = nutrients.filter(isMacro);
+    const others = nutrients
+      .filter((n: any) => !isMacro(n))
+      .sort((a: any, b: any) => a.name.localeCompare(b.name));
+
+    const summaryHeader = `${t("f1_result_for")}: ${ingredients.map(i => `${i.foodName} (${formatWeight(fromGrams(i.grams, weightUnit), weightUnit)})`).join(", ")}`;
+
+    const formatN = (n: any) => `${n.name.replace(/\s*\(.*?\)/g, "")}: ${n.totalAmount}${n.unit}`;
+
+    const majorList = major.map(formatN).join("\n");
+    const othersList = others.map(formatN).join("\n");
+
+    const fullText = `${summaryHeader}\n\n${t("f1_result_title")}:\n${majorList}${othersList ? `\n---\n${othersList}` : ''}`;
+
+    const success = await copyToClipboard(fullText);
+    if (success) {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  }
+
   return (
     <section id="hero" className="relative w-full overflow-visible pt-20 py-16 text-center lg:py-24">
       <div className="relative z-10 mx-auto max-w-2xl px-4">
@@ -253,19 +292,34 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
         ) : (
           <div className="space-y-4">
             <div className="flex flex-col gap-6 rounded-xl border border-light-grey bg-white p-4 overflow-visible">
-              <p className="text-sm text-muted-foreground mb-2">{t("f1_hint")}</p>
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-sm text-muted-foreground">{t("f1_hint")}</p>
+                <button
+                  onClick={toggleWeightUnit}
+                  className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-xs font-medium hover:bg-secondary/80 transition-colors"
+                >
+                  <Scale className="h-3.5 w-3.5" />
+                  {weightUnit === "g" ? t("unit_grams") : t("unit_ounces")}
+                </button>
+              </div>
               {ingredients.map((ingredient, index) => (
                 <div key={index} className="flex items-center gap-2">
-                  <Input
-                    type="number"
-                    value={ingredient.grams}
-                    onChange={(e) => {
-                      const newIngredients = [...ingredients]
-                      newIngredients[index].grams = parseInt(e.target.value) || 0
-                      setIngredients(newIngredients)
-                    }}
-                    className="h-10 w-20 rounded-lg border-border bg-secondary text-center"
-                  />
+                  <div className="relative flex-shrink-0">
+                    <Input
+                      type="number"
+                      value={Math.round(fromGrams(ingredient.grams, weightUnit) * 100) / 100}
+                      onChange={(e) => {
+                        const val = parseFloat(e.target.value) || 0
+                        const newIngredients = [...ingredients]
+                        newIngredients[index].grams = toGrams(val, weightUnit)
+                        setIngredients(newIngredients)
+                      }}
+                      className="h-10 w-24 rounded-lg border-border bg-secondary text-center pr-7"
+                    />
+                    <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-bold text-muted-foreground uppercase">
+                      {t(`unit_${weightUnit}`)}
+                    </span>
+                  </div>
                   <p className="flex-1 text-sm text-foreground">
                     {ingredient.foodName}
                   </p>
@@ -297,7 +351,17 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
 
             {/* F1 Results */}
             {f1Result && (
-              <div className={`mt-4 p-6 rounded-xl border-2 animate-in fade-in slide-in-from-top-2 ${f1Result.error ? (f1Result.isLimit ? "bg-yellow-50 border-yellow-200 text-yellow-900" : "bg-red-50 border-red-200 text-red-900") : "bg-emerald-50 border-emerald-200 text-emerald-900"}`}>
+              <div className={`relative mt-4 p-6 rounded-xl border-2 animate-in fade-in slide-in-from-top-2 ${f1Result.error ? (f1Result.isLimit ? "bg-yellow-50 border-yellow-200 text-yellow-900" : "bg-red-50 border-red-200 text-red-900") : "bg-emerald-50 border-emerald-200 text-emerald-900"}`}>
+                {!f1Result.error && (
+                  <button
+                    onClick={handleCopyF1}
+                    className="absolute top-4 right-4 h-8 w-8 flex items-center justify-center rounded-lg bg-white/50 hover:bg-white/80 transition-colors border border-emerald-200 shadow-sm"
+                    title={t("copy_to_clipboard")}
+                  >
+                    {copied ? <Check className="h-4 w-4 text-emerald-600" /> : <Copy className="h-4 w-4 text-emerald-800" />}
+                  </button>
+                )}
+
                 {f1Result.error ? (
                   <>
                     <h3 className="font-bold text-xl mb-2">{f1Result.isLimit ? t("attention") : t("caution")}</h3>
@@ -305,12 +369,57 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
                   </>
                 ) : (
                   <>
-                    <h3 className="font-bold text-xl mb-2">{t("f1_result_title")}</h3>
-                    {f1Result.nutrients?.filter((nutrient: any) => nutrient.totalAmount > 0).map((nutrient: any) => (
-                      <p key={nutrient.code} className="text-sm">
-                        {nutrient.name.replace(/\s*\(.*?\)/g, "")}: {nutrient.totalAmount}{nutrient.unit}
-                      </p>
-                    ))}
+                    <h3 className="font-bold text-xl mb-1">{t("f1_result_title")}</h3>
+                    <p className="text-[14px] font-medium italic opacity-90 mb-6 border-b-2 border-emerald-300/40 pb-3">
+                      {t("f1_result_for")}: {ingredients.map((i, idx) => (
+                        <span key={idx}>
+                          {i.foodName} ({formatWeight(fromGrams(i.grams, weightUnit), weightUnit)}){idx < ingredients.length - 1 ? ", " : ""}
+                        </span>
+                      ))}
+                    </p>
+
+                    {(() => {
+                      const isMacro = (n: any) =>
+                        n.category === 'macronutrient' ||
+                        /^(protein|fat|carbs|fiber|energy|calories|203|204|205|208|291)/i.test(String(n.code)) ||
+                        /^(білок|вуглеводи|жири|клітковина|енергія|белки|углеводы|жиры|клетчатка|энергия)/i.test(n.name);
+
+                      const nutrients = f1Result.nutrients?.filter((n: any) => n.totalAmount > 0) || [];
+                      const major = nutrients.filter(isMacro);
+                      const others = nutrients
+                        .filter((n: any) => !isMacro(n))
+                        .sort((a: any, b: any) => a.name.localeCompare(b.name));
+
+                      return (
+                        <>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1">
+                            {major.map((nutrient: any) => (
+                              <p key={nutrient.code} className="text-sm border-b border-emerald-100/30 py-1">
+                                <span className="font-medium">{nutrient.name.replace(/\s*\(.*?\)/g, "")}:</span> {nutrient.totalAmount}{nutrient.unit}
+                              </p>
+                            ))}
+                          </div>
+
+                          {others.length > 0 && (
+                            <>
+                              <div className="my-8 border-t-2 border-emerald-300/50 relative">
+                                <span className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 bg-emerald-50 px-3 text-[11px] text-emerald-700/60 uppercase font-black tracking-widest">
+                                  Micro
+                                </span>
+                              </div>
+
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-0.5">
+                                {others.map((nutrient: any) => (
+                                  <p key={nutrient.code} className="text-[13px] text-emerald-900/80 py-0.5">
+                                    <span className="font-normal">{nutrient.name.replace(/\s*\(.*?\)/g, "")}:</span> {nutrient.totalAmount}{nutrient.unit}
+                                  </p>
+                                ))}
+                              </div>
+                            </>
+                          )}
+                        </>
+                      );
+                    })()}
                   </>
                 )}
               </div>
