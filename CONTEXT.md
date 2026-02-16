@@ -1,8 +1,8 @@
 # Landing V3 — Контекст разработки
 
-## Текущая фаза: Phase 2 (каркас draft + страницы)
-## Что сделано: Phase 0 (ветка, CONTEXT.md), Phase 1 (species-config, functions-config, i18n)
-## Следующий шаг: Создать app/draft/page.tsx, страницы инструментов, components/landing-v3/ скелеты
+## Текущая фаза: Phase 4 (ToolSheet + F2 Wizard)
+## Что сделано: Phase 0 (ветка, CONTEXT.md), Phase 1 (species-config, functions-config, i18n), Phase 2 (draft route, страницы инструментов, SEO metadata), Phase 3 (PetSelector, ComingSoon)
+## Следующий шаг: Создать tool-sheet.tsx (Sheet-обёртка), f2-tool/step-species.tsx, f2-tool/step-search.tsx, f2-tool/step-result.tsx
 
 ## Принятые решения
 - Без Universal Search (не нужен на этом этапе)
@@ -19,4 +19,4 @@
 - F3-F6 не реализованы → заглушки ComingSoon
 - i18n: species_dog/cat/human уже существовали — в v3 блоке не дублировать
 
-## Последний MCP checkpoint: 2026-02-16 Phase 1 complete
+## Последний MCP checkpoint: 2026-02-16 Phase 3 complete
