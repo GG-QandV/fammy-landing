@@ -272,7 +272,7 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
         {activeFeature === "f2" && (
           <div className="space-y-4">
             <div className="flex flex-col sm:flex-row gap-2">
-              <div className="flex-1">
+              <div className="flex-1 w-full">
                 <FoodAutocomplete
                   onSelect={(food) => { setSelectedFood(food); setQuery(food.name); }}
                   placeholder={t("search_placeholder")}
@@ -281,7 +281,7 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
               <button
                 onClick={handleF2Check}
                 disabled={loading || !query}
-                className="h-12 sm:h-14 px-8 rounded-xl bg-navy text-white hover:opacity-90 disabled:opacity-50 transition-opacity font-medium"
+                className="h-12 sm:h-14 w-full sm:w-auto px-8 rounded-xl bg-navy text-white hover:opacity-90 disabled:opacity-50 transition-opacity font-medium"
               >
                 {loading ? <Loader2 className="animate-spin" /> : t("check_button").split(" ")[0]}
               </button>
@@ -453,12 +453,12 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
               value={promoCode}
               onChange={(e) => { setPromoCode(e.target.value); setPromoStatus("idle"); }}
               placeholder={t("promo_placeholder")}
-              className="flex-1 h-12 px-4 rounded-lg border border-light-grey bg-white text-navy text-base focus:border-navy/40 focus:outline-none"
+              className="flex-1 w-full h-12 px-4 rounded-lg border border-light-grey bg-white text-navy text-base focus:border-navy/40 focus:outline-none"
             />
             <button
               onClick={handlePromoSubmit}
               disabled={promoStatus === "loading" || !promoCode.trim()}
-              className="h-12 px-5 rounded-lg bg-navy text-white text-base font-semibold hover:opacity-90 disabled:opacity-50 transition-opacity"
+              className="h-12 w-full sm:w-auto px-5 rounded-lg bg-navy text-white text-base font-semibold hover:opacity-90 disabled:opacity-50 transition-opacity"
             >
               {promoStatus === "loading" ? "..." : t("apply_promo")}
             </button>
