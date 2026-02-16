@@ -283,7 +283,7 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
                 disabled={loading || !query}
                 className="h-12 sm:h-14 w-full sm:w-auto px-8 rounded-xl bg-navy text-white hover:opacity-90 disabled:opacity-50 transition-opacity font-medium"
               >
-                {loading ? <Loader2 className="animate-spin" /> : t("check_button").split(" ")[0]}
+                {loading ? <Loader2 className="animate-spin" /> : t("check_button")}
               </button>
             </div>
 
@@ -453,12 +453,12 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
               value={promoCode}
               onChange={(e) => { setPromoCode(e.target.value); setPromoStatus("idle"); }}
               placeholder={t("promo_placeholder")}
-              className="flex-1 w-full h-12 px-4 rounded-lg border border-light-grey bg-white text-navy text-base focus:border-navy/40 focus:outline-none"
+              className="w-full h-14 px-4 rounded-lg border border-light-grey bg-white text-navy text-base focus:border-navy/40 focus:outline-none placeholder:opacity-50"
             />
             <button
               onClick={handlePromoSubmit}
               disabled={promoStatus === "loading" || !promoCode.trim()}
-              className="h-12 w-full sm:w-auto px-5 rounded-lg bg-navy text-white text-base font-semibold hover:opacity-90 disabled:opacity-50 transition-opacity"
+              className="h-14 w-full sm:w-auto px-8 rounded-lg bg-navy text-white text-base font-semibold hover:opacity-90 disabled:opacity-50 transition-opacity"
             >
               {promoStatus === "loading" ? "..." : t("apply_promo")}
             </button>

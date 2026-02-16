@@ -537,7 +537,7 @@ export const translations = {
         promo_placeholder: 'Введіть промокод',
         checks_remaining: 'перевірок на 24 години',
         search_placeholder: 'Пошук їжі (напр. яблуко, шоколад)...',
-        check_button: 'Перевірити безпеку',
+        check_button: 'Зробити аналіз',
         species_dog: 'Собака',
         species_cat: 'Кіт',
         caution: 'Обережно',
