@@ -23,11 +23,11 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: "PetCheck -- Safe Food for Pets",
+  title: "Fammy.pet -- Safe Food for Pets",
   description: "Medical-grade food safety checker for your pets. Analyze composition and toxicity instantly.",
   metadataBase: new URL("https://fammy.pet"),
   openGraph: {
-    title: "PetCheck -- Safe Food for Pets",
+    title: "Fammy.pet -- Safe Food for Pets",
     description: "Medical-grade food safety checker for your pets. Analyze composition and toxicity instantly.",
     url: "https://fammy.pet",
     siteName: "fammy.pet",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "PetCheck -- Safe Food for Pets",
+    title: "Fammy.pet -- Safe Food for Pets",
     description: "Medical-grade food safety checker for your pets. Analyze composition and toxicity instantly.",
     images: ["/og-image.jpg"],
   },
