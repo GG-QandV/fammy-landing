@@ -212,25 +212,24 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
   }
 
   return (
-    <section id="hero" className="relative w-full overflow-visible pt-20 py-16 text-center lg:py-24">
-      <div className="relative z-10 mx-auto max-w-2xl px-4">
+    <section id="hero" className="relative w-full overflow-visible pt-16 py-12 text-center lg:pt-20 lg:py-24">
+      <div className="relative z-10 mx-auto max-w-2xl px-5">
         {/* Feature Tabs */}
         {/* Feature Tabs */}
-        <div className="mb-8 flex w-full max-w-[400px] mx-auto rounded-full bg-white-card p-1 shadow-soft border border-coral">
+        <div className="mb-10 flex w-full sm:max-w-[400px] mx-auto rounded-full bg-white-card p-1 shadow-soft border border-coral overflow-hidden sm:overflow-visible">
           <button
             onClick={() => onFeatureChange("f2")}
-            className={`flex-1 h-11 sm:h-12 px-2 sm:px-4 rounded-full text-sm sm:text-base font-medium transition-colors ${activeFeature === "f2" ? "bg-navy text-white" : "bg-slate-100 text-grey hover:bg-slate-200"}`}
+            className={`flex-1 h-11 sm:h-12 px-1 sm:px-4 rounded-full text-[13px] sm:text-base font-medium transition-colors flex items-center justify-center gap-1.5 ${activeFeature === "f2" ? "bg-navy text-white" : "bg-slate-100 text-grey hover:bg-slate-200"}`}
           >
-            <svg className="inline-block w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 256 256"><path d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"></path></svg>
-            <svg className="inline-block w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 256 256"><path d="M239.82,157l-12-96A24,24,0,0,0,204,40H32A16,16,0,0,0,16,56v88a16,16,0,0,0,16,16H75.06l37.78,75.58A8,8,0,0,0,120,240a40,40,0,0,0,40-40V184h56a24,24,0,0,0,23.82-27ZM72,144H32V56H72Zm150,21.29a7.88,7.88,0,0,1-6,2.71H152a8,8,0,0,0-8,8v24a24,24,0,0,1-19.29,23.54L88,150.11V56H204a8,8,0,0,1,7.94,7l12,96A7.87,7.87,0,0,1,222,165.29Z"></path></svg>
-            {t("f2_title")}
+            <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 256 256"><path d="M239.82,157l-12-96A24,24,0,0,0,204,40H32A16,16,0,0,0,16,56v88a16,16,0,0,0,16,16H75.06l37.78,75.58A8,8,0,0,0,120,240a40,40,0,0,0,40-40V184h56a24,24,0,0,0,23.82-27ZM72,144H32V56H72Zm150,21.29a7.88,7.88,0,0,1-6,2.71H152a8,8,0,0,0-8,8v24a24,24,0,0,1-19.29,23.54L88,150.11V56H204a8,8,0,0,1,7.94,7l12,96A7.87,7.87,0,0,1,222,165.29Z"></path></svg>
+            <span className="truncate">{t("f2_title")}</span>
           </button>
           <button
             onClick={() => onFeatureChange("f1")}
-            className={`flex-1 h-11 sm:h-12 px-2 sm:px-4 rounded-full text-sm sm:text-base font-medium transition-colors ${activeFeature === "f1" ? "bg-navy text-white" : "bg-slate-100 text-grey hover:bg-slate-200"}`}
+            className={`flex-1 h-11 sm:h-12 px-1 sm:px-4 rounded-full text-[13px] sm:text-base font-medium transition-colors flex items-center justify-center gap-1.5 ${activeFeature === "f1" ? "bg-navy text-white" : "bg-slate-100 text-grey hover:bg-slate-200"}`}
           >
-            <svg className="inline-block w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 256 256"><path d="M237.66,86.34l-60-60a8,8,0,0,0-11.32,0L37.11,155.57a44.77,44.77,0,0,0,63.32,63.32L212.32,107l22.21-7.4a8,8,0,0,0,3.13-13.25ZM89.11,207.57a28.77,28.77,0,0,1-40.68-40.68l28.8-28.8c8.47-2.9,21.75-4,39.07,5,10.6,5.54,20.18,8,28.56,8.73ZM205.47,92.41a8,8,0,0,0-3.13,1.93l-39.57,39.57c-8.47,2.9-21.75,4-39.07-5-10.6-5.54-20.18-8-28.56-8.73L172,43.31,217.19,88.5Z"></path></svg>
-            {t("f1_title")}
+            <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 256 256"><path d="M237.66,86.34l-60-60a8,8,0,0,0-11.32,0L37.11,155.57a44.77,44.77,0,0,0,63.32,63.32L212.32,107l22.21-7.4a8,8,0,0,0,3.13-13.25ZM89.11,207.57a28.77,28.77,0,0,1-40.68-40.68l28.8-28.8c8.47-2.9,21.75-4,39.07,5,10.6,5.54,20.18,8,28.56,8.73ZM205.47,92.41a8,8,0,0,0-3.13,1.93l-39.57,39.57c-8.47,2.9-21.75,4-39.07-5-10.6-5.54-20.18-8-28.56-8.73L172,43.31,217.19,88.5Z"></path></svg>
+            <span className="truncate">{t("f1_title")}</span>
           </button>
           {/* F3 temporarily disabled
           <button
@@ -244,7 +243,7 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
         </div>
 
         {/* Hero Content */}
-        <h1 className="font-display text-4xl font-bold text-foreground lg:text-5xl">
+        <h1 className="font-display text-[2rem] leading-tight font-bold text-foreground sm:text-4xl lg:text-5xl">
           {activeFeature === "f2" ? t("food_safety_title") : t("nutrient_analysis_title")}
         </h1>
         <p className="mt-4 text-lg text-muted-foreground lg:text-xl">
@@ -272,16 +271,17 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
 
         {activeFeature === "f2" && (
           <div className="space-y-4">
-            <div className="flex gap-2">
-              <FoodAutocomplete
-                onSelect={(food) => { setSelectedFood(food); setQuery(food.name); }}
-                placeholder={t("search_placeholder")}
-
-              />
+            <div className="flex flex-col sm:flex-row gap-2">
+              <div className="flex-1">
+                <FoodAutocomplete
+                  onSelect={(food) => { setSelectedFood(food); setQuery(food.name); }}
+                  placeholder={t("search_placeholder")}
+                />
+              </div>
               <button
                 onClick={handleF2Check}
                 disabled={loading || !query}
-                className="h-14 px-8 rounded-xl bg-navy text-white hover:opacity-90 disabled:opacity-50 transition-opacity font-medium"
+                className="h-12 sm:h-14 px-8 rounded-xl bg-navy text-white hover:opacity-90 disabled:opacity-50 transition-opacity font-medium"
               >
                 {loading ? <Loader2 className="animate-spin" /> : t("check_button").split(" ")[0]}
               </button>
@@ -447,7 +447,7 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
         {/* Promo Code - Alway below active tabs */}
         <div className="mt-8 rounded-xl bg-cream/30 border border-cream p-4">
           <p className="text-base font-medium text-navy mb-2">{t("have_promo")}</p>
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <input
               type="text"
               value={promoCode}
