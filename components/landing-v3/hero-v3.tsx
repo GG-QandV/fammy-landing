@@ -53,7 +53,7 @@ export function HeroV3({ onChooseTool, className }: HeroV3Props) {
     };
 
     return (
-        <section className={cn('relative w-full pt-16 pb-8 text-center lg:pt-20 lg:pb-12', className)}>
+        <section className={cn('relative w-full pt-8 pb-4 text-center lg:pt-20 lg:pb-12', className)}>
             <div className="mx-auto max-w-2xl px-5">
                 <h1 className="font-display text-[2rem] leading-tight font-bold text-foreground sm:text-4xl lg:text-5xl">
                     {t('food_safety_title')}
