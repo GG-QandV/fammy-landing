@@ -6,9 +6,10 @@ import { getOrCreateAnonId } from "../../lib/anonId"
 import { useRouter } from "next/navigation"
 import { Input } from "../ui/input"
 import FoodAutocomplete from "../ui/food-autocomplete"
-import { Loader2, Search, XCircle, ShieldCheck, Plus, Scale, Copy, Check } from "lucide-react"
+import { Loader2, Search, XCircle, ShieldCheck, Plus, Scale, Copy, Check, Calculator } from "lucide-react"
 import { toGrams, fromGrams, WeightUnit, formatWeight } from "../../lib/converters/weight-converter"
 import { copyToClipboard } from "../../lib/utils/clipboard"
+import PortionCalculator from "./portion-calculator"
 
 interface FoodResult {
   toxicityLevel: string
@@ -26,8 +27,8 @@ interface Ingredient {
 }
 
 interface HeroProps {
-  activeFeature: "f1" | "f2"
-  onFeatureChange: (feature: "f1" | "f2") => void
+  activeFeature: "f1" | "f2" | "f3"
+  onFeatureChange: (feature: "f1" | "f2" | "f3") => void
 }
 
 export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
@@ -231,14 +232,21 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
             <svg className="inline-block w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 256 256"><path d="M237.66,86.34l-60-60a8,8,0,0,0-11.32,0L37.11,155.57a44.77,44.77,0,0,0,63.32,63.32L212.32,107l22.21-7.4a8,8,0,0,0,3.13-13.25ZM89.11,207.57a28.77,28.77,0,0,1-40.68-40.68l28.8-28.8c8.47-2.9,21.75-4,39.07,5,10.6,5.54,20.18,8,28.56,8.73ZM205.47,92.41a8,8,0,0,0-3.13,1.93l-39.57,39.57c-8.47,2.9-21.75,4-39.07-5-10.6-5.54-20.18-8-28.56-8.73L172,43.31,217.19,88.5Z"></path></svg>
             {t("f1_title")}
           </button>
+          <button
+            onClick={() => onFeatureChange("f3")}
+            className={`flex-1 h-11 sm:h-12 px-2 sm:px-4 rounded-full text-sm sm:text-base font-medium transition-colors ${activeFeature === "f3" ? "bg-navy text-white" : "bg-slate-100 text-grey hover:bg-slate-200"}`}
+          >
+            <Calculator className="inline-block w-5 h-5 mr-2" />
+            {t("f3_title")}
+          </button>
         </div>
 
         {/* Hero Content */}
         <h1 className="font-display text-4xl font-bold text-foreground lg:text-5xl">
-          {activeFeature === "f2" ? t("food_safety_title") : t("nutrient_analysis_title")}
+          {activeFeature === "f2" ? t("food_safety_title") : activeFeature === "f3" ? t("f3_title") : t("nutrient_analysis_title")}
         </h1>
         <p className="mt-4 text-lg text-muted-foreground lg:text-xl">
-          {activeFeature === "f2" ? t("food_safety_desc") : t("nutrient_analysis_desc")}
+          {activeFeature === "f2" ? t("food_safety_desc") : activeFeature === "f3" ? t("f3_desc") : t("nutrient_analysis_desc")}
         </p>
 
         {activeFeature === "f2" && (
@@ -455,6 +463,9 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
             <p className="mt-2 text-sm text-red-600 font-medium">{t("promo_invalid")}</p>
           )}
         </div>
+        {activeFeature === "f3" && (
+          <PortionCalculator />
+        )}
       </div>
     </section>
   )

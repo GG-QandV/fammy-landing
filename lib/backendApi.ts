@@ -28,6 +28,52 @@ export interface F2CheckResult {
     explanation: string;
 }
 
+export interface PortionCalcInput {
+    target?: string;
+    subject_id?: string;
+    items?: { food_id: string; amount_grams: number }[];
+    recipe_id?: string;
+    portion_grams?: number;
+    period?: 'meal' | 'day' | 'week';
+    meals_per_day?: number;
+    lang?: string;
+}
+
+export interface PortionCalcResult {
+    subject: {
+        id: string;
+        name: string;
+        target: string;
+    } | null;
+    period: 'meal' | 'day' | 'week';
+    meals_per_day: number;
+    portion_grams: number;
+    total_grams_per_period: number;
+    nutrients: {
+        code: string;
+        name: string;
+        amount: number;
+        unit: string;
+    }[];
+    per_100g: {
+        code: string;
+        name: string;
+        amount: number;
+        unit: string;
+    }[];
+    toxicity_warnings: {
+        food_id: string;
+        food_name: string;
+        toxicity_level: string;
+        notes: string | null;
+    }[];
+    allergen_warnings: {
+        food_id: string;
+        food_name: string;
+        matched_allergen: string;
+    }[];
+}
+
 /**
  * Search foods by query
  * GET /api/v1/foods/search?q=chicken
@@ -75,8 +121,10 @@ export async function checkFood(
 
     console.log('[backendApi] Sending request:', {
         url,
-        headers: { 'x-session-id': anonId,
-        'Accept-Language': request.lang || 'en', hasAuth: !!token },
+        headers: {
+            'x-session-id': anonId,
+            'Accept-Language': request.lang || 'en', hasAuth: !!token
+        },
         body: requestBody
     });
 
@@ -107,5 +155,42 @@ export async function checkFood(
     const data = await response.json();
     console.log('[backendApi] Success response:', JSON.stringify(data, null, 2));
     // Backend returns { success: true, data: { results: { safe: [], warnings: [] }, overall_safe: boolean } }
+    return data.data;
+}
+
+/**
+ * Calculate portions and nutrients
+ * POST /api/v1/functions/portion-calc
+ */
+export async function calculatePortion(
+    request: PortionCalcInput,
+    anonId: string
+): Promise<PortionCalcResult> {
+    const url = `${BACKEND_BASE_URL}/api/v1/functions/portion-calc`;
+
+    const token = GUEST_TOKEN;
+
+    const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+        'x-session-id': anonId,
+        'Accept-Language': request.lang || 'en',
+    };
+
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(request),
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Backend API error: ${response.status} - ${errorText}`);
+    }
+
+    const data = await response.json();
     return data.data;
 }

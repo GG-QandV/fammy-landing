@@ -9,7 +9,7 @@ import WaitlistCTA from "@/components/landing/waitlist-cta"
 import { Footer } from "@/components/landing/footer"
 
 export default function Page() {
-  const [activeFeature, setActiveFeature] = useState<"f1" | "f2">("f2")
+  const [activeFeature, setActiveFeature] = useState<"f1" | "f2" | "f3">("f2")
 
   return (
     <>
