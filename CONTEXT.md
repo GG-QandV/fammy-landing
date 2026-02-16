@@ -1,8 +1,8 @@
 # Landing V3 — Контекст разработки
 
-## Текущая фаза: Phase 0 (подготовка)
-## Что сделано: Ветка `landing-v3` создана, CONTEXT.md создан
-## Следующий шаг: Phase 1 — создать lib/species-config.ts, lib/functions-config.ts, i18n append
+## Текущая фаза: Phase 2 (каркас draft + страницы)
+## Что сделано: Phase 0 (ветка, CONTEXT.md), Phase 1 (species-config, functions-config, i18n)
+## Следующий шаг: Создать app/draft/page.tsx, страницы инструментов, components/landing-v3/ скелеты
 
 ## Принятые решения
 - Без Universal Search (не нужен на этом этапе)
@@ -17,5 +17,6 @@
 ## Известные проблемы
 - Бэкенд поддерживает только dog/cat/human (расширение через 1-2 нед.)
 - F3-F6 не реализованы → заглушки ComingSoon
+- i18n: species_dog/cat/human уже существовали — в v3 блоке не дублировать
 
-## Последний MCP checkpoint: —
+## Последний MCP checkpoint: 2026-02-16 Phase 1 complete
