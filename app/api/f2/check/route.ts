@@ -116,10 +116,10 @@ export async function POST(request: NextRequest) {
 
         // Transform backend response to simple format for frontend
         const safeLabels: Record<string, { name: string; explanation: string }> = {
-            en: { name: 'Safe', explanation: 'This food is safe for your pet.' },
-            ua: { name: 'Безпечно', explanation: 'Ця їжа безпечна для вашого улюбленця.' },
-            es: { name: 'Seguro', explanation: 'Este alimento es seguro para tu mascota.' },
-            fr: { name: 'Sûr', explanation: 'Cet aliment est sûr pour votre animal.' },
+            en: { name: 'Non-toxic', explanation: 'This food is non-toxic for your pet.' },
+            ua: { name: 'Нетоксично', explanation: 'Ця їжа не токсична для вашого улюбленця.' },
+            es: { name: 'No tóxico', explanation: 'Este alimento no es tóxico para tu mascota.' },
+            fr: { name: 'Non toxique', explanation: 'Cet aliment n\'est pas toxique pour votre animal.' },
         };
         const safeLang = body.lang && ['en', 'ua', 'es', 'fr'].includes(body.lang) ? body.lang : 'en';
         let toxicityLevel: 'safe' | 'caution' | 'moderate' | 'high' | 'critical' | 'deadly' = 'safe';
