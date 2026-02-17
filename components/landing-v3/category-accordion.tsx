@@ -61,7 +61,7 @@ export function CategoryAccordion({ onSelectTool, className }: CategoryAccordion
                                         </span>
                                         {!func.available && (
                                             <Badge variant="secondary" className="text-[10px] h-5">
-                                                {t('coming_soon')}
+                                                {t('coming_soon' as any)}
                                             </Badge>
                                         )}
                                     </Button>

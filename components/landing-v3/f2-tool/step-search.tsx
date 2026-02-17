@@ -88,10 +88,16 @@ export function StepSearch({ species, onResult, className }: StepSearchProps) {
     };
 
     return (
-        <div className={cn('space-y-4', className)}>
-            <div className="flex items-center gap-2 mb-2 text-sm text-muted-foreground">
-                <span>{species.emoji}</span>
-                <span>{t(species.i18nKey as Parameters<typeof t>[0])}</span>
+        <div className={cn('space-y-4 w-full', className)}>
+            <div className="flex flex-col items-center justify-center gap-3 mb-6">
+                <img
+                    src={`/icons/pet-${species.id}.svg`}
+                    alt=""
+                    className="w-12 h-12 opacity-80"
+                />
+                <span className="text-xl font-bold text-[#4A5A7A]">
+                    {t(species.i18nKey as Parameters<typeof t>[0])}
+                </span>
             </div>
 
             <div className="space-y-3">

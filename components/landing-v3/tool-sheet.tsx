@@ -53,33 +53,19 @@ function ToolSheetInner({
 
     return (
         <div className="flex flex-col h-full">
-            {/* Step navigation header */}
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                     {canGoBack && (
                         <Button
                             variant="ghost"
                             size="icon"
-                            className="h-8 w-8"
+                            className="h-8 w-8 text-slate-400 hover:text-slate-600"
                             onClick={() => onStepChange(currentStep - 1)}
                         >
                             <ArrowLeft className="h-4 w-4" />
                         </Button>
                     )}
-                    <span className="text-sm text-muted-foreground">
-                        {currentStep + 1} / {steps.length}
-                    </span>
                 </div>
-
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-xs gap-1"
-                    onClick={() => router.push(func.route)}
-                >
-                    {t('open_full_page')}
-                    <ExternalLink className="h-3 w-3" />
-                </Button>
             </div>
 
             {/* Step indicators */}
@@ -127,16 +113,20 @@ export function ToolSheet({
             <Sheet open={open} onOpenChange={onOpenChange}>
                 <SheetContent
                     side="bottom"
-                    className={cn('h-[85vh] flex flex-col', className)}
+                    className={cn('h-[85vh] flex flex-col rounded-t-2xl border-none shadow-2xl bg-white p-0 overflow-hidden', className)}
                 >
-                    <SheetHeader>
-                        <SheetTitle>
-                            <span className="mr-2">{func.emoji}</span>
+                    <SheetHeader className="p-6 bg-[#4A5A7A] text-white">
+                        <SheetTitle className="text-xl font-bold text-white flex items-center gap-3">
+                            <img
+                                src={`/icons/tool-${func.id}.svg`}
+                                alt=""
+                                className="w-6 h-6 brightness-0 invert"
+                            />
                             {t(func.i18nKey as Parameters<typeof t>[0])}
                         </SheetTitle>
-                        <SheetDescription>{stepTitle}</SheetDescription>
+                        <SheetDescription className="text-sm text-slate-200">{stepTitle}</SheetDescription>
                     </SheetHeader>
-                    <div className="flex-1 mt-4 overflow-hidden">
+                    <div className="flex-1 mt-0 p-6 overflow-hidden">
                         <ToolSheetInner
                             func={func}
                             steps={steps}
@@ -151,15 +141,19 @@ export function ToolSheet({
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className={cn('sm:max-w-lg max-h-[80vh] flex flex-col', className)}>
-                <DialogHeader>
-                    <DialogTitle>
-                        <span className="mr-2">{func.emoji}</span>
-                        {t(func.i18nKey as Parameters<typeof t>[0])}
+            <DialogContent className={cn('sm:max-w-lg max-h-[80vh] flex flex-col rounded-2xl border-none shadow-2xl bg-white p-0 overflow-hidden', className)}>
+                <DialogHeader className="p-6 bg-[#4A5A7A] text-white">
+                    <DialogTitle className="text-xl font-bold text-white flex items-center gap-3">
+                        <img
+                            src={`/icons/tool-${func.id}.svg`}
+                            alt=""
+                            className="w-6 h-6 brightness-0 invert"
+                        />
+                        {t(func.id === 'f2' ? 'fn_f2_title' : (func.i18nKey as any))}
                     </DialogTitle>
-                    <DialogDescription>{stepTitle}</DialogDescription>
+                    <DialogDescription className="text-sm text-slate-200">{stepTitle}</DialogDescription>
                 </DialogHeader>
-                <div className="flex-1 overflow-hidden">
+                <div className="flex-1 p-6 overflow-hidden">
                     <ToolSheetInner
                         func={func}
                         steps={steps}

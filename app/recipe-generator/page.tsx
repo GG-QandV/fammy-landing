@@ -1,4 +1,8 @@
 import { Metadata } from "next"
+import { Nav } from "@/components/landing/nav"
+import { Footer } from "@/components/landing/footer"
+import { ComingSoon } from "@/components/landing-v3/shared/coming-soon"
+import { functions } from "@/lib/functions-config"
 
 export const metadata: Metadata = {
     title: "Recipe Generator — Fammy.pet",
@@ -15,9 +19,12 @@ export const metadata: Metadata = {
 
 export default function RecipeGeneratorPage() {
     return (
-        <main className="mx-auto max-w-3xl px-4 py-16">
-            <h1 className="text-3xl font-bold text-navy">📋 Recipe Generator</h1>
-            <p className="mt-4 text-muted-foreground">Coming soon.</p>
-        </main>
+        <div className="flex flex-col min-h-screen">
+            <Nav />
+            <main className="flex-1 flex flex-col items-center justify-center">
+                <ComingSoon func={functions['f4']} />
+            </main>
+            <Footer />
+        </div>
     )
 }

@@ -79,17 +79,29 @@ function PetSelectorContent({
                         className={cn(
                             'h-20 flex flex-col items-center justify-center gap-1 text-base',
                             'hover:bg-accent hover:border-primary/50 transition-all',
-                            !isSpeciesSupported(species) && 'opacity-60',
+                            'hover:bg-accent hover:border-primary/50 transition-all',
+                            !isSpeciesSupported(species) && 'cursor-default',
                         )}
                         onClick={() => handleSpeciesClick(species)}
                     >
-                        <span className="text-3xl">{species.emoji}</span>
-                        <span className="text-sm font-medium">
-                            {t(species.i18nKey as Parameters<typeof t>[0])}
-                        </span>
+                        <div className={cn("relative", !isSpeciesSupported(species) && "opacity-60 grayscale")}>
+                            <span className="text-3xl">{species.emoji}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <span className={cn("text-sm font-medium", !isSpeciesSupported(species) && "opacity-60 grayscale")}>
+                                {t(species.i18nKey as Parameters<typeof t>[0])}
+                            </span>
+                            {!isSpeciesSupported(species) && (
+                                <img
+                                    src="/icons/under-construction.png"
+                                    alt=""
+                                    className="w-10 h-10 object-contain shrink-0 grayscale-0 opacity-100"
+                                />
+                            )}
+                        </div>
                         {!isSpeciesSupported(species) && (
                             <span className="text-[10px] text-muted-foreground">
-                                {t('coming_soon')}
+                                {t('coming_soon' as any)}
                             </span>
                         )}
                     </Button>
@@ -145,7 +157,7 @@ function PetSelectorContent({
                     );
                 })}
             </div>
-        </ScrollArea>
+        </ScrollArea >
     );
 }
 
@@ -164,18 +176,27 @@ function SpeciesButton({
             variant="outline"
             size="sm"
             className={cn(
-                'justify-start gap-2 h-9',
-                !supported && 'opacity-60',
+                'justify-start gap-2 h-10 relative',
+                !supported && 'cursor-default',
             )}
             onClick={onClick}
         >
-            <span>{species.emoji}</span>
-            <span className="truncate text-xs">
+            <span className={cn("relative", !supported && "opacity-60 grayscale")}>
+                {species.emoji}
+            </span>
+            <span className={cn("truncate text-xs", !supported && "opacity-60 grayscale")}>
                 {t(species.i18nKey as Parameters<typeof t>[0])}
             </span>
             {!supported && (
-                <span className="ml-auto text-[9px] text-muted-foreground whitespace-nowrap">
-                    {t('coming_soon')}
+                <img
+                    src="/icons/under-construction.png"
+                    alt=""
+                    className="w-6 h-6 object-contain shrink-0 ml-1 grayscale-0 opacity-100"
+                />
+            )}
+            {!supported && (
+                <span className="ml-auto text-[9px] text-muted-foreground whitespace-nowrap opacity-60 grayscale">
+                    {t('coming_soon' as any)}
                 </span>
             )}
         </Button>

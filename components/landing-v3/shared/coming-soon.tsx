@@ -37,11 +37,11 @@ export function ComingSoon({ func, className }: ComingSoonProps) {
 
             <div className="inline-flex items-center gap-2 rounded-full bg-amber-500/10 px-4 py-2 text-amber-600 dark:text-amber-400">
                 <Clock className="h-4 w-4" />
-                <span className="text-sm font-medium">{t('coming_soon')}</span>
+                <span className="text-sm font-medium">{t('coming_soon' as any)}</span>
             </div>
 
             <p className="text-sm text-muted-foreground max-w-xs">
-                {t('coming_soon_desc')}
+                {t('coming_soon_desc' as any)}
             </p>
 
             <Button

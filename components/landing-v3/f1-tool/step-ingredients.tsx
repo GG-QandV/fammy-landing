@@ -20,12 +20,13 @@ interface Ingredient {
 interface StepIngredientsProps {
     species: SpeciesEntry;
     onSubmit: (ingredients: Ingredient[]) => void;
+    hideSpeciesIndicator?: boolean;
     className?: string;
 }
 
 export type { Ingredient };
 
-export function StepIngredients({ species, onSubmit, className }: StepIngredientsProps) {
+export function StepIngredients({ species, onSubmit, hideSpeciesIndicator, className }: StepIngredientsProps) {
     const { t } = useLanguage();
     const [ingredients, setIngredients] = useState<Ingredient[]>([]);
     const [weightUnit, setWeightUnit] = useState<WeightUnit>('g');
@@ -45,11 +46,13 @@ export function StepIngredients({ species, onSubmit, className }: StepIngredient
     };
 
     return (
-        <div className={cn('space-y-4', className)}>
-            <div className="flex items-center gap-2 mb-2 text-sm text-muted-foreground">
-                <span>{species.emoji}</span>
-                <span>{t(species.i18nKey as Parameters<typeof t>[0])}</span>
-            </div>
+        <div className={cn('space-y-4 w-full', className)}>
+            {!hideSpeciesIndicator && (
+                <div className="flex items-center gap-2 mb-2 text-sm text-muted-foreground">
+                    <span>{species.emoji}</span>
+                    <span>{t(species.i18nKey as Parameters<typeof t>[0])}</span>
+                </div>
+            )}
 
             <div className="rounded-xl border bg-card p-4 space-y-3">
                 <div className="flex items-center justify-between">

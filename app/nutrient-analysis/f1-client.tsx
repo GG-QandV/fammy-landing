@@ -1,6 +1,8 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
+import { ArrowLeft } from "lucide-react"
 import { useLanguage } from "@/context/LanguageContext"
 import { Nav } from "@/components/landing/nav"
 import { Footer } from "@/components/landing/footer"
@@ -28,6 +30,13 @@ export default function NutrientAnalysisClient() {
         <>
             <Nav />
             <main className="mx-auto max-w-2xl px-4 py-16 flex flex-col items-center text-center">
+                <Link
+                    href="/draft"
+                    className="flex items-center gap-2 text-sm text-slate-500 hover:text-[#4A5A7A] transition-colors mb-6 group"
+                >
+                    <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+                    {t('back_to_home' as any)}
+                </Link>
                 <h1 className="text-3xl font-bold flex flex-col items-center gap-3">
                     <img
                         src={`/icons/tool-${func.id}.svg`}

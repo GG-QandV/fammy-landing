@@ -67,7 +67,7 @@ export function HeroV3({ onChooseTool, className }: HeroV3Props) {
                     className="mt-8 h-14 px-8 text-base"
                     onClick={handleChooseTool}
                 >
-                    {t('choose_tool')}
+                    {t('choose_tool' as any)}
                 </Button>
 
                 {/* Promo code */}
