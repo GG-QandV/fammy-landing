@@ -217,6 +217,8 @@ export const translations = {
         step_select_species: 'Select your pet',
         step_search_food: 'Search food',
         step_result: 'Result',
+        all_in_one_app: 'Smart AI for Your Pet',
+        app_slogan_desc: 'Everything for safety and health in one app',
     },
     es: {
         feature_select_title: '¿Qué te gustaría verificar hoy?',
@@ -430,6 +432,8 @@ export const translations = {
         step_select_species: 'Selecciona tu mascota',
         step_search_food: 'Buscar alimento',
         step_result: 'Resultado',
+        all_in_one_app: 'IA Inteligente para tu Mascota',
+        app_slogan_desc: 'Todo para la seguridad и salud en una sola app',
     },
     fr: {
         feature_select_title: 'Que souhaitez-vous vérifier aujourd hui ?',
@@ -643,6 +647,8 @@ export const translations = {
         step_select_species: 'Sélectionnez votre animal',
         step_search_food: 'Chercher un aliment',
         step_result: 'Résultat',
+        all_in_one_app: 'IA Intelligente pour votre Animal',
+        app_slogan_desc: 'Tout pour la sécurité et la santé dans une seule app',
     },
     ua: {
         feature_select_title: 'Що ви хочете перевірити сьогодні?',
@@ -798,7 +804,8 @@ export const translations = {
         total_for_period: 'Разом за',
         empty_f3_results: 'Оберіть продукт та період для перегляду результатів',
         f3_error_generic: 'Не вдалося розрахувати порцію. Спробуйте ще раз.',
-
+        all_in_one_app: 'Розумний AI для вашого улюбленця',
+        app_slogan_desc: "Все для безпеки та здоров'я в одному додатку",
         // --- v3 Architecture Keys ---
         category_safety: 'Безпека харчування',
         category_nutrition: 'Харчування та дієта',

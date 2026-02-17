@@ -1,15 +1,16 @@
 "use client"
+
 import { useState, useMemo } from "react"
 import { Nav } from "@/components/landing/nav"
 import { Footer } from "@/components/landing/footer"
 import SupportCard from "@/components/landing/support-card"
 import WaitlistCTA from "@/components/landing/waitlist-cta"
 import { MiniFounder } from "@/components/landing/mini-founder"
-import { functions, type FunctionId } from "@/lib/functions-config"
+import { functions, type FunctionId, type CategoryId } from "@/lib/functions-config"
 import type { SpeciesEntry } from "@/lib/species-config"
-import { HeroV3 } from "@/components/landing-v3/hero-v3"
-import { DesktopLayout } from "@/components/landing-v3/desktop-layout"
-import { CategoryAccordion } from "@/components/landing-v3/category-accordion"
+import { CategoryBayan } from "@/components/landing-v3/category-bayan"
+import { CategorySheet } from "@/components/landing-v3/category-sheet"
+import { PromoBlock } from "@/components/landing-v3/promo-block"
 import { ToolSheet, type ToolSheetStep } from "@/components/landing-v3/tool-sheet"
 import { ComingSoon } from "@/components/landing-v3/shared/coming-soon"
 import { StepSpecies } from "@/components/landing-v3/f2-tool/step-species"
@@ -18,15 +19,21 @@ import { StepResult as F2StepResult } from "@/components/landing-v3/f2-tool/step
 import { StepIngredients, type Ingredient } from "@/components/landing-v3/f1-tool/step-ingredients"
 import { StepAnalyze, type F1Result } from "@/components/landing-v3/f1-tool/step-analyze"
 import { StepResult as F1StepResult } from "@/components/landing-v3/f1-tool/step-result"
+import { useLanguage } from "@/context/LanguageContext"
 
 /**
  * Draft landing page — development-only route.
- * Phase 6: Full assembly with HeroV3 + DesktopLayout + CategoryAccordion + ToolSheet.
+ * Phase 7: Clean 'Bayan' layout. No HeroV3, no sidebar.
+ * Slogan -> Category Buttons -> Promo -> Support.
  */
 export default function DraftPage() {
-    // Tool selection state
+    const { t } = useLanguage()
+
+    // UI state
+    const [activeCategory, setActiveCategory] = useState<CategoryId | null>(null)
+    const [categorySheetOpen, setCategorySheetOpen] = useState(false)
     const [activeTool, setActiveTool] = useState<FunctionId | null>(null)
-    const [sheetOpen, setSheetOpen] = useState(false)
+    const [toolSheetOpen, setToolSheetOpen] = useState(false)
 
     // F2 state
     const [f2Species, setF2Species] = useState<SpeciesEntry | null>(null)
@@ -38,6 +45,11 @@ export default function DraftPage() {
     const [f1Ingredients, setF1Ingredients] = useState<Ingredient[]>([])
     const [f1Result, setF1Result] = useState<F1Result | null>(null)
     const [f1Step, setF1Step] = useState(0)
+
+    const handleCategoryClick = (catId: CategoryId) => {
+        setActiveCategory(catId)
+        setCategorySheetOpen(true)
+    }
 
     const handleToolSelect = (funcId: FunctionId) => {
         setActiveTool(funcId)
@@ -51,7 +63,7 @@ export default function DraftPage() {
             setF1Result(null)
             setF1Step(0)
         }
-        setSheetOpen(true)
+        setToolSheetOpen(true)
     }
 
     // F2 wizard steps
@@ -125,68 +137,81 @@ export default function DraftPage() {
 
     const activeFunc = activeTool ? functions[activeTool] : null
 
-    const sidebarContent = (
-        <CategoryAccordion onSelectTool={handleToolSelect} />
-    )
-
-    const mainContent = (
-        <>
-            <HeroV3 onChooseTool={() => handleToolSelect('f2')} />
-
-            {/* ToolSheet modals */}
-            {activeFunc && activeFunc.available && activeTool === 'f2' && (
-                <ToolSheet
-                    open={sheetOpen}
-                    onOpenChange={setSheetOpen}
-                    func={activeFunc}
-                    steps={f2Steps}
-                    currentStep={f2Step}
-                    onStepChange={setF2Step}
-                />
-            )}
-            {activeFunc && activeFunc.available && activeTool === 'f1' && (
-                <ToolSheet
-                    open={sheetOpen}
-                    onOpenChange={setSheetOpen}
-                    func={activeFunc}
-                    steps={f1Steps}
-                    currentStep={f1Step}
-                    onStepChange={setF1Step}
-                />
-            )}
-            {activeFunc && !activeFunc.available && (
-                <ToolSheet
-                    open={sheetOpen}
-                    onOpenChange={setSheetOpen}
-                    func={activeFunc}
-                    steps={[{
-                        id: 'coming-soon',
-                        i18nKey: 'coming_soon',
-                        content: <ComingSoon func={activeFunc} />,
-                    }]}
-                    currentStep={0}
-                    onStepChange={() => { }}
-                />
-            )}
-
-            <div className="mt-12 space-y-0">
-                <SupportCard />
-                <WaitlistCTA />
-                <MiniFounder />
-            </div>
-        </>
-    )
-
     return (
-        <>
+        <div className="flex flex-col min-h-screen">
             <Nav />
-            <main className="min-h-screen">
-                <DesktopLayout
-                    sidebar={sidebarContent}
-                    main={mainContent}
+
+            <main className="flex-1">
+                <div className="mx-auto max-w-2xl px-5 pt-16 pb-12 text-center lg:pt-24 lg:pb-16 font-display">
+                    {/* Slogan Placeholder (should be provided by user or updated in i18n) */}
+                    <h1 className="text-[2.5rem] leading-[1.1] font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+                        {t('all_in_one_app' as any) || "Розумний помічник для вашого улюбленця"}
+                    </h1>
+                    <p className="mt-6 text-xl text-muted-foreground lg:text-2xl">
+                        {t('app_slogan_desc' as any) || "Все що потрібно для здоров'я та безпеки в одному додатку"}
+                    </p>
+
+                    <CategoryBayan
+                        onSelectCategory={handleCategoryClick}
+                        className="mt-12"
+                    />
+                </div>
+
+                <div className="mx-auto max-w-xl px-5 pb-20">
+                    <PromoBlock className="mb-12" />
+
+                    <div className="space-y-0">
+                        <SupportCard />
+                        <WaitlistCTA />
+                        <MiniFounder />
+                    </div>
+                </div>
+
+                {/* Overlays */}
+                <CategorySheet
+                    open={categorySheetOpen}
+                    onOpenChange={setCategorySheetOpen}
+                    categoryId={activeCategory}
+                    onSelectTool={handleToolSelect}
                 />
+
+                {activeFunc && activeFunc.available && activeTool === 'f2' && (
+                    <ToolSheet
+                        open={toolSheetOpen}
+                        onOpenChange={setToolSheetOpen}
+                        func={activeFunc}
+                        steps={f2Steps}
+                        currentStep={f2Step}
+                        onStepChange={setF2Step}
+                    />
+                )}
+                {activeFunc && activeFunc.available && activeTool === 'f1' && (
+                    <ToolSheet
+                        open={toolSheetOpen}
+                        onOpenChange={setToolSheetOpen}
+                        func={activeFunc}
+                        steps={f1Steps}
+                        currentStep={f1Step}
+                        onStepChange={setF1Step}
+                    />
+                )}
+                {activeFunc && !activeFunc.available && (
+                    <ToolSheet
+                        open={toolSheetOpen}
+                        onOpenChange={setToolSheetOpen}
+                        func={activeFunc}
+                        steps={[{
+                            id: 'coming-soon',
+                            i18nKey: 'coming_soon',
+                            content: <ComingSoon func={activeFunc} />,
+                        }]}
+                        currentStep={0}
+                        onStepChange={() => { }}
+                    />
+                )}
             </main>
+
             <Footer />
-        </>
+        </div>
     )
 }
