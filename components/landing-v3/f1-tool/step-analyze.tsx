@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { getOrCreateAnonId } from '@/lib/anonId';
 import { Button } from '@/components/ui/button';
@@ -32,8 +32,12 @@ export function StepAnalyze({ species, ingredients, onResult, className }: StepA
     const { t, language } = useLanguage();
     const [loading, setLoading] = useState(false);
 
+    useEffect(() => {
+        handleAnalyze();
+    }, []);
+
     const handleAnalyze = async () => {
-        if (ingredients.length === 0) return;
+        if (ingredients.length === 0 || loading) return;
 
         setLoading(true);
         try {
@@ -75,34 +79,22 @@ export function StepAnalyze({ species, ingredients, onResult, className }: StepA
     };
 
     return (
-        <div className={cn('space-y-4', className)}>
-            <div className="flex items-center gap-2 mb-2 text-sm text-muted-foreground">
-                <span>{species.emoji}</span>
-                <span>{t(species.i18nKey as Parameters<typeof t>[0])}</span>
+        <div className={cn('flex flex-col items-center justify-center py-12 space-y-4', className)}>
+            <div className="relative">
+                <div className="absolute inset-0 animate-ping rounded-full bg-[#4A5A7A]/10" />
+                <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-slate-50 border border-slate-100 shadow-sm">
+                    <Loader2 className="h-8 w-8 animate-spin text-[#4A5A7A]" />
+                </div>
             </div>
 
-            {/* Ingredients summary */}
-            <div className="rounded-xl border bg-card p-4 space-y-1">
-                <p className="text-sm font-medium mb-2">
-                    {t('f1_hint')} ({ingredients.length})
+            <div className="text-center space-y-1">
+                <h3 className="font-semibold text-slate-900">
+                    {t('analyzing' as any) || 'Аналізуємо нутрієнти...'}
+                </h3>
+                <p className="text-sm text-slate-500">
+                    {t('please_wait' as any) || 'Це займе всього кілька секунд'}
                 </p>
-                {ingredients.map((ing, i) => (
-                    <p key={i} className="text-sm text-muted-foreground">
-                        {ing.foodName} — {ing.grams}g
-                    </p>
-                ))}
             </div>
-
-            <Button
-                onClick={handleAnalyze}
-                disabled={loading || ingredients.length === 0}
-                className="w-full h-12"
-            >
-                {loading ? (
-                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                ) : null}
-                {t('analyze_button')}
-            </Button>
         </div>
     );
 }

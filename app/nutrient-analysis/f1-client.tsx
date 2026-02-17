@@ -19,65 +19,53 @@ export default function NutrientAnalysisClient() {
     const { t } = useLanguage()
     const func = functions.f1
 
-    const [species, setSpecies] = useState<SpeciesEntry | null>(null)
+    const [species] = useState<SpeciesEntry | null>({ id: 'dog', emoji: '🐕', i18nKey: 'species_dog', backendTarget: 'dog', group: 'popular' })
     const [ingredients, setIngredients] = useState<Ingredient[]>([])
     const [result, setResult] = useState<F1Result | null>(null)
-    const [step, setStep] = useState(0)
+    const [step, setStep] = useState(1) // Start with ingredients
 
     return (
         <>
             <Nav />
-            <main className="mx-auto max-w-2xl px-4 py-16">
-                <h1 className="text-3xl font-bold">
-                    <span className="mr-2">{func.emoji}</span>
-                    {t(func.i18nKey as Parameters<typeof t>[0])}
+            <main className="mx-auto max-w-2xl px-4 py-16 flex flex-col items-center text-center">
+                <h1 className="text-3xl font-bold flex flex-col items-center gap-3">
+                    <img
+                        src={`/icons/tool-${func.id}.svg`}
+                        alt=""
+                        className="w-12 h-12 opacity-80"
+                    />
+                    {t(func.i18nKey as any)}
                 </h1>
-                <p className="mt-2 text-muted-foreground">
-                    {t(func.i18nDescKey as Parameters<typeof t>[0])}
+                <p className="mt-4 text-muted-foreground max-w-lg">
+                    {t(func.i18nDescKey as any)}
                 </p>
 
-                <div className="mt-8">
-                    {step === 0 && (
-                        <StepSpecies
-                            onSelect={(sp) => { setSpecies(sp); setStep(1) }}
-                        />
-                    )}
+                <div className="mt-8 w-full max-w-xl text-left">
                     {step === 1 && species && (
                         <div className="space-y-4">
-                            <button
-                                onClick={() => setStep(0)}
-                                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                            >
-                                ← {t('back')}
-                            </button>
                             <StepIngredients
                                 species={species}
-                                onSubmit={(ings) => { setIngredients(ings); setStep(2) }}
+                                hideSpeciesIndicator
+                                onSubmit={(ings: any) => { setIngredients(ings); setStep(2) }}
                             />
                         </div>
                     )}
                     {step === 2 && species && ingredients.length > 0 && (
                         <div className="space-y-4">
-                            <button
-                                onClick={() => setStep(1)}
-                                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                            >
-                                ← {t('back')}
-                            </button>
                             <StepAnalyze
                                 species={species}
                                 ingredients={ingredients}
-                                onResult={(r) => { setResult(r); setStep(3) }}
+                                onResult={(r: any) => { setResult(r); setStep(3) }}
                             />
                         </div>
                     )}
                     {step === 3 && result && (
                         <div className="space-y-4">
                             <button
-                                onClick={() => { setResult(null); setStep(2) }}
+                                onClick={() => { setResult(null); setStep(1) }}
                                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                             >
-                                ← {t('back')}
+                                ← {t('back' as any)}
                             </button>
                             <StepResult result={result} ingredients={ingredients} />
                         </div>

@@ -95,34 +95,27 @@ export default function DraftPage() {
     ], [f2Species, f2Result])
 
     // F1 wizard steps
+    const f1DefaultSpecies: SpeciesEntry = { id: 'dog', emoji: '🐕', i18nKey: 'species_dog', backendTarget: 'dog', group: 'popular' }
     const f1Steps: ToolSheetStep[] = useMemo(() => [
         {
-            id: 'species',
-            i18nKey: 'step_select_species',
+            id: 'ingredients',
+            i18nKey: 'step_search_food',
             content: (
-                <StepSpecies
-                    onSelect={(sp) => { setF1Species(sp); setF1Step(1) }}
+                <StepIngredients
+                    species={f1DefaultSpecies}
+                    hideSpeciesIndicator
+                    onSubmit={(ings) => { setF1Ingredients(ings); setF1Step(1) }}
                 />
             ),
         },
         {
-            id: 'ingredients',
-            i18nKey: 'step_search_food',
-            content: f1Species ? (
-                <StepIngredients
-                    species={f1Species}
-                    onSubmit={(ings) => { setF1Ingredients(ings); setF1Step(2) }}
-                />
-            ) : null,
-        },
-        {
             id: 'analyze',
             i18nKey: 'step_result',
-            content: f1Species && f1Ingredients.length > 0 ? (
+            content: f1Ingredients.length > 0 ? (
                 <StepAnalyze
-                    species={f1Species}
+                    species={f1DefaultSpecies}
                     ingredients={f1Ingredients}
-                    onResult={(r) => { setF1Result(r); setF1Step(3) }}
+                    onResult={(r) => { setF1Result(r); setF1Step(2) }}
                 />
             ) : null,
         },
@@ -133,34 +126,34 @@ export default function DraftPage() {
                 <F1StepResult result={f1Result} ingredients={f1Ingredients} />
             ) : null,
         },
-    ], [f1Species, f1Ingredients, f1Result])
+    ], [f1Ingredients, f1Result])
 
     const activeFunc = activeTool ? functions[activeTool] : null
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen bg-background">
             <Nav />
 
             <main className="flex-1">
-                <div className="mx-auto max-w-2xl px-5 pt-16 pb-12 text-center lg:pt-24 lg:pb-16 font-display">
-                    {/* Slogan Placeholder (should be provided by user or updated in i18n) */}
-                    <h1 className="text-[2.5rem] leading-[1.1] font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-                        {t('all_in_one_app' as any) || "Розумний помічник для вашого улюбленця"}
+                <div className="mx-auto max-w-4xl px-5 pt-20 pb-12 text-center lg:pt-32 lg:pb-16">
+                    <h1 className="text-4xl leading-[1.1] font-extrabold tracking-tight text-slate-900 sm:text-6xl lg:text-7xl">
+                        {t('all_in_one_app' as any)}
                     </h1>
-                    <p className="mt-6 text-xl text-muted-foreground lg:text-2xl">
-                        {t('app_slogan_desc' as any) || "Все що потрібно для здоров'я та безпеки в одному додатку"}
+                    <p className="mt-8 text-lg text-slate-500 sm:text-xl lg:text-2xl max-w-2xl mx-auto">
+                        {t('app_slogan_desc' as any)}
                     </p>
 
                     <CategoryBayan
                         onSelectCategory={handleCategoryClick}
-                        className="mt-12"
+                        activeCategory={activeCategory || undefined}
+                        className="mt-16"
                     />
                 </div>
 
-                <div className="mx-auto max-w-xl px-5 pb-20">
-                    <PromoBlock className="mb-12" />
+                <div className="mx-auto max-w-xl px-5 pb-24">
+                    <PromoBlock />
 
-                    <div className="space-y-0">
+                    <div className="mt-20 space-y-12">
                         <SupportCard />
                         <WaitlistCTA />
                         <MiniFounder />
@@ -172,7 +165,11 @@ export default function DraftPage() {
                     open={categorySheetOpen}
                     onOpenChange={setCategorySheetOpen}
                     categoryId={activeCategory}
-                    onSelectTool={handleToolSelect}
+                    onSelectTool={(tid) => {
+                        setCategorySheetOpen(false)
+                        // Small delay to prevent transition conflict
+                        setTimeout(() => handleToolSelect(tid), 150)
+                    }}
                 />
 
                 {activeFunc && activeFunc.available && activeTool === 'f2' && (
@@ -190,9 +187,41 @@ export default function DraftPage() {
                         open={toolSheetOpen}
                         onOpenChange={setToolSheetOpen}
                         func={activeFunc}
-                        steps={f1Steps}
+                        steps={[
+                            {
+                                id: 'ingredients',
+                                i18nKey: 'step_search_food',
+                                content: (
+                                    <StepIngredients
+                                        species={f1DefaultSpecies}
+                                        hideSpeciesIndicator
+                                        onSubmit={(ings) => {
+                                            setF1Ingredients(ings);
+                                            // Trigger analysis immediately
+                                            setF1Step(1);
+                                        }}
+                                    />
+                                ),
+                            },
+                            {
+                                id: 'result',
+                                i18nKey: 'step_result',
+                                content: !f1Result ? (
+                                    <StepAnalyze
+                                        species={f1DefaultSpecies}
+                                        ingredients={f1Ingredients}
+                                        onResult={(r) => setF1Result(r)}
+                                    />
+                                ) : (
+                                    <F1StepResult result={f1Result} ingredients={f1Ingredients} />
+                                ),
+                            }
+                        ]}
                         currentStep={f1Step}
-                        onStepChange={setF1Step}
+                        onStepChange={(s) => {
+                            if (s === 0) setF1Result(null); // Reset result when going back to ingredients
+                            setF1Step(s);
+                        }}
                     />
                 )}
                 {activeFunc && !activeFunc.available && (
