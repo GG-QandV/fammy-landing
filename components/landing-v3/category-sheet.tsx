@@ -80,11 +80,11 @@ export function CategorySheet({ open, onOpenChange, categoryId, onSelectTool }: 
                                     <div className="mt-3 flex justify-end">
                                         <Link
                                             href={tool.route}
-                                            className="text-xs text-slate-400 hover:text-[#546a8c] flex items-center gap-1"
+                                            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-500 border border-slate-200 rounded-full hover:text-[#4A5A7A] hover:border-[#4A5A7A]/30 hover:bg-slate-50 transition-all shadow-sm bg-white/50 active:scale-95"
                                             onClick={(e) => e.stopPropagation()}
                                         >
-                                            <ExternalLink className="w-3 h-3" />
-                                            {t('open_on_page' as any) || 'Відкрити окремо'}
+                                            <ExternalLink className="w-4 h-4" />
+                                            {t('open_on_page' as any) || 'Відкрити на сторінці'}
                                         </Link>
                                     </div>
                                 )}
