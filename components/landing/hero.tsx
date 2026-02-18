@@ -44,6 +44,8 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
   const [f1Result, setF1Result] = useState<any | null>(null)
   const [promoCode, setPromoCode] = useState("")
   const [promoStatus, setPromoStatus] = useState<"idle" | "loading" | "success" | "expired" | "invalid">("idle")
+  const [showPromoModal, setShowPromoModal] = useState(false)
+  const [promoResult, setPromoResult] = useState<any>(null)
   const [weightUnit, setWeightUnit] = useState<WeightUnit>("g")
   const [copied, setCopied] = useState(false)
 
@@ -147,6 +149,26 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
     setQuery("")
   }
 
+  const featureNamesMap: Record<string, Record<string, string>> = {
+    diet_validator:      { en: 'Diet Validator',     ua: 'Валідатор дієти',       es: 'Validador de dieta',       fr: 'Validateur de regime' },
+    human_foods_checker: { en: 'Food Safety Check',  ua: 'Перевірка безпеки їжі', es: 'Verificador de alimentos', fr: 'Verificateur alimentaire' },
+    portion_calculator:  { en: 'Portion Calculator', ua: 'Калькулятор порцій',     es: 'Calculadora de porciones', fr: 'Calculateur de portions' },
+    recipe_generator:    { en: 'Recipe Generator',   ua: 'Генератор рецептів',     es: 'Generador de recetas',     fr: 'Generateur de recettes' },
+    bcs_tracker:         { en: 'BCS Tracker',        ua: 'BCS Трекер',             es: 'Rastreador BCS',           fr: 'Suivi BCS' },
+    nutrient_advice:     { en: 'Nutrient Advice',    ua: 'Поради з нутрієнтів',    es: 'Consejo nutricional',      fr: 'Conseils nutritionnels' },
+  }
+
+  const getFeatureName = (code: string) => featureNamesMap[code]?.[language] || featureNamesMap[code]?.en || code
+
+  const formatPromoExpiry = () => {
+    if (!promoResult?.token) return ""
+    try {
+      const payload = JSON.parse(atob(promoResult.token.split(".")[1]))
+      if (payload.exp) return new Date(payload.exp * 1000).toLocaleDateString()
+    } catch {}
+    return ""
+  }
+
   const handlePromoSubmit = async () => {
     if (!promoCode.trim()) return
     setPromoStatus("loading")
@@ -159,8 +181,12 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
       const data = await res.json()
       if (data.success) {
         setPromoStatus("success")
+        setPromoResult(data)
+        setShowPromoModal(true)
         if (data.token) {
           document.cookie = `promo_token=${data.token}; path=/; max-age=86400`
+          localStorage.setItem("promo_token", data.token)
+          if (data.features) localStorage.setItem("promo_features", JSON.stringify(data.features))
         }
       } else if (data.error === "expired") {
         setPromoStatus("expired")
@@ -474,6 +500,45 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
           )}
         </div>
       </div>
+
+      {/* Promo Success Modal */}
+      {showPromoModal && promoResult && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={() => setShowPromoModal(false)}>
+          <div className="relative w-full max-w-md rounded-2xl bg-white p-6 shadow-xl" onClick={(e) => e.stopPropagation()}>
+            <button onClick={() => setShowPromoModal(false)} className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+            <div className="text-center mb-4">
+              <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-2">
+                <svg className="w-6 h-6 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+              </div>
+              <h3 className="text-xl font-bold text-gray-800">{t("promo_congrats")}</h3>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-4 mb-3">
+              <p className="text-sm text-gray-500 mb-2 font-medium">{t("promo_features_granted")}</p>
+              <ul className="space-y-1">
+                {(promoResult.features || []).map((f: any) => (
+                  <li key={f.code} className="flex justify-between text-sm">
+                    <span className="text-gray-800 font-medium">{getFeatureName(f.code)}</span>
+                    <span className="text-gray-500">
+                      {f.usageLimit ? `${f.usageLimit} ${t("promo_total")}` : ""}
+                      {f.usageLimit && f.dailyLimit ? " / " : ""}
+                      {f.dailyLimit ? `${f.dailyLimit}/${t("promo_per_day")}` : ""}
+                      {!f.usageLimit && !f.dailyLimit ? t("promo_unlimited") : ""}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {formatPromoExpiry() && (
+              <p className="text-center text-sm text-gray-500 mb-3">
+                {t("promo_valid_until")}: <span className="font-semibold text-gray-800">{formatPromoExpiry()}</span>
+              </p>
+            )}
+            <button onClick={() => setShowPromoModal(false)} className="w-full py-3 rounded-xl bg-navy text-white font-semibold hover:opacity-90">
+              {t("promo_got_it")}
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   )
 }
