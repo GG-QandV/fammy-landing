@@ -7,5 +7,7 @@ node_modules/
 .vercel_secrets/
 .env
 docs/stripe_key.txt
+docs/New task/
+docs/New task0/
 docs/SVGs_Flat/
 docs/SVGs/
