@@ -10,6 +10,7 @@ import { Loader2, Search, XCircle, ShieldCheck, Plus, Scale, Copy, Check, Calcul
 import { toGrams, fromGrams, WeightUnit, formatWeight } from "../../lib/converters/weight-converter"
 import { copyToClipboard } from "../../lib/utils/clipboard"
 import PortionCalculator from "./portion-calculator"
+import { UsageCounter } from "../ui/usage-counter"
 
 interface FoodResult {
   toxicityLevel: string
@@ -46,6 +47,13 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
   const [promoStatus, setPromoStatus] = useState<"idle" | "loading" | "success" | "expired" | "invalid">("idle")
   const [weightUnit, setWeightUnit] = useState<WeightUnit>("g")
   const [copied, setCopied] = useState(false)
+  const [remainingToday, setRemainingToday] = useState<number | null>(null)
+  const [dailyLimit, setDailyLimit] = useState<number | null>(null)
+
+  const featureCode = activeFeature === "f2" ? "human_foods_checker" : "diet_validator"
+  // Effective limit: promo > API response > default
+  const DEFAULT_LIMIT = activeFeature === "f2" ? 10 : 5
+  const effectiveDailyLimit = dailyLimit ?? DEFAULT_LIMIT
 
   useEffect(() => {
     getOrCreateAnonId()
@@ -71,10 +79,20 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
       })
 
       const data = await res.json()
+      console.log('[F2 TRACE] hero.tsx raw response:', JSON.stringify(data));
 
       if (data.result) {
         setResult(data.result)
+        if (data.remainingToday !== undefined) {
+          console.log('[F2 TRACE] hero.tsx setting remainingToday:', data.remainingToday);
+          setRemainingToday(data.remainingToday)
+        }
+        if (data.dailyLimit !== undefined) {
+          console.log('[F2 TRACE] hero.tsx setting dailyLimit:', data.dailyLimit);
+          setDailyLimit(data.dailyLimit)
+        }
       } else if (data.code === "LIMIT_REACHED") {
+        setRemainingToday(0)
         setResult({
           toxicityLevel: "caution",
           toxicityName: t("attention"),
@@ -122,7 +140,10 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
 
       if (data.success) {
         setF1Result(data.data)
+        if (data.remainingToday !== undefined) setRemainingToday(data.remainingToday)
+        if (data.dailyLimit !== undefined) setDailyLimit(data.dailyLimit)
       } else if (data.code === "LIMIT_REACHED") {
+        setRemainingToday(0)
         setF1Result({
           error: t("f1_limit_reached"),
           isLimit: true,
@@ -249,6 +270,11 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
         <p className="mt-4 text-lg text-muted-foreground lg:text-xl">
           {activeFeature === "f2" ? t("food_safety_desc") : t("nutrient_analysis_desc")}
         </p>
+
+        {/* Usage counter — shows remaining checks on page load */}
+        <div className="mt-3 flex justify-center">
+          <UsageCounter feature={activeFeature === "f2" ? "f2" : "f1"} />
+        </div>
 
         {activeFeature === "f2" && (
           <div className="mt-8 flex justify-center gap-3">
@@ -444,8 +470,12 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
           <PortionCalculator />
         )}
 
-        {/* Promo Code - Alway below active tabs */}
-        <div className="mt-8 rounded-xl bg-cream/30 border border-cream p-4">
+        {/* Promo Code - Always below active tabs */}
+        {/* Usage counter reminder — above promo block */}
+        <div className="mt-8 flex justify-center">
+          <UsageCounter feature={activeFeature === "f2" ? "f2" : "f1"} />
+        </div>
+        <div className="mt-2 rounded-xl bg-cream/30 border border-cream p-4">
           <p className="text-base font-medium text-navy mb-2">{t("have_promo")}</p>
           <div className="flex flex-col sm:flex-row gap-2">
             <input

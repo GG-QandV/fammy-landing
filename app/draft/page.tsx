@@ -135,22 +135,23 @@ export default function DraftPage() {
             <Nav />
 
             <main className="flex-1">
-                <div className="mx-auto max-w-4xl px-5 pt-20 pb-12 text-center lg:pt-32 lg:pb-16">
-                    <h1 className="text-4xl leading-[1.1] font-extrabold tracking-tight text-slate-900 sm:text-6xl lg:text-7xl">
+                <div className="mx-auto max-w-4xl px-5 pt-20 pb-12 text-left lg:pt-32 lg:pb-16">
+                    <h1 className="text-4xl leading-[1.1] font-extrabold tracking-tight text-[#2C3650] sm:text-6xl lg:text-7xl text-center">
                         {t('all_in_one_app' as any)}
                     </h1>
-                    <p className="mt-8 text-lg text-slate-500 sm:text-xl lg:text-2xl max-w-2xl mx-auto">
+                    <p className="mt-8 text-lg text-[#2C3650]/80 sm:text-xl lg:text-2xl max-w-2xl mx-auto text-center">
                         {t('app_slogan_desc' as any)}
                     </p>
 
-                    <CategoryBayan
-                        onSelectCategory={handleCategoryClick}
-                        activeCategory={activeCategory || undefined}
-                        className="mt-16"
-                    />
+                    <div className="w-full max-w-xl mx-auto mt-12 mb-8 p-6 rounded-3xl bg-[#f8f8f2] border border-[#e8e8e0] shadow-sm">
+                        <CategoryBayan
+                            onSelectCategory={handleCategoryClick}
+                            activeCategory={activeCategory || undefined}
+                        />
+                    </div>
                 </div>
 
-                <div className="mx-auto max-w-xl px-5 pb-24">
+                <div className="mx-auto max-w-4xl px-5 pb-24">
                     <PromoBlock />
 
                     <div className="mt-20 space-y-12">

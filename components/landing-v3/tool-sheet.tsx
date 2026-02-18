@@ -22,6 +22,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { FunctionEntry } from '@/lib/functions-config';
+import { UsageCounter } from '@/components/ui/usage-counter';
 
 export interface ToolSheetStep {
     id: string;
@@ -125,6 +126,14 @@ export function ToolSheet({
                             {t(func.i18nKey as Parameters<typeof t>[0])}
                         </SheetTitle>
                         <SheetDescription className="text-sm text-slate-200">{stepTitle}</SheetDescription>
+                        {(func.id === 'f1' || func.id === 'f2') && (
+                            <div className="mt-2">
+                                <UsageCounter
+                                    feature={func.id as 'f1' | 'f2'}
+                                    className="border-white/20 bg-white/10 text-white"
+                                />
+                            </div>
+                        )}
                     </SheetHeader>
                     <div className="flex-1 mt-0 p-6 overflow-hidden">
                         <ToolSheetInner
@@ -152,6 +161,14 @@ export function ToolSheet({
                         {t(func.id === 'f2' ? 'fn_f2_title' : (func.i18nKey as any))}
                     </DialogTitle>
                     <DialogDescription className="text-sm text-slate-200">{stepTitle}</DialogDescription>
+                    {(func.id === 'f1' || func.id === 'f2') && (
+                        <div className="mt-2">
+                            <UsageCounter
+                                feature={func.id as 'f1' | 'f2'}
+                                className="border-white/20 bg-white/10 text-white"
+                            />
+                        </div>
+                    )}
                 </DialogHeader>
                 <div className="flex-1 p-6 overflow-hidden">
                     <ToolSheetInner

@@ -12,6 +12,7 @@ import { StepSpecies } from "@/components/landing-v3/f2-tool/step-species"
 import { StepIngredients, type Ingredient } from "@/components/landing-v3/f1-tool/step-ingredients"
 import { StepAnalyze, type F1Result } from "@/components/landing-v3/f1-tool/step-analyze"
 import { StepResult } from "@/components/landing-v3/f1-tool/step-result"
+import { UsageCounter } from "@/components/ui/usage-counter"
 
 /**
  * F1: Nutrient Analysis — standalone SEO page.
@@ -30,13 +31,16 @@ export default function NutrientAnalysisClient() {
         <>
             <Nav />
             <main className="mx-auto max-w-2xl px-4 py-16 flex flex-col items-center text-center">
-                <Link
-                    href="/draft"
-                    className="flex items-center gap-2 text-sm text-slate-500 hover:text-[#4A5A7A] transition-colors mb-6 group"
-                >
-                    <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-                    {t('back_to_home' as any)}
-                </Link>
+                <div className="w-full max-w-lg mx-auto flex flex-col items-start">
+                    <Link
+                        href="/draft"
+                        className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-slate-500 border border-slate-200 rounded-full hover:text-[#4A5A7A] hover:border-[#4A5A7A]/30 hover:bg-slate-50 transition-all mb-8 shadow-sm bg-white/50 backdrop-blur-sm group active:scale-95"
+                    >
+                        <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+                        {t('back_to_home' as any)}
+                    </Link>
+                </div>
+
                 <h1 className="text-3xl font-bold flex flex-col items-center gap-3">
                     <img
                         src={`/icons/tool-${func.id}.svg`}
@@ -45,13 +49,20 @@ export default function NutrientAnalysisClient() {
                     />
                     {t(func.i18nKey as any)}
                 </h1>
-                <p className="mt-4 text-muted-foreground max-w-lg">
-                    {t(func.i18nDescKey as any)}
-                </p>
 
-                <div className="mt-8 w-full max-w-xl text-left">
+                <div className="w-full max-w-lg mx-auto text-left">
+                    <p className="mt-4 text-muted-foreground">
+                        {t(func.i18nDescKey as any)}
+                    </p>
+                    {/* Usage counter — shows remaining checks on page load */}
+                    <div className="mt-3">
+                        <UsageCounter feature="f1" />
+                    </div>
+                </div>
+
+                <div className="mt-8 w-full max-w-xl">
                     {step === 1 && species && (
-                        <div className="space-y-4">
+                        <div className="text-left mx-auto max-w-lg">
                             <StepIngredients
                                 species={species}
                                 hideSpeciesIndicator
@@ -60,23 +71,31 @@ export default function NutrientAnalysisClient() {
                         </div>
                     )}
                     {step === 2 && species && ingredients.length > 0 && (
-                        <div className="space-y-4">
+                        <div className="text-left mx-auto max-w-lg">
                             <StepAnalyze
                                 species={species}
                                 ingredients={ingredients}
-                                onResult={(r: any) => { setResult(r); setStep(3) }}
+                                onResult={(r: any) => {
+                                    setResult(r);
+                                    setStep(3);
+                                }}
                             />
                         </div>
                     )}
                     {step === 3 && result && (
-                        <div className="space-y-4">
-                            <button
-                                onClick={() => { setResult(null); setStep(1) }}
-                                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                            >
-                                ← {t('back' as any)}
-                            </button>
-                            <StepResult result={result} ingredients={ingredients} />
+                        <div className="space-y-6 mx-auto max-w-lg">
+                            <div className="flex">
+                                <button
+                                    onClick={() => { setResult(null); setStep(1) }}
+                                    className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-slate-600 border border-slate-200 rounded-full hover:bg-slate-50 transition-all active:scale-95 shadow-sm bg-white/50 backdrop-blur-sm"
+                                >
+                                    <ArrowLeft className="w-4 h-4" />
+                                    {t('back' as any)}
+                                </button>
+                            </div>
+                            <div className="text-left">
+                                <StepResult result={result} ingredients={ingredients} />
+                            </div>
                         </div>
                     )}
                 </div>

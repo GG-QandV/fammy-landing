@@ -5,6 +5,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
+import { UsageCounter } from '@/components/ui/usage-counter';
 
 interface HeroV3Props {
     onChooseTool?: () => void;
@@ -61,6 +62,11 @@ export function HeroV3({ onChooseTool, className }: HeroV3Props) {
                 <p className="mt-4 text-lg text-muted-foreground lg:text-xl">
                     {t('food_safety_desc')}
                 </p>
+
+                {/* Usage counter — shows remaining checks on page load */}
+                <div className="mt-3 flex justify-center">
+                    <UsageCounter feature="f2" />
+                </div>
 
                 <Button
                     size="lg"

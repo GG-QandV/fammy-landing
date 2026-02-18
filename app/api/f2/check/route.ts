@@ -69,6 +69,9 @@ export async function POST(request: NextRequest) {
             }
         }
 
+        // Track usage count for remainingToday in response
+        let usageCount: number | null = null;
+
         // If no entitlement, check usage count by BOTH anon_id and IP
         if (!entitlement) {
             const twentyFourHoursAgo = new Date();
@@ -81,6 +84,7 @@ export async function POST(request: NextRequest) {
                 .or(`anon_id.eq.${anonId},ip_address.eq.${ip}`)
                 .gte('created_at', twentyFourHoursAgo.toISOString()) as any);
 
+            usageCount = count ?? 0;
             if (count !== null && count >= currentLimit) {
                 return NextResponse.json(
                     {
@@ -163,14 +167,18 @@ export async function POST(request: NextRequest) {
                 food_id: body.foodId,
             });
 
-        return NextResponse.json({
+        const responsePayload = {
             result: {
                 toxicityLevel,
                 toxicityName,
                 explanation,
                 severity
             },
-        });
+            remainingToday: entitlement ? null : Math.max(0, currentLimit - ((usageCount ?? 0) + 1)),
+            dailyLimit: entitlement ? null : currentLimit,
+        };
+        console.log('[F2 TRACE] Response payload:', JSON.stringify(responsePayload));
+        return NextResponse.json(responsePayload);
     } catch (error) {
         console.error('[LANDING] F2 check error:', error);
         return NextResponse.json(

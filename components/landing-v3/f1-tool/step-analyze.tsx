@@ -58,12 +58,18 @@ export function StepAnalyze({ species, ingredients, onResult, className }: StepA
             const data = await res.json();
 
             if (data.success) {
-                onResult(data.data);
+                onResult({
+                    ...data.data,
+                    remainingToday: data.remainingToday ?? null,
+                    dailyLimit: data.dailyLimit ?? null,
+                } as any);
             } else if (data.code === 'LIMIT_REACHED') {
                 onResult({
                     error: t('f1_limit_reached'),
                     isLimit: true,
-                });
+                    remainingToday: 0,
+                    dailyLimit: 5,
+                } as any);
             } else {
                 onResult({
                     error: data.message || data.error?.message || t('f1_error_generic'),

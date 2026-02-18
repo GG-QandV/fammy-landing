@@ -54,9 +54,17 @@ export function StepSearch({ species, onResult, className }: StepSearchProps) {
             });
 
             const data = await res.json();
+            console.log('[F2 TRACE] StepSearch raw response:', JSON.stringify(data));
 
             if (data.result) {
-                onResult({ ...data.result, foodName: selectedFood.name });
+                const resultPayload = {
+                    ...data.result,
+                    foodName: selectedFood.name,
+                    remainingToday: data.remainingToday ?? null,
+                    dailyLimit: data.dailyLimit ?? null,
+                } as any;
+                console.log('[F2 TRACE] Calling onResult with:', JSON.stringify(resultPayload));
+                onResult(resultPayload);
             } else if (data.code === 'LIMIT_REACHED') {
                 onResult({
                     toxicityLevel: 'caution',
@@ -64,7 +72,9 @@ export function StepSearch({ species, onResult, className }: StepSearchProps) {
                     explanation: t('f2_limit_reached'),
                     severity: 2,
                     foodName: selectedFood.name,
-                });
+                    remainingToday: 0,
+                    dailyLimit: 10,
+                } as any);
             } else {
                 onResult({
                     toxicityLevel: 'caution',

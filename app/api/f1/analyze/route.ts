@@ -66,6 +66,9 @@ export async function POST(request: NextRequest) {
             .eq('is_unlimited', true)
             .single() as any);
 
+        // Track usage count for remainingToday in response
+        let usageCount: number | null = null;
+
         // Check usage limit
         if (!entitlement) {
             const twentyFourHoursAgo = new Date();
@@ -77,6 +80,7 @@ export async function POST(request: NextRequest) {
                 .or(`anon_id.eq.${anonId},ip_address.eq.${ip}`)
                 .gte('created_at', twentyFourHoursAgo.toISOString()) as any);
 
+            usageCount = count ?? 0;
             console.log('[F1] Usage check:', { anonId, ip, count, DAILY_LIMIT });
             if (count !== null && count >= DAILY_LIMIT) {
                 return NextResponse.json(
@@ -91,7 +95,7 @@ export async function POST(request: NextRequest) {
 
         // Create guest recipe
         const recipeName = `Guest Recipe ${new Date().toISOString().slice(0, 16)}`;
-        
+
         const { data: recipe, error: recipeError } = await supabaseAdmin
             .from('recipes')
             .insert({
@@ -153,7 +157,7 @@ export async function POST(request: NextRequest) {
         if (!response.ok) {
             const errorText = await response.text();
             console.error('[F1] Backend error:', response.status, errorText);
-            
+
             if (response.status === 429 || response.status === 403) {
                 return NextResponse.json(
                     { code: 'LIMIT_REACHED', message: 'Limit reached' },
@@ -180,7 +184,12 @@ export async function POST(request: NextRequest) {
                 nutrients_count: result?.nutrients?.length || 0,
             });
 
-        return NextResponse.json({ success: true, data: result });
+        return NextResponse.json({
+            success: true,
+            data: result,
+            remainingToday: entitlement ? null : Math.max(0, DAILY_LIMIT - ((usageCount ?? 0) + 1)),
+            dailyLimit: entitlement ? null : DAILY_LIMIT,
+        });
 
     } catch (error) {
         console.error('[F1] Analyze error:', error);

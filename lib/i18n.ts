@@ -230,6 +230,8 @@ export const translations = {
         enter_promo: 'Enter promo code...',
         promo_error: 'Network error. Please try again.',
         back_to_home: 'Back to home',
+        usage_remaining_label: 'Remaining today:',
+        usage_remaining_of: 'of',
     },
     es: {
         feature_select_title: '¿Qué te gustaría verificar hoy?',
@@ -458,6 +460,8 @@ export const translations = {
         enter_promo: 'Ingresa código...',
         promo_error: 'Error de red. Intenta de nuevo.',
         back_to_home: 'Volver al inicio',
+        usage_remaining_label: 'Restantes hoy:',
+        usage_remaining_of: 'de',
     },
     fr: {
         feature_select_title: 'Que souhaitez-vous vérifier aujourd hui ?',
@@ -686,6 +690,8 @@ export const translations = {
         enter_promo: 'Entrer le code...',
         promo_error: 'Erreur réseau. Veuillez réessayer.',
         back_to_home: 'Retour à l\'accueil',
+        usage_remaining_label: 'Restants aujourd\'hui :',
+        usage_remaining_of: 'sur',
     },
     ua: {
         feature_select_title: 'Що ви хочете перевірити сьогодні?',
@@ -913,6 +919,8 @@ export const translations = {
         enter_promo: 'Введіть промокод...',
         promo_error: 'Помилка мережі. Спробуйте ще раз.',
         back_to_home: 'На головну',
+        usage_remaining_label: 'Залишилось сьогодні:',
+        usage_remaining_of: 'з',
     }
 };
 
