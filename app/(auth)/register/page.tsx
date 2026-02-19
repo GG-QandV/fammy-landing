@@ -6,7 +6,9 @@ import { useState } from 'react';
 import { useAuth } from '../../../context/AuthContext';
 import { useLanguage } from '../../../context/LanguageContext';
 
-export default function RegisterPage() {
+import { Suspense } from 'react';
+
+function RegisterContent() {
     const { register, isLoading } = useAuth();
     const { t } = useLanguage();
     const router = useRouter();
@@ -132,5 +134,13 @@ export default function RegisterPage() {
                 </form>
             </div>
         </div>
+    );
+}
+
+export default function RegisterPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <RegisterContent />
+        </Suspense>
     );
 }

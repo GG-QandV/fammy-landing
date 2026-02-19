@@ -6,7 +6,9 @@ import { useState } from 'react';
 import { useAuth } from '../../../context/AuthContext';
 import { useLanguage } from '../../../context/LanguageContext';
 
-export default function LoginPage() {
+import { Suspense } from 'react';
+
+function LoginContent() {
     const { login, isLoading } = useAuth();
     const { t } = useLanguage();
     const router = useRouter();
@@ -117,5 +119,13 @@ export default function LoginPage() {
                 </form>
             </div>
         </div>
+    );
+}
+
+export default function LoginPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <LoginContent />
+        </Suspense>
     );
 }
