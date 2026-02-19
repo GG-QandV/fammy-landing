@@ -60,6 +60,7 @@ export const viewport: Viewport = {
 }
 
 import { LanguageProvider } from "../context/LanguageContext"
+import { AuthProvider } from "../context/AuthContext"
 
 export default function RootLayout({
   children,
@@ -72,7 +73,9 @@ export default function RootLayout({
         className={`${dmSans.variable} ${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}
       >
         <LanguageProvider>
-          {children}
+          <AuthProvider>
+            {children}
+          </AuthProvider>
         </LanguageProvider>
       </body>
     </html>
