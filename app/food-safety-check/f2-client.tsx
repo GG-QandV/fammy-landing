@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState } from "react"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { useLanguage } from "@/context/LanguageContext"

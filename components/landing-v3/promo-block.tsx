@@ -20,12 +20,12 @@ interface PromoResult {
 }
 
 const featureNames: Record<string, Record<string, string>> = {
-  diet_validator:       { en: 'Diet Validator',       ua: 'Валідатор дієти',         es: 'Validador de dieta',        fr: 'Validateur de regime' },
-  human_foods_checker:  { en: 'Food Safety Check',    ua: 'Перевірка безпеки їжі',   es: 'Verificador de alimentos',  fr: 'Verificateur alimentaire' },
-  portion_calculator:   { en: 'Portion Calculator',   ua: 'Калькулятор порцій',       es: 'Calculadora de porciones',  fr: 'Calculateur de portions' },
-  recipe_generator:     { en: 'Recipe Generator',     ua: 'Генератор рецептів',       es: 'Generador de recetas',      fr: 'Generateur de recettes' },
-  bcs_tracker:          { en: 'BCS Tracker',          ua: 'BCS Трекер',               es: 'Rastreador BCS',            fr: 'Suivi BCS' },
-  nutrient_advice:      { en: 'Nutrient Advice',      ua: 'Поради з нутрієнтів',      es: 'Consejo nutricional',       fr: 'Conseils nutritionnels' },
+  diet_validator: { en: 'Diet Validator', ua: 'Валідатор дієти', es: 'Validador de dieta', fr: 'Validateur de regime' },
+  human_foods_checker: { en: 'Food Safety Check', ua: 'Пошук токсинів', es: 'Verificador de alimentos', fr: 'Verificateur alimentaire' },
+  portion_calculator: { en: 'Portion Calculator', ua: 'Калькулятор порцій', es: 'Calculadora de porciones', fr: 'Calculateur de portions' },
+  recipe_generator: { en: 'Recipe Generator', ua: 'Генератор рецептів', es: 'Generador de recetas', fr: 'Generateur de recettes' },
+  bcs_tracker: { en: 'BCS Tracker', ua: 'BCS Трекер', es: 'Rastreador BCS', fr: 'Suivi BCS' },
+  nutrient_advice: { en: 'Nutrient Advice', ua: 'Поради з нутрієнтів', es: 'Consejo nutricional', fr: 'Conseils nutritionnels' },
 }
 
 export function PromoBlock() {
@@ -82,7 +82,7 @@ export function PromoBlock() {
       if (payload.exp) {
         return new Date(payload.exp * 1000).toLocaleDateString()
       }
-    } catch {}
+    } catch { }
     return ""
   }
 

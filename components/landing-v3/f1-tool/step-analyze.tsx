@@ -95,10 +95,10 @@ export function StepAnalyze({ species, ingredients, onResult, className }: StepA
 
             <div className="text-center space-y-1">
                 <h3 className="font-semibold text-slate-900">
-                    {t('analyzing' as any) || 'Аналізуємо нутрієнти...'}
+                    {t('analyzing' as any)}
                 </h3>
                 <p className="text-sm text-slate-500">
-                    {t('please_wait' as any) || 'Це займе всього кілька секунд'}
+                    {t('please_wait' as any)}
                 </p>
             </div>
         </div>

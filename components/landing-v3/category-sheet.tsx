@@ -68,7 +68,7 @@ export function CategorySheet({ open, onOpenChange, categoryId, onSelectTool }: 
                                         <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-[#546a8c] transition-colors" />
                                     ) : (
                                         <Badge variant="secondary" className="bg-slate-200 text-slate-500 font-normal">
-                                            {t('coming_soon' as any) || 'Скоро'}
+                                            {t('coming_soon' as any) || 'Coming soon'}
                                         </Badge>
                                     )}
                                 </div>
@@ -84,7 +84,7 @@ export function CategorySheet({ open, onOpenChange, categoryId, onSelectTool }: 
                                             onClick={(e) => e.stopPropagation()}
                                         >
                                             <ExternalLink className="w-4 h-4" />
-                                            {t('open_on_page' as any) || 'Відкрити на сторінці'}
+                                            {t('open_on_page' as any) || 'Open on separate page'}
                                         </Link>
                                     </div>
                                 )}

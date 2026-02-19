@@ -13,7 +13,7 @@ export function CategoryBayan({ onSelectCategory, activeCategory, className }: C
 
     // Categories are: 'safety', 'nutrition', 'health'
     const categories = [
-        { id: 'safety', label: t('category_safety'), iconPath: '/icons/category-safety.svg' },
+        { id: 'safety', label: t('category_safety_btn'), iconPath: '/icons/category-safety.svg' },
         { id: 'nutrition', label: t('category_nutrition'), iconPath: '/icons/category-nutrition.svg' },
         { id: 'health', label: t('category_health'), iconPath: '/icons/category-health.svg' },
     ]
@@ -25,10 +25,10 @@ export function CategoryBayan({ onSelectCategory, activeCategory, className }: C
                     key={cat.id}
                     onClick={() => onSelectCategory(cat.id)}
                     className={cn(
-                        "relative flex items-center pr-20 pl-8 py-2 rounded-[42px] border-2 transition-all duration-300 text-[21px] font-bold min-h-[65px] border-[#2C3650] w-full max-w-[440px] mx-auto",
+                        "relative flex items-center pr-20 pl-8 py-2 rounded-[42px] border-2 transition-all duration-300 text-[21px] font-bold min-h-[65px] border-[#2C3650] w-full max-w-[440px] mx-auto active:opacity-100",
                         activeCategory === cat.id
-                            ? "bg-[#4A5A7A] text-[#F5E6B8] shadow-xl" // Dark border (#2C3650 is in base) + Light Cream text
-                            : "bg-[#4A5A7A] text-white/95 hover:bg-[#5a6e91] hover:border-[#2C3650]/80"
+                            ? "bg-[#4A5A7A] text-[#F5E6B8] shadow-xl opacity-100" // Active always opaque
+                            : "bg-[#4A5A7A] text-white/95 hover:bg-[#5a6e91] hover:border-[#2C3650]/80 opacity-80 hover:opacity-100" // Inactive 20% transparent, solid on hover
                     )}
                 >
                     <div className="flex items-center gap-4">

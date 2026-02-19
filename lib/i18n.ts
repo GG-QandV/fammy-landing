@@ -162,10 +162,13 @@ export const translations = {
         total_for_period: 'Total for',
         empty_f3_results: 'Select food and period to see results',
         f3_error_generic: 'Failed to calculate portion. Please try again.',
+        analyzing: 'Analyzing nutrients...',
+        please_wait: 'This will take just a few seconds',
 
         // --- v3 Architecture Keys ---
         // Categories
         category_safety: 'Food Safety',
+        category_safety_btn: 'Food Safety',
         category_nutrition: 'Nutrition & Diet',
         category_health: 'Health Monitoring',
         // Functions
@@ -426,9 +429,12 @@ export const translations = {
         total_for_period: 'Total para',
         empty_f3_results: 'Selecciona comida y periodo для ver resultados',
         f3_error_generic: 'Error al calcular la porción. Por favor, inténtalo de nuevo.',
+        analyzing: 'Analizando nutrientes...',
+        please_wait: 'Esto tomará solo unos segundos',
 
         // --- v3 Architecture Keys ---
         category_safety: 'Seguridad Alimentaria',
+        category_safety_btn: 'Seguridad Alimentaria',
         category_nutrition: 'Nutrición y Dieta',
         category_health: 'Monitoreo de Salud',
         fn_f1_title: 'Análisis de Nutrientes',
@@ -687,9 +693,12 @@ export const translations = {
         total_for_period: 'Total pour',
         empty_f3_results: 'Sélectionnez la nourriture et la période для voir les résultats',
         f3_error_generic: 'Échec du calcul de la portion. Veuillez réessayer.',
+        analyzing: 'Analyse des nutriments...',
+        please_wait: 'Cela ne prendra que quelques secondes',
 
         // --- v3 Architecture Keys ---
         category_safety: 'Sécurité Alimentaire',
+        category_safety_btn: 'Sécurité Alimentaire',
         category_nutrition: 'Nutrition et Régime',
         category_health: 'Suivi de Santé',
         fn_f1_title: 'Analyse Nutritionnelle',
@@ -790,7 +799,7 @@ export const translations = {
         feature_select_title: 'Що ви хочете перевірити сьогодні?',
         f1_title: 'Аналіз Нутрієнтів',
         f1_desc: 'Детальний аналіз вітамінів, мінералів та калорій на основі офіційної бази даних USDA Foundation Foods. 3 800+ продуктів, 187 000+ зв\'язків нутрієнт-продукт.',
-        f2_title: 'Безпека Їжі',
+        f2_title: 'Пошук токсинів',
         f2_desc: 'Миттєво перевірте, чи їжа токсична для собак або котів. База з 454 токсинів на основі досліджень AAFCO, FEDIAF та ветеринарної токсикології.',
         f1_error_generic: "Помилка аналізу. Спробуйте ще.",
         f1_error_network: "Помилка мережі. Перевірте зєднання.",
@@ -866,7 +875,7 @@ export const translations = {
         promo_placeholder: 'Введіть промокод',
         checks_remaining: 'перевірок на 24 години',
         search_placeholder: 'Пошук їжі (напр. яблуко, шоколад)...',
-        check_button: 'Зробити аналіз',
+        check_button: 'Пошук токсичних речовин',
         species_dog: 'Собака',
         species_cat: 'Кіт',
         caution: 'Обережно',
@@ -889,6 +898,8 @@ export const translations = {
         invalid_grams: 'Введіть коректну кількість грамів',
         already_added: 'Цей інгредієнт вже додано',
         add_ingredients_alert: 'Додайте хоча б один інгредієнт',
+        analyzing: 'Аналізуємо нутрієнти...',
+        please_wait: 'Це займе всього кілька секунд',
         add_ingredient: 'Додати інгредієнт',
         ingredients_list: 'Інгредієнти',
         // Ethical Gate Modal
@@ -949,12 +960,13 @@ export const translations = {
         empty_f3_results: 'Оберіть продукт та період для перегляду результатів',
         f3_error_generic: 'Не вдалося розрахувати порцію. Спробуйте ще раз.',
         // --- v3 Architecture Keys ---
-        category_safety: 'Безпека харчування',
+        category_safety: 'Перевірка харчування домашніх тварин',
+        category_safety_btn: 'Пошук токсинів',
         category_nutrition: 'Харчування та дієта',
         category_health: 'Моніторинг здоров\'я',
         fn_f1_title: 'Аналіз нутрієнтів',
         fn_f1_desc: 'Детальний аналіз вітамінів, мінералів та калорій',
-        fn_f2_title: 'Перевірка безпеки',
+        fn_f2_title: 'Пошук токсинів',
         fn_f2_desc: 'Перевірте чи продукт безпечний для вашого улюбленця',
         fn_f3_title: 'Калькулятор порцій',
         fn_f3_desc: 'Розрахуйте правильний розмір порції',

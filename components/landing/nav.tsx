@@ -32,7 +32,7 @@ export function Nav() {
               type="button"
               onClick={() => setLanguage(lang)}
               className={`px-2 py-1 text-xs font-medium rounded-full transition-colors ${language === lang
-                ? "bg-navy text-white"
+                ? "bg-navy/70 text-white"
                 : "text-grey hover:text-navy"
                 }`}
             >

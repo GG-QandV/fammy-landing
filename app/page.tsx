@@ -9,6 +9,7 @@ import { MiniFounder } from "@/components/landing/mini-founder"
 import { functions, type FunctionId, type CategoryId } from "@/lib/functions-config"
 import type { SpeciesEntry } from "@/lib/species-config"
 import { CategoryBayan } from "@/components/landing-v3/category-bayan"
+import { AuthCTA } from "@/components/landing-v3/auth-cta"
 import { CategorySheet } from "@/components/landing-v3/category-sheet"
 import { PromoBlock } from "@/components/landing-v3/promo-block"
 import { ToolSheet, type ToolSheetStep } from "@/components/landing-v3/tool-sheet"
@@ -148,6 +149,8 @@ export default function Home() {
               activeCategory={activeCategory || undefined}
             />
           </div>
+
+          <AuthCTA />
         </div>
 
         <div className="mx-auto max-w-4xl px-5 pb-24">
