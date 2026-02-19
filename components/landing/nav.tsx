@@ -25,7 +25,7 @@ export function Nav() {
         </div>
 
         {/* Language switcher */}
-        <div className="pointer-events-auto flex gap-1 rounded-full border border-light-grey bg-white-card/80 p-1 backdrop-blur-sm">
+        <div className="pointer-events-auto flex gap-1 rounded-full border border-light-grey bg-white-card/80 p-1 backdrop-blur-sm logo-shadow">
           {(["en", "es", "fr", "ua"] as const).map((lang) => (
             <button
               key={lang}

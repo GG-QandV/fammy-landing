@@ -30,7 +30,7 @@ export function AuthCTA() {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center gap-3 mt-14 mb-12 px-4 w-full">
+        <div className="flex flex-col items-center justify-center gap-3 mt-8 mb-4 px-4 w-full">
             <Link
                 href="/login"
                 className="flex items-center justify-center w-full max-w-[356px] min-h-[52px] rounded-[20px] bg-[#546a8c] hover:bg-[#435570] px-8 text-xl font-medium text-white transition-colors opacity-50 hover:opacity-100"

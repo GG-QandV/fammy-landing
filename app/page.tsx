@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react"
 import { Nav } from "@/components/landing/nav"
 import { Footer } from "@/components/landing/footer"
+import { ArrowDown } from "lucide-react"
 import SupportCard from "@/components/landing/support-card"
 import WaitlistCTA from "@/components/landing/waitlist-cta"
 import { MiniFounder } from "@/components/landing/mini-founder"
@@ -135,7 +136,7 @@ export default function Home() {
       <Nav />
 
       <main className="flex-1">
-        <div className="mx-auto max-w-4xl px-5 pt-20 pb-12 text-left lg:pt-32 lg:pb-16">
+        <div className="mx-auto max-w-4xl px-5 pt-20 pb-4 text-left lg:pt-32 lg:pb-6">
           <h1 className="text-4xl leading-[1.1] font-extrabold tracking-tight text-[#2C3650] sm:text-6xl lg:text-7xl text-center">
             {t('all_in_one_app' as any)}
           </h1>
@@ -153,10 +154,18 @@ export default function Home() {
           <AuthCTA />
         </div>
 
-        <div className="mx-auto max-w-4xl px-5 pb-24">
+        <div className="mx-auto max-w-4xl px-5 pb-24 relative">
+          <div className="fixed bottom-6 left-0 right-0 z-50 flex justify-center pointer-events-none">
+            <div className="animate-bounce cursor-pointer flex justify-center">
+              <div className="bg-white/80 backdrop-blur-sm rounded-full p-2.5 border border-[#e8e8e0] shadow-md text-[#2C3650] pointer-events-auto hover:bg-white scale-95 transition-transform">
+                <ArrowDown className="w-6 h-6" />
+              </div>
+            </div>
+          </div>
+
           <PromoBlock />
 
-          <div className="mt-20 space-y-12">
+          <div className="mt-8 space-y-12">
             <SupportCard />
             <WaitlistCTA />
             <MiniFounder />

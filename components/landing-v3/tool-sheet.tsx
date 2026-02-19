@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type ReactNode } from 'react';
+import { useState, useEffect, type ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
@@ -109,9 +109,35 @@ export function ToolSheet({
         ? t(steps[currentStep].i18nKey as Parameters<typeof t>[0])
         : '';
 
+    // Handle mobile back button
+    useEffect(() => {
+        if (!open) return;
+
+        // Push state only if we haven't already (protect against StrictMode double mount)
+        if (!window.history.state?.toolSheetOpen) {
+            window.history.pushState({ toolSheetOpen: true }, '');
+        }
+
+        const handlePopState = () => {
+            // When browser back is clicked, close the sheet
+            onOpenChange(false);
+        };
+
+        window.addEventListener('popstate', handlePopState);
+        return () => window.removeEventListener('popstate', handlePopState);
+    }, [open, onOpenChange]);
+
+    const handleOpenChange = (newOpen: boolean) => {
+        // If closing via UI, also pop the history state to keep it clean
+        if (!newOpen && window.history.state?.toolSheetOpen) {
+            window.history.back();
+        }
+        onOpenChange(newOpen);
+    };
+
     if (isMobile) {
         return (
-            <Sheet open={open} onOpenChange={onOpenChange}>
+            <Sheet open={open} onOpenChange={handleOpenChange}>
                 <SheetContent
                     side="bottom"
                     className={cn('h-[85vh] flex flex-col rounded-t-2xl border-none shadow-2xl bg-white p-0 overflow-hidden', className)}
@@ -149,7 +175,7 @@ export function ToolSheet({
     }
 
     return (
-        <Dialog open={open} onOpenChange={onOpenChange}>
+        <Dialog open={open} onOpenChange={handleOpenChange}>
             <DialogContent className={cn('sm:max-w-lg max-h-[80vh] flex flex-col rounded-2xl border-none shadow-2xl bg-white p-0 overflow-hidden', className)}>
                 <DialogHeader className="p-6 bg-[#4A5A7A] text-white">
                     <DialogTitle className="text-xl font-bold text-white flex items-center gap-3">
