@@ -171,10 +171,15 @@ export default function Home() {
           <AuthCTA />
         </div>
 
-        <div className="mx-auto max-w-4xl px-5 pb-24 relative">
+        <div id="promo-section" className="mx-auto max-w-4xl px-5 pb-24 relative">
           <div className="fixed bottom-6 left-0 right-0 z-50 flex justify-center pointer-events-none">
-            <div className="animate-bounce cursor-pointer flex justify-center">
-              <div className="bg-white/80 backdrop-blur-sm rounded-full p-2.5 border border-[#e8e8e0] shadow-md text-[#2C3650] pointer-events-auto hover:bg-white scale-95 transition-transform">
+            <div
+              className="animate-bounce cursor-pointer flex justify-center pointer-events-auto"
+              onClick={() => {
+                document.getElementById('promo-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+            >
+              <div className="bg-white/80 backdrop-blur-sm rounded-full p-2.5 border border-[#e8e8e0] shadow-md text-[#2C3650] hover:bg-white scale-95 transition-transform">
                 <ArrowDown className="w-6 h-6" />
               </div>
             </div>
