@@ -21,8 +21,13 @@ class BackInterceptorManager {
 
     private handlePopState = (event: PopStateEvent) => {
         if (this.stack.length > 0) {
-            // Поддерживаем ловушку активной
-            this.pushDummyState();
+            // Поддерживаем ловушку активной, но делаем это асинхронно!
+            // Chrome/Safari блокируют синхронный pushState внутри popstate (History Trapping protection)
+            // Если pushState заблокируется, на следующий "Назад" юзер вылетит из приложения.
+            setTimeout(() => {
+                this.pushDummyState();
+            }, 50);
+
             // Вызываем верхний колбек из стека
             const topCallback = this.stack[this.stack.length - 1];
             if (topCallback) topCallback();

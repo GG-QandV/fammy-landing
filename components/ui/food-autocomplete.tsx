@@ -103,7 +103,9 @@ export default function FoodAutocomplete({ onSelect, placeholder = 'Search for a
         <div className="relative w-full">
             <input
                 ref={inputRef}
-                type="text"
+                type="search"
+                name="random_food_search_field"
+                id="random_food_search_field"
                 value={query}
                 onChange={(e) => {
                     isSelectedResultRef.current = false;
@@ -111,10 +113,11 @@ export default function FoodAutocomplete({ onSelect, placeholder = 'Search for a
                 }}
                 onKeyDown={handleKeyDown}
                 placeholder={placeholder}
-                autoComplete="off"
+                autoComplete="new-password"
                 autoCorrect="off"
                 spellCheck={false}
-                className="h-14 w-full px-4 py-3 border border-light-grey rounded-lg bg-white focus:border-navy/40 focus:outline-none"
+                autoCapitalize="off"
+                className="h-14 w-full px-4 py-3 border border-light-grey rounded-lg bg-white focus:border-navy/40 focus:outline-none [&::-webkit-search-cancel-button]:hidden"
                 data-testid="food-autocomplete-input"
             />
 

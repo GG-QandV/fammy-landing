@@ -214,6 +214,10 @@ export default function Home() {
             currentStep={f2Step}
             onStepChange={(s) => {
               if (s === 1) setF2Result(null); // Reset result when going back to search
+              if (s === 0) {
+                setF2Result(null);
+                setF2Species(null);
+              }
               setF2Step(s);
             }}
           />
