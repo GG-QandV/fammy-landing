@@ -95,7 +95,7 @@ export function StepIngredients({ species, onSubmit, hideSpeciesIndicator, class
                 ))}
 
                 {/* Add ingredient */}
-                {ingredients.length < 5 && (
+                {ingredients.length < 10 && (
                     <FoodAutocomplete
                         onSelect={(food) => {
                             setIngredients((prev) => [
@@ -107,7 +107,7 @@ export function StepIngredients({ species, onSubmit, hideSpeciesIndicator, class
                         clearOnSelect={true}
                     />
                 )}
-                {ingredients.length >= 5 && (
+                {ingredients.length >= 10 && (
                     <p className="text-sm text-center text-muted-foreground pt-2">
                         {t('max_ingredients_reached' as any) || 'Maximum 5 ingredients'}
                     </p>
