@@ -61,6 +61,9 @@ export function Footer() {
             <p className="text-xs opacity-50">
               {`2025 fammy.pet. ${t("footer_disclaimer")}`}
             </p>
+            <p className="mt-2 text-[10px] opacity-40 font-mono">
+              v3.0.0
+            </p>
           </div>
         </div>
       </div>
