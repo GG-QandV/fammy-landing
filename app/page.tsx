@@ -105,6 +105,13 @@ export default function Home() {
     },
   ], [f2Species, f2Result])
 
+  // Перехват системной кнопки "Назад" конкретно для открытых модалок 
+  // ToolSheet сама перехватывает "Назад" через useBackInterceptor.
+  // Но когда мы на шаге 2 (Result), нажатие "Назад" триггерит ToolSheet:
+  // if (currentStep > 0) onStepChange(currentStep - 1);
+  // Это меняет шаг на 1 (Поиск). Но если мы в F2, StepSearch рендерится, но он не очищает Result.
+  // Надо сбрасывать f2Result при переходе назад с шага Result.
+
   // F1 wizard steps
   const f1DefaultSpecies: SpeciesEntry = { id: 'dog', emoji: '🐕', i18nKey: 'species_dog', backendTarget: 'dog', group: 'popular' }
   const f1Steps: ToolSheetStep[] = useMemo(() => [
@@ -200,7 +207,10 @@ export default function Home() {
             func={activeFunc}
             steps={f2Steps}
             currentStep={f2Step}
-            onStepChange={setF2Step}
+            onStepChange={(s) => {
+              if (s === 1) setF2Result(null); // Reset result when going back to search
+              setF2Step(s);
+            }}
           />
         )}
         {activeFunc && activeFunc.available && activeTool === 'f1' && (

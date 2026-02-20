@@ -111,6 +111,9 @@ export default function FoodAutocomplete({ onSelect, placeholder = 'Search for a
                 }}
                 onKeyDown={handleKeyDown}
                 placeholder={placeholder}
+                autoComplete="off"
+                autoCorrect="off"
+                spellCheck={false}
                 className="h-14 w-full px-4 py-3 border border-light-grey rounded-lg bg-white focus:border-navy/40 focus:outline-none"
                 data-testid="food-autocomplete-input"
             />
