@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { useLanguage } from "../../context/LanguageContext"
 import { AuthButtons } from "../auth/AuthButtons"
+import { LanguageSelector } from "../landing-v3/shared/language-selector"
 
 export function Nav() {
   const { language, setLanguage } = useLanguage()
@@ -26,20 +27,8 @@ export function Nav() {
           </div>
 
           {/* Language switcher */}
-          <div className="pointer-events-auto flex gap-1 rounded-full border border-light-grey bg-white-card/80 p-1 backdrop-blur-sm logo-shadow items-center h-[34px]">
-            {(["en", "es", "fr", "ua"] as const).map((lang) => (
-              <button
-                key={lang}
-                type="button"
-                onClick={() => setLanguage(lang)}
-                className={`px-2 py-1 text-xs font-medium rounded-full transition-colors ${language === lang
-                  ? "bg-navy/70 text-white"
-                  : "text-grey hover:text-navy"
-                  }`}
-              >
-                {lang.toUpperCase()}
-              </button>
-            ))}
+          <div className="pointer-events-auto flex items-center h-[34px]">
+            <LanguageSelector />
           </div>
         </div>
 
