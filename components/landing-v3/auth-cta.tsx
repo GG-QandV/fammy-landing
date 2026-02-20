@@ -20,9 +20,7 @@ export function AuthCTA() {
                     className="flex items-center gap-2 rounded-full bg-navy px-6 py-3 text-sm font-bold text-white shadow-lg transition-transform hover:scale-105 active:scale-95"
                 >
                     {/* User Avatar Placeholder */}
-                    <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-navy text-xs">
-                        {user.name ? user.name.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase()}
-                    </div>
+                    <img src="/icons/user-circle.svg" alt="Profile" className="w-5 h-5 invert" />
                     <span>{t('profile')}</span>
                 </Link>
             </div>
@@ -35,12 +33,14 @@ export function AuthCTA() {
                 href="/login"
                 className="flex items-center justify-center w-full max-w-[356px] min-h-[52px] rounded-[20px] bg-[#546a8c] hover:bg-[#435570] px-8 text-xl font-medium text-white transition-colors opacity-50 hover:opacity-100"
             >
+                <img src="/icons/user-circle.svg" alt="" className="w-6 h-6 mr-2 invert" />
                 {t('login_button')}
             </Link>
             <Link
                 href="/register"
                 className="flex items-center justify-center w-full max-w-[356px] min-h-[52px] rounded-[20px] border border-[#546a8c]/40 bg-transparent px-8 text-xl font-medium text-[#5c5c54] hover:bg-black/5 transition-colors"
             >
+                <img src="/icons/user-circle-plus.svg" alt="" className="w-6 h-6 mr-2 opacity-70" />
                 {t('register_button')}
             </Link>
         </div>
