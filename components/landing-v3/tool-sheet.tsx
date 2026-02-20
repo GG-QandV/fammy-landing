@@ -46,7 +46,8 @@ function ToolSheetInner({
     steps,
     currentStep,
     onStepChange,
-}: Pick<ToolSheetProps, 'func' | 'steps' | 'currentStep' | 'onStepChange'>) {
+    onOpenChange,
+}: Pick<ToolSheetProps, 'func' | 'steps' | 'currentStep' | 'onStepChange' | 'onOpenChange'>) {
     const { t } = useLanguage();
     const router = useRouter();
 
@@ -57,16 +58,19 @@ function ToolSheetInner({
         <div className="flex flex-col h-full">
             <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
-                    {canGoBack && (
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 text-slate-400 hover:text-slate-600"
-                            onClick={() => onStepChange(currentStep - 1)}
-                        >
-                            <ArrowLeft className="h-4 w-4" />
-                        </Button>
-                    )}
+                    <button
+                        onClick={() => {
+                            if (canGoBack) {
+                                onStepChange(currentStep - 1);
+                            } else if (onOpenChange) {
+                                onOpenChange(false);
+                            }
+                        }}
+                        className="flex items-center justify-center shrink-0 h-10 w-10 rounded-full bg-slate-100 hover:bg-slate-200 text-[#4A5A7A] transition-colors border border-slate-200/50 shadow-sm"
+                        aria-label={t('back' as any)}
+                    >
+                        <ArrowLeft className="h-5 w-5" />
+                    </button>
                 </div>
             </div>
 
@@ -158,6 +162,7 @@ export function ToolSheet({
                             steps={steps}
                             currentStep={currentStep}
                             onStepChange={onStepChange}
+                            onOpenChange={handleOpenChange}
                         />
                     </div>
                 </SheetContent>
@@ -193,6 +198,7 @@ export function ToolSheet({
                         steps={steps}
                         currentStep={currentStep}
                         onStepChange={onStepChange}
+                        onOpenChange={handleOpenChange}
                     />
                 </div>
             </DialogContent>

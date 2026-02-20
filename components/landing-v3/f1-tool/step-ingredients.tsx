@@ -95,16 +95,23 @@ export function StepIngredients({ species, onSubmit, hideSpeciesIndicator, class
                 ))}
 
                 {/* Add ingredient */}
-                <FoodAutocomplete
-                    onSelect={(food) => {
-                        setIngredients((prev) => [
-                            ...prev,
-                            { foodId: food.id, foodName: food.name, grams: 100 },
-                        ]);
-                    }}
-                    placeholder={t('recipe_search_placeholder')}
-                    clearOnSelect={true}
-                />
+                {ingredients.length < 5 && (
+                    <FoodAutocomplete
+                        onSelect={(food) => {
+                            setIngredients((prev) => [
+                                ...prev,
+                                { foodId: food.id, foodName: food.name, grams: 100 },
+                            ]);
+                        }}
+                        placeholder={ingredients.length > 0 ? (t('add_more_food' as Parameters<typeof t>[0])) : t('recipe_search_placeholder')}
+                        clearOnSelect={true}
+                    />
+                )}
+                {ingredients.length >= 5 && (
+                    <p className="text-sm text-center text-muted-foreground pt-2">
+                        {t('max_ingredients_reached' as any) || 'Maximum 5 ingredients'}
+                    </p>
+                )}
             </div>
 
             <Button

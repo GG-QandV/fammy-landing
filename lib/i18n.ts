@@ -104,6 +104,8 @@ export const translations = {
         already_added: 'This ingredient is already added',
         add_ingredients_alert: 'Please add at least one ingredient',
         add_ingredient: 'Add ingredient',
+        add_more_food: 'Add more food',
+        max_ingredients_reached: 'Maximum 5 ingredients reached',
         ingredients_list: 'Ingredients',
         // Ethical Gate Modal
         waitlist_header: 'Waiting for full version?',
@@ -377,6 +379,8 @@ export const translations = {
         already_added: 'Este ingrediente ya fue agregado',
         add_ingredients_alert: 'Por favor agrega al menos un ingrediente',
         add_ingredient: 'Agregar ingrediente',
+        add_more_food: 'Agregar más comida',
+        max_ingredients_reached: 'Máximo 5 ingredientes',
         ingredients_list: 'Ingredientes',
         // Ethical Gate Modal
         waitlist_header: '¿Esperando la versión completa?',
@@ -647,6 +651,8 @@ export const translations = {
         already_added: 'Cet ingrédient est déjà ajouté',
         add_ingredients_alert: 'Veuillez ajouter au moins un ingrédient',
         add_ingredient: 'Ajouter un ingrédient',
+        add_more_food: 'Ajouter plus de nourriture',
+        max_ingredients_reached: 'Maximum 5 ingrédients',
         ingredients_list: 'Ingrédients',
         // Ethical Gate Modal
         waitlist_header: 'En attente de la version complète?',
@@ -919,6 +925,8 @@ export const translations = {
         analyzing: 'Аналізуємо нутрієнти...',
         please_wait: 'Це займе всього кілька секунд',
         add_ingredient: 'Додати інгредієнт',
+        add_more_food: 'Додати ще продукт',
+        max_ingredients_reached: 'Максимум 5 продуктів',
         ingredients_list: 'Інгредієнти',
         // Ethical Gate Modal
         waitlist_header: 'Чекаєте на повну версію?',
