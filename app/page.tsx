@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useCallback } from "react"
 import { Nav } from "@/components/landing/nav"
 import { Footer } from "@/components/landing/footer"
 import { ArrowDown } from "lucide-react"
@@ -22,6 +22,8 @@ import { StepIngredients, type Ingredient } from "@/components/landing-v3/f1-too
 import { StepAnalyze, type F1Result } from "@/components/landing-v3/f1-tool/step-analyze"
 import { StepResult as F1StepResult } from "@/components/landing-v3/f1-tool/step-result"
 import { useLanguage } from "@/context/LanguageContext"
+import { useBackInterceptor } from "@/lib/hooks/use-back-handler"
+import { ExitPromptDialog } from "@/components/landing-v3/shared/exit-prompt-dialog"
 
 /**
  * Main Landing Page (V3)
@@ -35,6 +37,14 @@ export default function Home() {
   const [categorySheetOpen, setCategorySheetOpen] = useState(false)
   const [activeTool, setActiveTool] = useState<FunctionId | null>(null)
   const [toolSheetOpen, setToolSheetOpen] = useState(false)
+  const [exitPromptOpen, setExitPromptOpen] = useState(false)
+
+  const handleHomeBack = useCallback(() => {
+    setExitPromptOpen(true)
+  }, [])
+
+  // Перехватываем "Назад" на главной, только если все модалки закрыты
+  useBackInterceptor(handleHomeBack, !toolSheetOpen && !categorySheetOpen && !exitPromptOpen)
 
   // F2 state
   const [f2Species, setF2Species] = useState<SpeciesEntry | null>(null)
@@ -250,6 +260,15 @@ export default function Home() {
             onStepChange={() => { }}
           />
         )}
+
+        <ExitPromptDialog
+          open={exitPromptOpen}
+          onOpenChange={setExitPromptOpen}
+          onConfirmExit={() => {
+            setExitPromptOpen(false)
+            setTimeout(() => window.history.back(), 100)
+          }}
+        />
       </main>
 
       <Footer />

@@ -266,6 +266,12 @@ export const translations = {
         invitation_error: 'Failed to accept invitation. Please try again.',
         invitation_success: 'Invitation accepted!',
         invitation_invalid: 'Invalid or expired invitation.',
+
+        // Exit Prompt
+        exit_prompt_title: 'Are you sure you want to exit?',
+        exit_prompt_desc: 'Have you saved all your records? Unsaved checks will be lost.',
+        exit_prompt_yes: 'Yes, Exit',
+        exit_prompt_no: 'Cancel',
     },
     es: {
         feature_select_title: '¿Qué te gustaría verificar hoy?',
@@ -530,6 +536,12 @@ export const translations = {
         invitation_error: 'Error al aceptar. Inténtalo de nuevo.',
         invitation_success: '¡Invitación aceptada!',
         invitation_invalid: 'Invitación inválida o expirada.',
+
+        // Exit Prompt
+        exit_prompt_title: '¿Estás seguro de que quieres salir?',
+        exit_prompt_desc: '¿Has guardado todos tus registros? Las verificaciones no guardadas se perderán.',
+        exit_prompt_yes: 'Sí, Salir',
+        exit_prompt_no: 'Cancelar',
     },
     fr: {
         feature_select_title: 'Que souhaitez-vous vérifier aujourd hui ?',
@@ -794,6 +806,12 @@ export const translations = {
         invitation_error: 'Échec de l\'acceptation. Veuillez réessayer.',
         invitation_success: 'Invitation acceptée !',
         invitation_invalid: 'Invitation invalide ou expirée.',
+
+        // Exit Prompt
+        exit_prompt_title: 'Voulez-vous vraiment quitter ?',
+        exit_prompt_desc: 'Avez-vous sauvegardé tous vos enregistrements ? Les vérifications non sauvegardées seront perdues.',
+        exit_prompt_yes: 'Oui, Quitter',
+        exit_prompt_no: 'Annuler',
     },
     ua: {
         feature_select_title: 'Що ви хочете перевірити сьогодні?',
@@ -1057,6 +1075,12 @@ export const translations = {
         invitation_error: 'Не вдалося прийняти запрошення. Спробуйте ще раз.',
         invitation_success: 'Запрошення прийнято!',
         invitation_invalid: 'Запрошення недійсне або прострочене.',
+
+        // Exit Prompt
+        exit_prompt_title: 'Ви впевнені, що хочете вийти?',
+        exit_prompt_desc: 'Ви зберегли всі свої записи? Незбережені перевірки буде втрачено.',
+        exit_prompt_yes: 'Так, Вийти',
+        exit_prompt_no: 'Скасувати',
     }
 };
 

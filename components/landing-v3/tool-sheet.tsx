@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect, type ReactNode } from 'react';
+import { useState, useEffect, type ReactNode, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { useIsMobile } from '@/components/ui/use-mobile';
+import { useBackInterceptor } from '@/lib/hooks/use-back-handler';
 import {
     Sheet,
     SheetContent,
@@ -109,29 +110,19 @@ export function ToolSheet({
         ? t(steps[currentStep].i18nKey as Parameters<typeof t>[0])
         : '';
 
-    // Handle mobile back button
-    useEffect(() => {
-        if (!open) return;
-
-        // Push state only if we haven't already (protect against StrictMode double mount)
-        if (!window.history.state?.toolSheetOpen) {
-            window.history.pushState({ toolSheetOpen: true }, '');
-        }
-
-        const handlePopState = () => {
-            // When browser back is clicked, close the sheet
+    // Handle back button for multi-step tools
+    const handleBackPress = useCallback(() => {
+        if (currentStep > 0) {
+            onStepChange(currentStep - 1);
+        } else {
             onOpenChange(false);
-        };
+        }
+    }, [currentStep, onStepChange, onOpenChange]);
 
-        window.addEventListener('popstate', handlePopState);
-        return () => window.removeEventListener('popstate', handlePopState);
-    }, [open, onOpenChange]);
+    // Use interceptor only when sheet is open
+    useBackInterceptor(handleBackPress, open);
 
     const handleOpenChange = (newOpen: boolean) => {
-        // If closing via UI, also pop the history state to keep it clean
-        if (!newOpen && window.history.state?.toolSheetOpen) {
-            window.history.back();
-        }
         onOpenChange(newOpen);
     };
 
