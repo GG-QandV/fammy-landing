@@ -20,11 +20,11 @@ import {
     DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 
-const languages: { code: Language; name: string; emoji: string }[] = [
-    { code: "en", name: "English", emoji: "🇺🇸🇬🇧" },
-    { code: "es", name: "Español", emoji: "🇪🇸" },
-    { code: "fr", name: "Français", emoji: "🇫🇷" },
-    { code: "ua", name: "Українська", emoji: "🇺🇦" },
+const languages: { code: Language; name: string; icons: string[] }[] = [
+    { code: "en", name: "English", icons: ["/icons/flags/us.svg", "/icons/flags/gb.svg"] },
+    { code: "es", name: "Español", icons: ["/icons/flags/es.svg"] },
+    { code: "fr", name: "Français", icons: ["/icons/flags/fr.svg"] },
+    { code: "ua", name: "Українська", icons: ["/icons/flags/ua.svg"] },
     // Здесь легко добавляются все языки ЕС в будущем
 ];
 
@@ -76,10 +76,17 @@ export function LanguageSelector() {
                                     className={`flex items-center justify-between w-full p-4 rounded-xl border transition-all ${isActive ? 'border-gray-300 shadow-sm bg-gray-50/50' : 'border-gray-100 hover:bg-gray-50'}`}
                                 >
                                     <div className="flex items-center gap-4">
-                                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 shadow-sm overflow-hidden shrink-0 border border-gray-200/60">
-                                            <span className={`text-xl ${lang.code === 'en' ? 'tracking-tighter scale-125' : 'scale-150'}`}>
-                                                {lang.emoji}
-                                            </span>
+                                        <div className="flex items-center justify-center w-10 h-10 shrink-0">
+                                            <div className="flex items-center justify-center relative w-full h-full">
+                                                {lang.icons.map((icon, i) => (
+                                                    <img
+                                                        key={icon}
+                                                        src={icon}
+                                                        alt="flag"
+                                                        className={`w-10 h-10 rounded-full shadow-sm object-cover border border-gray-200/60 bg-white ${i > 0 ? '-ml-5 relative z-10' : 'relative z-0'}`}
+                                                    />
+                                                ))}
+                                            </div>
                                         </div>
                                         <span className="text-lg font-medium text-gray-800">{lang.name}</span>
                                     </div>
@@ -119,10 +126,17 @@ export function LanguageSelector() {
                                 onClick={() => handleSelect(lang.code)}
                                 className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer ${isActive ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
                             >
-                                <div className="flex items-center justify-center w-7 h-7 rounded-full bg-gray-100 shadow-sm overflow-hidden shrink-0 border border-gray-200/60">
-                                    <span className={`text-sm ${lang.code === 'en' ? 'tracking-tighter scale-125' : 'scale-150'}`}>
-                                        {lang.emoji}
-                                    </span>
+                                <div className="flex items-center justify-center w-7 h-7 shrink-0">
+                                    <div className="flex items-center justify-center relative w-full h-full">
+                                        {lang.icons.map((icon, i) => (
+                                            <img
+                                                key={icon}
+                                                src={icon}
+                                                alt="flag"
+                                                className={`w-7 h-7 rounded-full shadow-sm object-cover border border-gray-200/60 bg-white ${i > 0 ? '-ml-3.5 relative z-10' : 'relative z-0'}`}
+                                            />
+                                        ))}
+                                    </div>
                                 </div>
                                 <span className="font-medium flex-1 text-gray-800">{lang.name}</span>
                                 {isActive && <div className="w-1.5 h-1.5 bg-[#b58c54] rounded-full ml-auto" />}
