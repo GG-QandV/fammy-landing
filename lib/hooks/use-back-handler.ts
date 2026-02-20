@@ -1,11 +1,74 @@
 import { useEffect, useRef } from 'react';
 
+type InterceptorCallback = () => void;
+
+class BackInterceptorManager {
+    private stack: InterceptorCallback[] = [];
+    private stateId: string | null = null;
+    private isInitialized = false;
+
+    private pushDummyState() {
+        if (typeof window === 'undefined') return;
+
+        if (!this.stateId) {
+            this.stateId = `back-interceptor-${Date.now()}`;
+        }
+        const currentState = window.history.state || {};
+        if (currentState.interceptorId !== this.stateId) {
+            window.history.pushState({ ...currentState, interceptorId: this.stateId }, '');
+        }
+    }
+
+    private handlePopState = (event: PopStateEvent) => {
+        if (this.stack.length > 0) {
+            // Поддерживаем ловушку активной
+            this.pushDummyState();
+            // Вызываем верхний колбек из стека
+            const topCallback = this.stack[this.stack.length - 1];
+            if (topCallback) topCallback();
+        }
+    };
+
+    public push(callback: InterceptorCallback) {
+        if (typeof window === 'undefined') return;
+
+        if (!this.isInitialized) {
+            window.addEventListener('popstate', this.handlePopState);
+            this.isInitialized = true;
+        }
+
+        if (this.stack.length === 0) {
+            this.pushDummyState();
+        }
+        this.stack.push(callback);
+    }
+
+    public remove(callback: InterceptorCallback) {
+        if (typeof window === 'undefined') return;
+
+        const index = this.stack.indexOf(callback);
+        if (index !== -1) {
+            this.stack.splice(index, 1);
+        }
+
+        // Ждем миллисекунды, чтобы убедиться, что другой модал не открылся сразу же
+        setTimeout(() => {
+            if (this.stack.length === 0 && this.stateId) {
+                if (window.history.state?.interceptorId === this.stateId) {
+                    window.history.back();
+                }
+                this.stateId = null;
+            }
+        }, 50);
+    }
+}
+
+// Единый глобальный диспетчер
+const backManager = new BackInterceptorManager();
+
 /**
  * Хук для перехвата системной кнопки "Назад" (Android back button, iOS swipe back).
- * Позволяет выполнить кастомное действие вместо стандартного возврата назад в истории браузера.
- * 
- * @param onBack Функция, которая будет вызвана при нажатии кнопки "Назад"
- * @param isActive Нужно ли перехватывать логику прямо сейчас
+ * Решает проблему Race Conditions при переключении между несколькими модалками.
  */
 export function useBackInterceptor(
     onBack: () => void,
@@ -13,7 +76,7 @@ export function useBackInterceptor(
 ) {
     const onBackRef = useRef(onBack);
 
-    // Поддерживаем ссылку на функцию всегда актуальной
+    // Поддерживаем ссылку актуальной
     useEffect(() => {
         onBackRef.current = onBack;
     }, [onBack]);
@@ -21,43 +84,11 @@ export function useBackInterceptor(
     useEffect(() => {
         if (!isActive) return;
 
-        // Уникальный ID для нашей записи в истории
-        const stateId = `back-interceptor-${Date.now()}`;
-
-        // Функция сохранения стейта с учетом Next.js 
-        // ВАЖНО: Next.js App Router хранит свое дерево навигации в window.history.state. 
-        // Если его затереть, при popstate произойдет полная перезагрузка (hard reload)!
-        const pushDummyState = () => {
-            const currentState = window.history.state || {};
-            if (currentState.interceptorId !== stateId) {
-                // Сохраняем все поля Next.js (...currentState) и добавляем свой флаг
-                window.history.pushState({ ...currentState, interceptorId: stateId }, '');
-            }
-        };
-
-        // Пушим запись при активации
-        pushDummyState();
-
-        const handlePopState = (event: PopStateEvent) => {
-            // При нажатии "Назад" браузер извлекает этот стейт. 
-            // Чтобы перехват продолжал работать и стейт-ловушка оставалась, пушим его обратно
-            pushDummyState();
-
-            // Вызываем пользовательскую логику возврата 
-            onBackRef.current();
-        };
-
-        window.addEventListener('popstate', handlePopState);
+        const callback = () => onBackRef.current();
+        backManager.push(callback);
 
         return () => {
-            window.removeEventListener('popstate', handlePopState);
-
-            // Если компонент размонтировался или хук деактивировался (например закрыли модалку "крестиком"),
-            // и наш пустой стейт всё еще висит последним в истории, то нужно сделать back(),
-            // иначе у пользователя накопится "мусор" в стеке истории.
-            if (window.history.state?.interceptorId === stateId) {
-                window.history.back();
-            }
+            backManager.remove(callback);
         };
     }, [isActive]);
 }

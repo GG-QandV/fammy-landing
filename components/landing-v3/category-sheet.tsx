@@ -11,6 +11,7 @@ import { ArrowRight, ExternalLink } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
+import { useBackInterceptor } from "@/lib/hooks/use-back-handler"
 
 interface CategorySheetProps {
     open: boolean
@@ -21,6 +22,10 @@ interface CategorySheetProps {
 
 export function CategorySheet({ open, onOpenChange, categoryId, onSelectTool }: CategorySheetProps) {
     const { t } = useLanguage()
+
+    useBackInterceptor(() => {
+        onOpenChange(false)
+    }, open)
 
     if (!categoryId) return null
 
