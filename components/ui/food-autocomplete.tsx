@@ -118,7 +118,10 @@ export default function FoodAutocomplete({ onSelect, placeholder = 'Search for a
                     {results.map((food, index) => (
                         <button
                             key={food.id}
-                            onClick={() => handleSelect(food)}
+                            onMouseDown={(e) => {
+                                e.preventDefault();
+                                handleSelect(food);
+                            }}
                             className={`w-full px-4 py-2 text-left hover:bg-sky ${index === selectedIndex ? 'bg-sky' : ''
                                 }`}
                             data-testid={`food-option-${index}`}

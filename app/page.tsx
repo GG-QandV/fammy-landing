@@ -189,8 +189,7 @@ export default function Home() {
           categoryId={activeCategory}
           onSelectTool={(tid) => {
             setCategorySheetOpen(false)
-            // Small delay to prevent transition conflict
-            setTimeout(() => handleToolSelect(tid), 150)
+            handleToolSelect(tid)
           }}
         />
 
