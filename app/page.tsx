@@ -146,7 +146,7 @@ export default function Home() {
       <Nav />
 
       <main className="flex-1">
-        <div className="mx-auto max-w-4xl px-5 pt-20 pb-4 text-left lg:pt-32 lg:pb-6">
+        <div className="mx-auto max-w-4xl px-5 pt-32 pb-4 text-left lg:pt-32 lg:pb-6">
           <h1 className="text-4xl leading-[1.1] font-extrabold tracking-tight text-[#2C3650] sm:text-6xl lg:text-7xl text-center">
             {t('all_in_one_app' as any)}
           </h1>
