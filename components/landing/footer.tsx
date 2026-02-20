@@ -62,7 +62,7 @@ export function Footer() {
               {`2025 fammy.pet. ${t("footer_disclaimer")}`}
             </p>
             <p className="mt-2 text-[10px] opacity-40 font-mono">
-              v3.0.0
+              v1.3.0.100
             </p>
           </div>
         </div>
