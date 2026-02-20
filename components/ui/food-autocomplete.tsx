@@ -11,9 +11,10 @@ interface Food {
 interface Props {
     onSelect: (food: Food) => void;
     placeholder?: string;
+    clearOnSelect?: boolean;
 }
 
-export default function FoodAutocomplete({ onSelect, placeholder = 'Search for a food...' }: Props) {
+export default function FoodAutocomplete({ onSelect, placeholder = 'Search for a food...', clearOnSelect = false }: Props) {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState<Food[]>([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -22,12 +23,18 @@ export default function FoodAutocomplete({ onSelect, placeholder = 'Search for a
     const { language } = useLanguage();
     const inputRef = useRef<HTMLInputElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const isSelectedResultRef = useRef(false);
 
     // Debounced search
     useEffect(() => {
         if (query.length < 2) {
             setResults([]);
             setIsOpen(false);
+            return;
+        }
+
+        // Не нужно искать, если текст поменялся из-за того, что мы только что выбрали продукт
+        if (isSelectedResultRef.current) {
             return;
         }
 
@@ -68,7 +75,8 @@ export default function FoodAutocomplete({ onSelect, placeholder = 'Search for a
     };
 
     const handleSelect = (food: Food) => {
-        setQuery(food.name);
+        isSelectedResultRef.current = true;
+        setQuery(clearOnSelect ? '' : food.name);
         setIsOpen(false);
         setSelectedIndex(-1);
         onSelect(food);
@@ -97,7 +105,10 @@ export default function FoodAutocomplete({ onSelect, placeholder = 'Search for a
                 ref={inputRef}
                 type="text"
                 value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                onChange={(e) => {
+                    isSelectedResultRef.current = false;
+                    setQuery(e.target.value);
+                }}
                 onKeyDown={handleKeyDown}
                 placeholder={placeholder}
                 className="h-14 w-full px-4 py-3 border border-light-grey rounded-lg bg-white focus:border-navy/40 focus:outline-none"

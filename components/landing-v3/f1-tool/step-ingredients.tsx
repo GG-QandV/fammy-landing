@@ -103,6 +103,7 @@ export function StepIngredients({ species, onSubmit, hideSpeciesIndicator, class
                         ]);
                     }}
                     placeholder={t('recipe_search_placeholder')}
+                    clearOnSelect={true}
                 />
             </div>
 
