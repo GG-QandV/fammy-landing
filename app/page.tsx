@@ -176,7 +176,7 @@ export default function Home() {
             <div
               className="animate-bounce cursor-pointer flex justify-center pointer-events-auto"
               onClick={() => {
-                document.getElementById('promo-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                window.scrollBy({ top: window.innerHeight * 0.8, behavior: 'smooth' });
               }}
             >
               <div className="bg-white/80 backdrop-blur-sm rounded-full p-2.5 border border-[#e8e8e0] shadow-md text-[#2C3650] hover:bg-white scale-95 transition-transform">
@@ -255,6 +255,13 @@ export default function Home() {
             ]}
             currentStep={f1Step}
             onStepChange={(s) => {
+              // Если мы возвращаемся назад с экрана результатов (шаг 2 -> 1),
+              // то мы должны перепрыгнуть через экран загрузки (шаг 1) сразу на ингредиенты (шаг 0).
+              if (s === 1 && f1Step === 2) {
+                setF1Result(null);
+                setF1Step(0);
+                return;
+              }
               if (s === 0) setF1Result(null); // Reset result when going back to ingredients
               setF1Step(s);
             }}

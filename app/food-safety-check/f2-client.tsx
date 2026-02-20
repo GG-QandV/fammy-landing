@@ -4,6 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { useLanguage } from "@/context/LanguageContext"
+import { useCallback } from "react"
 import { Nav } from "@/components/landing/nav"
 import { Footer } from "@/components/landing/footer"
 import { functions } from "@/lib/functions-config"
@@ -12,6 +13,7 @@ import { StepSpecies } from "@/components/landing-v3/f2-tool/step-species"
 import { StepSearch, type F2Result } from "@/components/landing-v3/f2-tool/step-search"
 import { StepResult } from "@/components/landing-v3/f2-tool/step-result"
 import { UsageCounter } from "@/components/ui/usage-counter"
+import { useBackInterceptor } from "@/lib/hooks/use-back-handler"
 
 /**
  * F2: Food Safety Check — standalone SEO page.
@@ -24,6 +26,18 @@ export default function FoodSafetyCheckPage() {
     const [species, setSpecies] = useState<SpeciesEntry | null>(null)
     const [result, setResult] = useState<F2Result | null>(null)
     const [step, setStep] = useState(0)
+
+    const handleBackPress = useCallback(() => {
+        if (step === 2) {
+            setResult(null);
+            setStep(1);
+        } else if (step === 1) {
+            setSpecies(null);
+            setStep(0);
+        }
+    }, [step]);
+
+    useBackInterceptor(handleBackPress, step > 0);
 
     return (
         <>

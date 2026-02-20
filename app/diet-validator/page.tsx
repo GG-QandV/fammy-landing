@@ -4,6 +4,7 @@ import React from "react"
 
 import { useState, useCallback } from "react"
 import Link from "next/link"
+import { useBackInterceptor } from "@/lib/hooks/use-back-handler"
 
 type ResultStatus = "safe" | "caution" | "danger"
 interface IngredientResult {
@@ -79,6 +80,14 @@ export default function DietValidatorPage() {
   const [results, setResults] = useState<IngredientResult[]>([])
   const [loading, setLoading] = useState(false)
 
+  const handleBackPress = useCallback(() => {
+    if (results.length > 0) {
+      setResults([])
+    }
+  }, [results.length])
+
+  useBackInterceptor(handleBackPress, results.length > 0)
+
   const handleAddIngredient = useCallback(() => {
     const value = input.trim()
     if (value && !ingredients.includes(value)) {
@@ -144,11 +153,10 @@ export default function DietValidatorPage() {
             <button
               type="button"
               onClick={() => { setAnimal("dog"); setResults([]) }}
-              className={`flex h-16 items-center justify-center gap-3 rounded-xl border-2 text-base font-semibold transition-all active:scale-[0.97] lg:h-[72px] ${
-                animal === "dog"
+              className={`flex h-16 items-center justify-center gap-3 rounded-xl border-2 text-base font-semibold transition-all active:scale-[0.97] lg:h-[72px] ${animal === "dog"
                   ? "border-teal bg-teal/5 text-teal"
                   : "border-border bg-background text-muted-foreground hover:border-border hover:bg-muted"
-              }`}
+                }`}
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2.823.47-4.113 6.006-4 7 .137 1.217 1.5 2 2.5 2s2-1.5 2-1.5M14 5.172C14 3.782 15.577 2.679 17.5 3c2.823.47 4.113 6.006 4 7-.137 1.217-1.5 2-2.5 2s-2-1.5-2-1.5M8 14v.5M16 14v.5M11.25 16.25h1.5L12 17l-.75-.75z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -159,11 +167,10 @@ export default function DietValidatorPage() {
             <button
               type="button"
               onClick={() => { setAnimal("cat"); setResults([]) }}
-              className={`flex h-16 items-center justify-center gap-3 rounded-xl border-2 text-base font-semibold transition-all active:scale-[0.97] lg:h-[72px] ${
-                animal === "cat"
+              className={`flex h-16 items-center justify-center gap-3 rounded-xl border-2 text-base font-semibold transition-all active:scale-[0.97] lg:h-[72px] ${animal === "cat"
                   ? "border-teal bg-teal/5 text-teal"
                   : "border-border bg-background text-muted-foreground hover:border-border hover:bg-muted"
-              }`}
+                }`}
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M12 22c4.97 0 9-2.686 9-6s-4.03-6-9-6-9 2.686-9 6 4.03 6 9 6z" stroke="currentColor" strokeWidth="1.5" />
