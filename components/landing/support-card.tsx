@@ -193,7 +193,7 @@ export default function SupportCard() {
                                 <h3 className="text-xl font-bold text-navy">
                                     {tier.name}
                                 </h3>
-                                <div className="text-right">
+                                <div className="text-right translate-y-[3px]">
                                     <div className="text-3xl font-bold text-dark-navy">
                                         €{tier.price}
                                     </div>
