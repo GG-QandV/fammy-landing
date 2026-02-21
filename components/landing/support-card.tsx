@@ -193,12 +193,12 @@ export default function SupportCard() {
                                 <h3 className="text-xl font-bold text-navy">
                                     {tier.name}
                                 </h3>
-                                <div className="text-right translate-y-[3px]">
+                                <div className="text-right translate-y-[3px] relative">
                                     <div className="text-3xl font-bold text-dark-navy">
                                         €{tier.price}
                                     </div>
                                     {tier.id === 'founder' && (
-                                        <p className="text-xs text-coral line-through mt-1">
+                                        <p className="text-xs text-coral line-through absolute right-0 top-full mt-0.5 whitespace-nowrap">
                                             {t('support_core_compare')}
                                         </p>
                                     )}
