@@ -198,7 +198,7 @@ export default function SupportCard() {
                                         €{tier.price}
                                     </div>
                                     {tier.id === 'founder' && (
-                                        <p className="text-xs text-coral line-through -mt-1">
+                                        <p className="text-xs text-coral line-through mt-1">
                                             {t('support_core_compare')}
                                         </p>
                                     )}
