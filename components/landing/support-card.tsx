@@ -204,10 +204,10 @@ export default function SupportCard() {
                                     )}
                                 </div>
                             </div>
-                            <p className="text-grey text-sm mb-4 min-h-[40px]">
+                            <p className="text-grey text-sm mb-2 min-h-[40px]">
                                 {tier.desc}
                             </p>
-                            {tier.id !== 'founder' && <div className="mb-4" />}
+                            {tier.id !== 'founder' && <div className="mb-2" />}
                             <button
                                 onClick={() => handleSupport(tier.id)}
                                 disabled={loading === tier.id}
