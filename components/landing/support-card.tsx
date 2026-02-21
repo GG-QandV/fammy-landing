@@ -193,16 +193,20 @@ export default function SupportCard() {
                                 <h3 className="text-xl font-bold text-navy">
                                     {tier.name}
                                 </h3>
-                                <div className="text-3xl font-bold text-dark-navy">
-                                    €{tier.price}
+                                <div className="text-right">
+                                    <div className="text-3xl font-bold text-dark-navy">
+                                        €{tier.price}
+                                    </div>
+                                    {tier.id === 'founder' && (
+                                        <p className="text-xs text-coral line-through -mt-1">
+                                            {t('support_core_compare')}
+                                        </p>
+                                    )}
                                 </div>
                             </div>
                             <p className="text-grey text-sm mb-4 min-h-[40px]">
                                 {tier.desc}
                             </p>
-                            {tier.id === 'founder' && (
-                                <p className="text-sm text-coral line-through mb-3">{t('support_core_compare')}</p>
-                            )}
                             {tier.id !== 'founder' && <div className="mb-4" />}
                             <button
                                 onClick={() => handleSupport(tier.id)}
