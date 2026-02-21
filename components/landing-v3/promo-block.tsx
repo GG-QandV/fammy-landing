@@ -58,6 +58,9 @@ export function PromoBlock({ variant = "default" }: PromoBlockProps) {
         setPromoResult(data)
         setShowModal(true)
 
+        // Dispatch event for usage count refresh
+        window.dispatchEvent(new CustomEvent('usage-updated'));
+
         if (data.token) {
           localStorage.setItem("promo_token", data.token)
           localStorage.setItem("promo_tier", data.tier || "promo")

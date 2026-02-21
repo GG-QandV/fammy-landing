@@ -182,9 +182,10 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
         setPromoStatus("success")
         if (data.token) {
           localStorage.setItem("promo_token", data.token)
-          if (data.tier) localStorage.setItem("promo_tier", data.tier)
           if (data.features) localStorage.setItem("promo_features", JSON.stringify(data.features))
         }
+        // Dispatch event for usage count refresh
+        window.dispatchEvent(new CustomEvent('usage-updated'));
       } else if (data.error === "expired") {
         setPromoStatus("expired")
       } else {

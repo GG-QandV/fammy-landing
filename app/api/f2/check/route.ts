@@ -3,6 +3,7 @@ import { supabaseAdmin } from '../../../../lib/supabaseAdmin';
 import { checkFood } from '../../../../lib/backendApi';
 import { getAnonIdFromCookieHeader } from '../../../../lib/anonId';
 import { jwtVerify } from 'jose';
+import { PromoDOT } from '@/lib/promoDOT';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 const SECRET = new TextEncoder().encode(JWT_SECRET);
@@ -51,23 +52,10 @@ export async function POST(request: NextRequest) {
             .eq('is_unlimited', true)
             .single() as any);
 
-        // Check for promo token in headers
-        const promoToken = request.headers.get('x-promo-token');
-        let currentLimit = 10;
-        let isPromoActive = false;
-
-        if (promoToken) {
-            try {
-                const { payload } = await jwtVerify(promoToken, SECRET);
-                if (payload.userId === anonId && payload.limit) {
-                    currentLimit = payload.limit as number;
-                    isPromoActive = true;
-                    console.log(`[LANDING] Promo active for ${anonId}, limit: ${currentLimit}`);
-                }
-            } catch (e) {
-                console.warn('[LANDING] Invalid promo token provided');
-            }
-        }
+        // Use DOT layer for promo limits
+        const promoResult = await PromoDOT.getActiveLimit(anonId, 10);
+        const currentLimit = promoResult.dailyLimit;
+        const isPromoActive = promoResult.isActive;
 
         // Track usage count for remainingToday in response
         let usageCount: number | null = null;
@@ -158,14 +146,10 @@ export async function POST(request: NextRequest) {
         }
 
         // Log usage event
-        await supabaseAdmin
-            .from('landing_f2_usage_events' as any)
-            .insert({
-                anon_id: anonId,
-                ip_address: ip,
-                target: body.target,
-                food_id: body.foodId,
-            });
+        await PromoDOT.trackF2Usage(anonId, ip, {
+            target: body.target,
+            food_id: body.foodId,
+        });
 
         const responsePayload = {
             result: {

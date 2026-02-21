@@ -21,12 +21,8 @@ export interface UsageData {
 export function useUsageCount(): UsageData | null {
     const [usage, setUsage] = useState<UsageData | null>(null);
 
-    useEffect(() => {
-        // Ensure anon_id cookie exists before fetching
-        getOrCreateAnonId();
-
+    const fetchUsage = () => {
         const promoToken = localStorage.getItem('promo_token');
-
         fetch('/api/usage', {
             credentials: 'include',
             headers: {
@@ -38,6 +34,20 @@ export function useUsageCount(): UsageData | null {
                 if (data.f1 && data.f2) setUsage(data);
             })
             .catch(() => {/* silently ignore */ });
+    };
+
+    useEffect(() => {
+        // Ensure anon_id cookie exists before fetching
+        getOrCreateAnonId();
+        fetchUsage();
+
+        const handleUpdate = () => {
+            console.log('[useUsageCount] Refreshing usage...');
+            fetchUsage();
+        };
+
+        window.addEventListener('usage-updated', handleUpdate);
+        return () => window.removeEventListener('usage-updated', handleUpdate);
     }, []);
 
     return usage;

@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabaseAdmin } from '../../../lib/supabaseAdmin';
-import { getAnonIdFromCookieHeader } from '../../../lib/anonId';
-import { jwtVerify } from 'jose';
-
-const JWT_SECRET = process.env.JWT_SECRET || 'secret';
-const SECRET = new TextEncoder().encode(JWT_SECRET);
+import { PromoDOT } from '@/lib/promoDOT';
+import { getAnonIdFromCookieHeader } from '@/lib/anonId';
+import { supabaseAdmin } from '@/lib/supabaseAdmin';
 
 const F1_DAILY_LIMIT_DEFAULT = 5;
 const F2_DAILY_LIMIT_DEFAULT = 10;
@@ -28,25 +25,13 @@ export async function GET(request: NextRequest) {
             });
         }
 
-        // Check for promo token in headers
-        const promoToken = request.headers.get('x-promo-token');
-        let f1Limit = F1_DAILY_LIMIT_DEFAULT;
-        let f2Limit = F2_DAILY_LIMIT_DEFAULT;
+        // Use DOT layer for promo limits
+        const promoResult = await PromoDOT.getActiveLimit(anonId, F1_DAILY_LIMIT_DEFAULT);
+        const f1Limit = promoResult.dailyLimit;
+        const f2Limit = promoResult.isActive ? f1Limit : F2_DAILY_LIMIT_DEFAULT;
 
-        if (promoToken) {
-            try {
-                const { payload } = await jwtVerify(promoToken, SECRET);
-                if (payload.userId === anonId && payload.limit) {
-                    // If promo has a global limit or features, we adjust. 
-                    // For now, let's assume the promo 'limit' applies to both or use features.
-                    const promoLimit = payload.limit as number;
-                    f1Limit = promoLimit;
-                    f2Limit = promoLimit;
-                    console.log(`[usage] Promo active for ${anonId}, new limits: ${promoLimit}`);
-                }
-            } catch (e) {
-                console.warn('[usage] Invalid promo token');
-            }
+        if (promoResult.isActive) {
+            console.log(`[usage] DOT Promo applied: ${f1Limit}`);
         }
 
         const twentyFourHoursAgo = new Date();

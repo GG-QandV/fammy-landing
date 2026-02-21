@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '../../../../lib/supabaseAdmin';
 import { getAnonIdFromCookieHeader } from '../../../../lib/anonId';
 import { SignJWT, jwtVerify } from 'jose';
+import { PromoDOT } from '@/lib/promoDOT';
 
 const BACKEND_BASE_URL = process.env.BACKEND_BASE_URL || 'http://localhost:3000';
 const JWT_SECRET = process.env.JWT_SECRET || '';
@@ -66,23 +67,10 @@ export async function POST(request: NextRequest) {
             .eq('is_unlimited', true)
             .single() as any);
 
-        // Check for promo token in headers
-        const promoToken = request.headers.get('x-promo-token');
-        let currentLimit = DAILY_LIMIT_DEFAULT;
-        let isPromoActive = false;
-
-        if (promoToken && JWT_SECRET) {
-            try {
-                const { payload } = await jwtVerify(promoToken, SECRET);
-                if (payload.userId === anonId && payload.limit) {
-                    currentLimit = payload.limit as number;
-                    isPromoActive = true;
-                    console.log(`[F1] Promo active for ${anonId}, limit: ${currentLimit}`);
-                }
-            } catch (e) {
-                console.warn('[F1] Invalid promo token');
-            }
-        }
+        // Use DOT layer for promo limits
+        const promoResult = await PromoDOT.getActiveLimit(anonId, DAILY_LIMIT_DEFAULT);
+        const currentLimit = promoResult.dailyLimit;
+        const isPromoActive = promoResult.isActive;
 
         // Track usage count for remainingToday in response
         let usageCount: number | null = null;
@@ -193,15 +181,11 @@ export async function POST(request: NextRequest) {
         const result = data.data;
 
         // Log usage
-        await supabaseAdmin
-            .from('landing_f1_usage_events' as any)
-            .insert({
-                anon_id: anonId,
-                ip_address: ip,
-                recipe_id: recipe.id,
-                recipe_name: recipeName,
-                nutrients_count: result?.nutrients?.length || 0,
-            });
+        await PromoDOT.trackF1Usage(anonId, ip, {
+            recipe_id: recipe.id,
+            recipe_name: recipeName,
+            nutrients_count: result?.nutrients?.length || 0,
+        });
 
         return NextResponse.json({
             success: true,
