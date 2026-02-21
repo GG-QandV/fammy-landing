@@ -168,7 +168,7 @@ export default function SupportCard() {
             <h2 className="text-3xl font-bold text-navy mb-3 leading-tight">
                 {t('support_title')}
             </h2>
-            <p className="text-lg text-grey mb-6 leading-snug">
+            <p className="text-lg text-grey mb-[34px] leading-snug">
                 {t('support_subtitle')}
             </p>
 
