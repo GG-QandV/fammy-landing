@@ -165,10 +165,10 @@ export default function SupportCard() {
 
     return (
         <div className="max-w-5xl mx-auto text-center pt-[34px] pb-12">
-            <h2 className="text-3xl font-bold text-navy mb-3">
+            <h2 className="text-3xl font-bold text-navy mb-3 leading-tight">
                 {t('support_title')}
             </h2>
-            <p className="text-lg text-grey mb-10">
+            <p className="text-lg text-grey mb-6 leading-snug">
                 {t('support_subtitle')}
             </p>
 
