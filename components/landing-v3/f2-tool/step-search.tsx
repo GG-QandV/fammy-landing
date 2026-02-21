@@ -35,15 +35,12 @@ export function StepSearch({ species, onResult, className }: StepSearchProps) {
         setLoading(true);
         try {
             const anonId = getOrCreateAnonId();
-            const promoToken = typeof document !== 'undefined'
-                ? document.cookie.match(/promo_token=([^;]+)/)?.[1] || ''
-                : '';
+            const promoToken = localStorage.getItem('promo_token') || '';
 
             const res = await fetch('/api/f2/check', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    Cookie: `anon_id=${anonId}`,
                     ...(promoToken ? { 'x-promo-token': promoToken } : {}),
                 },
                 body: JSON.stringify({

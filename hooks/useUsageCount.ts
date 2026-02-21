@@ -25,7 +25,14 @@ export function useUsageCount(): UsageData | null {
         // Ensure anon_id cookie exists before fetching
         getOrCreateAnonId();
 
-        fetch('/api/usage', { credentials: 'include' })
+        const promoToken = localStorage.getItem('promo_token');
+
+        fetch('/api/usage', {
+            credentials: 'include',
+            headers: {
+                ...(promoToken ? { 'x-promo-token': promoToken } : {})
+            }
+        })
             .then((r) => r.json())
             .then((data) => {
                 if (data.f1 && data.f2) setUsage(data);

@@ -67,12 +67,11 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
 
     try {
       const anonId = await getOrCreateAnonId()
-      const promoToken = document.cookie.match(/promo_token=([^;]+)/)?.[1] || ""
+      const promoToken = localStorage.getItem("promo_token") || ""
       const res = await fetch("/api/f2/check", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Cookie: `anon_id=${anonId}`,
           ...(promoToken ? { "x-promo-token": promoToken } : {}),
         },
         body: JSON.stringify({ target: species, foodId: selectedFood?.id || "", lang: language }),
@@ -127,11 +126,12 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
 
     try {
       const anonId = await getOrCreateAnonId()
+      const promoToken = localStorage.getItem("promo_token") || ""
       const res = await fetch("/api/f1/analyze", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Cookie: `anon_id=${anonId}`,
+          ...(promoToken ? { "x-promo-token": promoToken } : {}),
         },
         body: JSON.stringify({ target: species, ingredients, lang: language }),
       })
@@ -181,7 +181,9 @@ export function Hero({ activeFeature, onFeatureChange }: HeroProps) {
       if (data.success) {
         setPromoStatus("success")
         if (data.token) {
-          document.cookie = `promo_token=${data.token}; path=/; max-age=86400`
+          localStorage.setItem("promo_token", data.token)
+          if (data.tier) localStorage.setItem("promo_tier", data.tier)
+          if (data.features) localStorage.setItem("promo_features", JSON.stringify(data.features))
         }
       } else if (data.error === "expired") {
         setPromoStatus("expired")

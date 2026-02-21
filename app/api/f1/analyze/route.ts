@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '../../../../lib/supabaseAdmin';
 import { getAnonIdFromCookieHeader } from '../../../../lib/anonId';
-import { SignJWT } from 'jose';
+import { SignJWT, jwtVerify } from 'jose';
 
 const BACKEND_BASE_URL = process.env.BACKEND_BASE_URL || 'http://localhost:3000';
 const JWT_SECRET = process.env.JWT_SECRET || '';
 const SECRET = new TextEncoder().encode(JWT_SECRET);
 const GUEST_USER_ID = '00000000-0000-0000-0000-000000000001';
-const DAILY_LIMIT = 5;
+const DAILY_LIMIT_DEFAULT = 5;
 
 async function generateGuestToken(anonId: string): Promise<string> {
     if (!JWT_SECRET) return '';
@@ -66,6 +66,24 @@ export async function POST(request: NextRequest) {
             .eq('is_unlimited', true)
             .single() as any);
 
+        // Check for promo token in headers
+        const promoToken = request.headers.get('x-promo-token');
+        let currentLimit = DAILY_LIMIT_DEFAULT;
+        let isPromoActive = false;
+
+        if (promoToken && JWT_SECRET) {
+            try {
+                const { payload } = await jwtVerify(promoToken, SECRET);
+                if (payload.userId === anonId && payload.limit) {
+                    currentLimit = payload.limit as number;
+                    isPromoActive = true;
+                    console.log(`[F1] Promo active for ${anonId}, limit: ${currentLimit}`);
+                }
+            } catch (e) {
+                console.warn('[F1] Invalid promo token');
+            }
+        }
+
         // Track usage count for remainingToday in response
         let usageCount: number | null = null;
 
@@ -81,12 +99,13 @@ export async function POST(request: NextRequest) {
                 .gte('created_at', twentyFourHoursAgo.toISOString()) as any);
 
             usageCount = count ?? 0;
-            console.log('[F1] Usage check:', { anonId, ip, count, DAILY_LIMIT });
-            if (count !== null && count >= DAILY_LIMIT) {
+            console.log('[F1] Usage check:', { anonId, ip, count, currentLimit });
+            if (count !== null && count >= currentLimit) {
                 return NextResponse.json(
                     {
                         code: 'LIMIT_REACHED',
-                        message: `You have reached the limit of ${DAILY_LIMIT} analyses per 24 hours`
+                        message: `You have reached the limit of ${currentLimit} analyses per 24 hours`,
+                        isPromo: isPromoActive
                     },
                     { status: 403 }
                 );
@@ -187,8 +206,8 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({
             success: true,
             data: result,
-            remainingToday: entitlement ? null : Math.max(0, DAILY_LIMIT - ((usageCount ?? 0) + 1)),
-            dailyLimit: entitlement ? null : DAILY_LIMIT,
+            remainingToday: entitlement ? null : Math.max(0, currentLimit - ((usageCount ?? 0) + 1)),
+            dailyLimit: entitlement ? null : currentLimit,
         });
 
     } catch (error) {
