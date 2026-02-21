@@ -161,7 +161,7 @@ export default function Home() {
             {t('app_slogan_desc' as any)}
           </p>
 
-          <div className="w-full max-w-xl mx-auto mt-12 mb-8 p-6 rounded-3xl bg-[#f8f8f2] border border-[#e8e8e0] shadow-sm">
+          <div className="w-full max-w-xl mx-auto mt-12 p-6 rounded-3xl bg-[#f8f8f2] border border-[#e8e8e0] shadow-sm">
             <CategoryBayan
               onSelectCategory={handleCategoryClick}
               activeCategory={activeCategory || undefined}
@@ -185,9 +185,9 @@ export default function Home() {
             </div>
           </div>
 
-          <PromoBlock />
 
-          <div className="mt-8 space-y-12">
+
+          <div className="space-y-12">
             <SupportCard />
             <WaitlistCTA />
             <MiniFounder />

@@ -9,12 +9,12 @@ export function AuthCTA() {
     const { t } = useLanguage();
 
     if (isLoading) {
-        return <div className="h-12 w-32 animate-pulse rounded-full bg-gray-200 mx-auto mt-8 mb-12"></div>;
+        return <div className="h-12 w-32 animate-pulse rounded-full bg-gray-200 mx-auto mt-4 mb-4"></div>;
     }
 
     if (user) {
         return (
-            <div className="hidden md:flex justify-center mt-8 mb-12">
+            <div className="hidden md:flex justify-center mt-4 mb-4">
                 <Link
                     href="/profile"
                     className="flex items-center gap-2 rounded-full bg-navy px-6 py-3 text-sm font-bold text-white shadow-lg transition-transform hover:scale-105 active:scale-95"
@@ -28,7 +28,7 @@ export function AuthCTA() {
     }
 
     return (
-        <div className="hidden md:flex flex-col items-center justify-center gap-3 mt-8 mb-4 px-4 w-full">
+        <div className="hidden md:flex flex-col items-center justify-center gap-3 mt-4 mb-4 px-4 w-full">
             <Link
                 href="/login"
                 className="flex items-center justify-center w-full max-w-[356px] min-h-[52px] rounded-[20px] bg-[#546a8c] hover:bg-[#435570] px-8 text-xl font-medium text-white transition-colors opacity-50 hover:opacity-100"

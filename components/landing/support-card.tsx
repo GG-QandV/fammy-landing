@@ -164,7 +164,7 @@ export default function SupportCard() {
     ];
 
     return (
-        <div className="max-w-5xl mx-auto text-center py-12">
+        <div className="max-w-5xl mx-auto text-center pt-[34px] pb-12">
             <h2 className="text-3xl font-bold text-navy mb-3">
                 {t('support_title')}
             </h2>
@@ -177,8 +177,8 @@ export default function SupportCard() {
                     <div
                         key={tier.id}
                         className={`bg-white rounded-xl p-6 border-2 transition-colors shadow-soft ${tier.id === 'founder'
-                                ? 'border-navy/30 ring-2 ring-cream'
-                                : 'border-light-grey hover:border-navy/20'
+                            ? 'border-navy/30 ring-2 ring-cream'
+                            : 'border-light-grey hover:border-navy/20'
                             }`}
                     >
                         <div className="flex justify-center mb-3">
