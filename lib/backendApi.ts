@@ -194,3 +194,159 @@ export async function calculatePortion(
     const data = await response.json();
     return data.data;
 }
+
+// F7 Nutrient Guide DTOs & Methods
+
+export interface Nutrient {
+    id: string;
+    code: string;
+    name: string;
+    unit: string;
+    category: string | null;
+    sort_order: number;
+}
+
+export interface NutrientNote {
+    id: string;
+    focus_area: string;
+    note: string;
+    source: string | null;
+    priority: number;
+}
+
+export interface NutrientDetail extends Nutrient {
+    notes: NutrientNote[];
+}
+
+export interface FoodSource {
+    id: string;
+    name: string;
+    amount: number;
+    unit: string;
+}
+
+export interface NutrientListParams {
+    target?: string;
+    category?: string;
+    lang?: string;
+}
+
+/**
+ * Get all nutrients
+ */
+export async function getNutrients(params: NutrientListParams = {}): Promise<Nutrient[]> {
+    if (typeof window !== 'undefined') {
+        const query = new URLSearchParams();
+        if (params.target) query.append('target', params.target);
+        if (params.category) query.append('category', params.category);
+        if (params.lang) query.append('lang', params.lang);
+        const res = await fetch(`/api/f6/nutrients?${query.toString()}`);
+        const json = await res.json();
+        return json.data || [];
+    }
+
+    const query = new URLSearchParams();
+    if (params.target) query.append('target', params.target);
+    if (params.category) query.append('category', params.category);
+    if (params.lang) query.append('lang', params.lang);
+
+    const url = `${BACKEND_BASE_URL}/api/v1/reference/nutrients?${query.toString()}`;
+    const response = await fetch(url);
+
+    if (!response.ok) throw new Error(`Backend API error: ${response.status}`);
+    const data = await response.json();
+    return data.data || [];
+}
+
+/**
+ * Search nutrients
+ */
+export async function searchNutrients(q: string, target?: string, lang: string = 'en'): Promise<Nutrient[]> {
+    if (!q || q.trim().length < 2) return [];
+
+    if (typeof window !== 'undefined') {
+        const query = new URLSearchParams({ q, lang });
+        if (target) query.append('target', target);
+        const res = await fetch(`/api/f6/nutrients/search?${query.toString()}`);
+        const json = await res.json();
+        return json.data || [];
+    }
+
+    const query = new URLSearchParams({ q, lang });
+    if (target) query.append('target', target);
+
+    const url = `${BACKEND_BASE_URL}/api/v1/reference/nutrients/search?${query.toString()}`;
+    const response = await fetch(url);
+
+    if (!response.ok) throw new Error(`Backend API error: ${response.status}`);
+    const data = await response.json();
+    return data.data || [];
+}
+
+/**
+ * Get nutrient detail
+ */
+export async function getNutrientDetail(id: string, target?: string, lang: string = 'en'): Promise<NutrientDetail> {
+    if (typeof window !== 'undefined') {
+        const query = new URLSearchParams({ lang });
+        if (target) query.append('target', target);
+        const res = await fetch(`/api/f6/nutrients/${id}?${query.toString()}`);
+        const json = await res.json();
+        return json.data;
+    }
+
+    const query = new URLSearchParams({ lang });
+    if (target) query.append('target', target);
+
+    const url = `${BACKEND_BASE_URL}/api/v1/reference/nutrients/${id}?${query.toString()}`;
+    const response = await fetch(url);
+
+    if (!response.ok) throw new Error(`Backend API error: ${response.status}`);
+    const data = await response.json();
+    return data.data;
+}
+
+/**
+ * Get food sources for a nutrient
+ * Requires authorization (session token)
+ */
+export async function getNutrientFoods(id: string, target?: string, lang: string = 'en'): Promise<FoodSource[]> {
+    if (typeof window !== 'undefined') {
+        const query = new URLSearchParams({ lang });
+        if (target) query.append('target', target);
+        const res = await fetch(`/api/f6/nutrients/${id}/foods?${query.toString()}`);
+
+        if (res.status === 403) {
+            throw new Error('UPGRADE_REQUIRED');
+        }
+
+        if (!res.ok) throw new Error(`API error: ${res.status}`);
+        const json = await res.json();
+        return json.data || [];
+    }
+
+    const query = new URLSearchParams({ lang });
+    if (target) query.append('target', target);
+
+    const url = `${BACKEND_BASE_URL}/api/v1/reference/nutrients/${id}/foods?${query.toString()}`;
+
+    // Note: In a real app, we'd get the actual user token from a store
+    // For now, using GUEST_TOKEN if available as fallback
+    const token = GUEST_TOKEN;
+
+    const response = await fetch(url, {
+        headers: {
+            'Authorization': token ? `Bearer ${token}` : '',
+        }
+    });
+
+    if (!response.ok) {
+        if (response.status === 403) {
+            throw new Error('UPGRADE_REQUIRED');
+        }
+        throw new Error(`Backend API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.data || [];
+}

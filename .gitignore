@@ -10,3 +10,9 @@ docs/New task0/
 docs/SVGs_Flat/
 docs/SVGs/
 docs/data_sources/nutrients_data/*.csv
+
+# F7 Nutrient Guide (Capsulated/Deferred)
+app/nutrients-guide/
+app/_nutrients-guide/
+components/landing-v3/f7-tool/
+app/api/f6/

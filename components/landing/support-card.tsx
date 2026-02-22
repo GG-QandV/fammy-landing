@@ -8,12 +8,13 @@ type TierId = 'basic_support' | 'pro_support' | 'founder';
 interface EmailModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onSkip: () => void;
     onSubmit: (email: string, giftEmail?: string) => void;
+    onSkip?: () => void;
     t: (key: string) => string;
+    isOptional?: boolean;
 }
 
-function EmailModal({ isOpen, onClose, onSkip, onSubmit, t }: EmailModalProps) {
+function EmailModal({ isOpen, onClose, onSubmit, onSkip, t, isOptional }: EmailModalProps) {
     const [email, setEmail] = useState('');
     const [isGift, setIsGift] = useState(false);
     const [giftEmail, setGiftEmail] = useState('');
@@ -22,7 +23,7 @@ function EmailModal({ isOpen, onClose, onSkip, onSubmit, t }: EmailModalProps) {
     if (!isOpen) return null;
 
     const handleSubmit = () => {
-        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        if (!isOptional && (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) {
             setError(t('invalid_email'));
             return;
         }
@@ -47,56 +48,64 @@ function EmailModal({ isOpen, onClose, onSkip, onSubmit, t }: EmailModalProps) {
                     type="email"
                     value={email}
                     onChange={(e) => { setEmail(e.target.value); setError(''); }}
-                    placeholder={t('email_placeholder')}
+                    placeholder={isOptional ? t('email_placeholder_optional') : t('email_placeholder')}
                     className="w-full px-4 py-3 border border-light-grey rounded-lg mb-2 bg-white text-navy"
                 />
-                {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
-                <label className="flex items-center gap-2 mt-4 cursor-pointer">
-                    <input
-                        type="checkbox"
-                        checked={isGift}
-                        onChange={(e) => setIsGift(e.target.checked)}
-                        className="w-4 h-4 rounded border-light-grey"
-                    />
-                    <span className="text-navy">{t('gift_checkbox')}</span>
-                </label>
-
-                {isGift && (
-                    <div className="mt-3">
-                        <label className="block text-sm text-grey mb-1">
-                            {t('gift_email_label')}
+                {!isOptional && (
+                    <div className="mt-4 space-y-4">
+                        <label className="flex items-center gap-3 cursor-pointer group">
+                            <div className="relative flex items-center">
+                                <input
+                                    type="checkbox"
+                                    checked={isGift}
+                                    onChange={(e) => setIsGift(e.target.checked)}
+                                    className="peer h-5 w-5 cursor-pointer appearance-none rounded border border-light-grey transition-all checked:bg-navy"
+                                />
+                                <svg className="pointer-events-none absolute h-5 w-5 text-white opacity-0 peer-checked:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="4"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                            </div>
+                            <span className="text-navy font-medium">{t('gift_checkbox')}</span>
                         </label>
-                        <input
-                            type="email"
-                            value={giftEmail}
-                            onChange={(e) => { setGiftEmail(e.target.value); setError(''); }}
-                            placeholder={t('gift_email_placeholder')}
-                            className="w-full px-4 py-3 border border-light-grey rounded-lg bg-white text-navy"
-                        />
+
+                        {isGift && (
+                            <div className="space-y-2 animate-in fade-in slide-in-from-top-2 duration-200">
+                                <label className="text-sm font-semibold text-grey ml-1">{t('gift_email_label')}</label>
+                                <input
+                                    type="email"
+                                    value={giftEmail}
+                                    onChange={(e) => { setGiftEmail(e.target.value); setError(''); }}
+                                    placeholder={t('gift_email_placeholder')}
+                                    className="w-full px-4 py-3 border border-light-grey rounded-lg bg-white text-navy focus:border-navy outline-none"
+                                />
+                            </div>
+                        )}
                     </div>
                 )}
 
-                <div className="flex gap-3 mt-4">
-                    <button
-                        onClick={onSkip}
-                        className="flex-1 px-4 py-3 border border-light-grey text-grey rounded-lg hover:bg-slate-50"
-                    >
-                        {t('support_skip_discount')}
-                    </button>
+                {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+
+                <div className="mt-6 flex flex-col gap-3">
                     <button
                         onClick={handleSubmit}
-                        className="flex-1 px-4 py-3 bg-navy hover:opacity-90 text-white rounded-lg font-semibold"
+                        className="w-full px-4 py-3 bg-navy hover:opacity-90 text-white rounded-lg font-semibold shadow-sm transition-all active:scale-[0.98]"
                     >
                         {t('support_get_discount')}
                     </button>
+                    {!isOptional && onSkip && (
+                        <button
+                            onClick={onSkip}
+                            className="w-full px-4 py-3 text-grey hover:text-navy text-sm font-medium transition-colors"
+                        >
+                            {t('support_skip_discount')}
+                        </button>
+                    )}
                 </div>
 
                 <button
                     onClick={onClose}
-                    className="absolute top-4 right-4 text-grey hover:text-navy"
+                    className="absolute top-4 right-4 text-grey hover:text-navy transition-colors h-8 w-8 flex items-center justify-center hover:bg-light-grey/20 rounded-full"
                 >
-                    ✕
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
             </div>
         </div>
@@ -143,17 +152,17 @@ export default function SupportCard() {
         setShowEmailModal(true);
     };
 
-    const handleSkipEmail = () => {
-        setShowEmailModal(false);
-        if (pendingTier) {
-            createCheckout(pendingTier);
-        }
-    };
-
     const handleSubmitEmail = (email: string, giftEmail?: string) => {
         setShowEmailModal(false);
         if (pendingTier) {
             createCheckout(pendingTier, email, giftEmail);
+        }
+    };
+
+    const handleSkipEmail = () => {
+        setShowEmailModal(false);
+        if (pendingTier) {
+            createCheckout(pendingTier);
         }
     };
 
@@ -223,9 +232,10 @@ export default function SupportCard() {
             <EmailModal
                 isOpen={showEmailModal}
                 onClose={() => setShowEmailModal(false)}
-                onSkip={handleSkipEmail}
                 onSubmit={handleSubmitEmail}
+                onSkip={handleSkipEmail}
                 t={t as any}
+                isOptional={pendingTier === 'basic_support'}
             />
         </div>
     );
